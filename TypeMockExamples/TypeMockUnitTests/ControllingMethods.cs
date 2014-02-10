@@ -109,13 +109,19 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
             ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            int result = classUnderTest.AddToDependency(1, realDependency);
+            int result1 = classUnderTest.AddToDependency(1, realDependency);
 
             // assert
-            Assert.AreEqual(3, result);
+            Assert.AreEqual(3, result1);
+
+            // arrange
             returnValue = 4;
-            result = classUnderTest.AddToDependency(1, realDependency);
-            Assert.AreEqual(5, result);
+
+            // act
+            int result2 = classUnderTest.AddToDependency(1, realDependency);
+
+            // assert
+            Assert.AreEqual(5, result2);
         }
 
         [TestMethod]

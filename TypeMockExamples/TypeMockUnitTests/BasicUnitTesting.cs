@@ -36,7 +36,6 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
         {
             // Arrange - Fake a Process, default is that all Members.ReturnRecursiveFakes 
             Process processFake = Isolate.Fake.Instance<Process>();
-
             Isolate.WhenCalled(() => processFake.MainModule.Site.Name).WillReturn("Typemock rocks");
 
             // Act 
