@@ -1,6 +1,8 @@
 ﻿
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
@@ -19,24 +21,29 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
         [TestMethod]
         public void SwapCollection_WithFakeData()
         {
+            // arrange
             var dependency = new Dependency();
-            Isolate.WhenCalled(() => dependency.GetList())
-                .WillReturnCollectionValuesOf(new[] { 1, 2, 3 });
+            Isolate.WhenCalled(() => dependency.GetList()).WillReturnCollectionValuesOf(new[] { 1, 2, 3 });
             
+            // act
             var result = new ClassUnderTest().Sum(dependency);
 
+            // assert
             Assert.AreEqual(6, result);
         }
 
         [TestMethod]
         public void ImplictCollectionCreation_ByFakingLastItem()
         {
+            // arrange
             var dependency = new Dependency();
-            // A fake collection of size of 6 is created implicitely
+            // A fake collection of size of 6 is created implicitly
             Isolate.WhenCalled(() => dependency.GetList()[5]).WillReturn(3);
 
+            // act
             var result = new ClassUnderTest().Count(dependency);
 
+            // assert
             Assert.AreEqual(6, result);
             Assert.AreEqual(3, dependency.GetList()[5]);
         }   
@@ -52,6 +59,7 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
     public class MyList : IList<int>
     {
         #region IList implementation
+
         public int IndexOf(int item)
         {
             throw new NotImplementedException();
@@ -73,6 +81,7 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
             {
                 throw new NotImplementedException();
             }
+
             set
             {
                 throw new NotImplementedException();
@@ -119,10 +128,11 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
             throw new NotImplementedException();
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();
         }
+
         #endregion
     }
 
@@ -138,18 +148,12 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
     {
         public int Sum(Dependency dependency)
         {
-            int total = 0;
-            foreach (var i in dependency.GetList())
-            {
-                total += i;
-            }
-            return total;
+            return dependency.GetList().Sum();
         }
 
         public int Count(Dependency dependency)
         {
             return dependency.GetList().Count;
         }
-
     }
 }
