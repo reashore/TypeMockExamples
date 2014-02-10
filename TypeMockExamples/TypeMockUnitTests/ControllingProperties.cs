@@ -1,18 +1,4 @@
-﻿#region Copyright (c) 2004-2013, Typemock     http://www.typemock.com
-/************************************************************************************
-'
-' Copyright © 2004-2013 Typemock Ltd
-'
-' This software is provided 'as-is', without any express or implied warranty. In no 
-' event will the authors be held liable for any damages arising from the use of this 
-' software.
-' 
-' Permission is granted to anyone to use this software for any purpose, including 
-' commercial applications, and to alter it and redistribute it freely.
-'
-'***********************************************************************************/
-#endregion
-
+﻿
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;

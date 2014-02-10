@@ -1,7 +1,7 @@
-﻿using System;
+﻿
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace TypeMockExamples
+namespace TypeMockExamples.MyUnitTests
 {
     [TestClass]
     public class UnitTest1

@@ -59,23 +59,23 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTests\AssertingCallsWhereMade.cs" />
-    <Compile Include="UnitTests\BasicUnitTesting.cs" />
-    <Compile Include="UnitTests\Collections.cs" />
-    <Compile Include="UnitTests\ControllingMethods.cs" />
-    <Compile Include="UnitTests\ControllingProperties.cs" />
-    <Compile Include="UnitTests\CreatingFutureFakes.cs" />
-    <Compile Include="UnitTests\FakingConstructors.cs" />
-    <Compile Include="UnitTests\FakingDependencies.cs" />
-    <Compile Include="UnitTests\InvokingMethods.cs" />
-    <Compile Include="UnitTests\LiveObjects.cs" />
-    <Compile Include="UnitTests\MethodRedirection.cs" />
-    <Compile Include="UnitTests\MethodsArgument.cs" />
-    <Compile Include="UnitTests\PrivateMethods.cs" />
-    <Compile Include="UnitTests\RefOutArguments.cs" />
-    <Compile Include="UnitTests\StaticMethods.cs" />
+    <Compile Include="TypeMockUnitTests\BasicUnitTesting.cs" />
+    <Compile Include="TypeMockUnitTests\Collections.cs" />
+    <Compile Include="TypeMockUnitTests\ControllingMethods.cs" />
+    <Compile Include="TypeMockUnitTests\ControllingProperties.cs" />
+    <Compile Include="TypeMockUnitTests\CreatingFutureFakes.cs" />
+    <Compile Include="TypeMockUnitTests\FakingConstructors.cs" />
+    <Compile Include="TypeMockUnitTests\FakingDependencies.cs" />
+    <Compile Include="TypeMockUnitTests\InvokingMethods.cs" />
+    <Compile Include="TypeMockUnitTests\LiveObjects.cs" />
+    <Compile Include="TypeMockUnitTests\MethodRedirection.cs" />
+    <Compile Include="TypeMockUnitTests\MethodsArgument.cs" />
+    <Compile Include="TypeMockUnitTests\PrivateMethods.cs" />
+    <Compile Include="TypeMockUnitTests\RefOutArguments.cs" />
     <Compile Include="MyUnitTests\UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeMockUnitTests\AssertingCallsWhereMade.cs" />
+    <Compile Include="TypeMockUnitTests\StaticMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
