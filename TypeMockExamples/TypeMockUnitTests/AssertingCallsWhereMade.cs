@@ -22,9 +22,10 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
         {
             // arrange
             Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
+            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            new ClassUnderTest().DoAction(2, fakeDependency);
+            classUnderTest.DoAction(2, fakeDependency);
 
             // assert
             Isolate.Verify.WasCalledWithAnyArguments(() => fakeDependency.CheckSecurity(null, null));
@@ -35,9 +36,10 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
         {
             // arrange
             Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
+            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            new ClassUnderTest().DoAction(2, fakeDependency);
+            classUnderTest.DoAction(2, fakeDependency);
 
             // assert
             Isolate.Verify.WasNotCalled(() => fakeDependency.CallGuard());
@@ -48,9 +50,9 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
         {
             // arrange
             Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
+            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            ClassUnderTest classUnderTest = new ClassUnderTest();
             classUnderTest.DoAction(2, fakeDependency);
             classUnderTest.DoAction(3, fakeDependency);
 
@@ -98,6 +100,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
             classUnderTest.DoAction(2, fakeDependency);
 
             // assert
+            // todo: fix possible null reference exception
             Isolate.Verify.WasCalledWithArguments(() => fakeDependency.CheckSecurity(null, null)).Matching(
                 a => (a[0] as string).StartsWith("type") && (a[1] as string).StartsWith("rule"));
         }
