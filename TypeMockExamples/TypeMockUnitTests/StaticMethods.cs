@@ -31,9 +31,14 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
         [TestMethod]
         public void VerifyStaticMethodWasCalled()
         {
+            // arrange
             Isolate.Fake.StaticMethods<Dependency>();
+            ClassUnderTest classUnderTest = new ClassUnderTest();
 
-            int result = new ClassUnderTest().Calculate(1, 2);
+            // act
+            classUnderTest.Calculate(1, 2);
+
+            // assert
             Isolate.Verify.WasCalledWithAnyArguments(() => Dependency.CheckSecurity(null, null));
         }
 
