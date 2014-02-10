@@ -62,11 +62,12 @@
   <ItemGroup>
     <Compile Include="FluentAssertions\BooleanTests.cs" />
     <Compile Include="FluentAssertions\DateTimeTests.cs" />
+    <Compile Include="FluentAssertions\FluentCollectionTests.cs" />
     <Compile Include="FluentAssertions\NullableTypesTests.cs" />
     <Compile Include="FluentAssertions\NumericTests.cs" />
     <Compile Include="FluentAssertions\ReferenceTypeTests.cs" />
     <Compile Include="FluentAssertions\StringTests.cs" />
-    <Compile Include="MyUnitTests\UnitTest2..cs" />
+    <Compile Include="MyUnitTests\NUnitTests.cs" />
     <Compile Include="TypeMockUnitTests\BasicUnitTesting.cs" />
     <Compile Include="TypeMockUnitTests\Collections.cs" />
     <Compile Include="TypeMockUnitTests\ControllingMethods.cs" />
@@ -80,7 +81,7 @@
     <Compile Include="TypeMockUnitTests\MethodsArgument.cs" />
     <Compile Include="TypeMockUnitTests\PrivateMethods.cs" />
     <Compile Include="TypeMockUnitTests\RefOutArguments.cs" />
-    <Compile Include="MyUnitTests\UnitTest1.cs" />
+    <Compile Include="MyUnitTests\MSTestTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeMockUnitTests\AssertingCallsWhereMade.cs" />
     <Compile Include="TypeMockUnitTests\StaticMethods.cs" />

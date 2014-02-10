@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace TypeMockExamples.MyUnitTests
 {
     [TestFixture]
-    public class UnitTest2
+    public class NUnitTests
     {
         [Test]
         public void TestMethod1()

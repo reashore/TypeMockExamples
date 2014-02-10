@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace TypeMockExamples.FluentAssertions
 {
     [TestClass]
-    public class StringTests
+    public class FluentStringTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestStrings()
         {
             string theString = null;
             theString.Should().BeNull();

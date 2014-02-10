@@ -5,10 +5,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace TypeMockExamples.FluentAssertions
 {
     [TestClass]
-    public class NullableTypesTests
+    public class FluentNullableTypesTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestNullableTypes()
         {
             short? theShort = null;
             theShort.Should().NotHaveValue();

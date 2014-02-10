@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace TypeMockExamples.FluentAssertions
 {
     [TestClass]
-    public class BooleanTests
+    public class FluentBooleanTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestBooleans()
         {
             bool theBoolean = false;
             theBoolean.Should().BeFalse("it's set to false");

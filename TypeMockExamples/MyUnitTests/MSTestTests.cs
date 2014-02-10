@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace TypeMockExamples.MyUnitTests
 {
     [TestClass]
-    public class UnitTest1
+    public class MSTestTests
     {
         [TestMethod]
         public void TestMethod1()

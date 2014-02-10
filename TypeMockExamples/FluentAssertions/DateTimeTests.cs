@@ -5,10 +5,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace TypeMockExamples.FluentAssertions
 {
     [TestClass]
-    public class DateTimeTests
+    public class FluentDateTimeTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestDateTime()
         {
             DateTime theDatetime = 1.March(2010).At(22, 15);
 

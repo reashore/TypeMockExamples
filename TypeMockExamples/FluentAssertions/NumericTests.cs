@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace TypeMockExamples.FluentAssertions
 {
     [TestClass]
-    public class NumericTests
+    public class FluentNumericTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestNumericTypes()
         {
             int theInt = 5;
             theInt.Should().BeGreaterOrEqualTo(5);
