@@ -3,7 +3,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
-namespace Typemock.Examples.CSharp.StaticMethods
+namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
 {
     /// <summary>
     /// This test class shows how to fake static methods. 

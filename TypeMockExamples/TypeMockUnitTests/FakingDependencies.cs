@@ -3,7 +3,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
-namespace Typemock.Examples.CSharp.FakingDependencies
+namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
 {
     /// <summary>
     /// This test class shows different ways of faking dependencies of a class.

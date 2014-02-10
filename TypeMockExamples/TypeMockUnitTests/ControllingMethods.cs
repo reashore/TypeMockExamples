@@ -1,11 +1,10 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
-namespace Typemock.Examples.CSharp.Methods
+namespace TypeMockExamples.TypeMockUnitTests.Methods
 {
     /// <summary>
     /// This test class shows different ways of controlling the behavior of fake objects using the Isolate.WhenCalled() API.

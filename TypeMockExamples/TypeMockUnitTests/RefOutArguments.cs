@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
-namespace Typemock.Examples.CSharp.RefOutArguments
+namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
 {
     /// <summary>
     /// This test class shows different ways of controlling the behavior of ref and out arguments

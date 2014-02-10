@@ -3,7 +3,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
-namespace Typemock.Examples.CSharp.PrivateMethods
+namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
 {
     /// <summary>
     /// This test class shows how to fake non-public (private, protected or internal) methods, properties and indexers.

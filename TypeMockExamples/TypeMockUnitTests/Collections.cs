@@ -1,10 +1,9 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
-namespace Typemock.Examples.CSharp.Collections
+namespace TypeMockExamples.TypeMockUnitTests.Collections
 {
     /// <summary>
     /// This test class shows ways to control methods and properties returning collections using Typemock Isolator.

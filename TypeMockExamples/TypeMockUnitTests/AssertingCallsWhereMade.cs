@@ -17,7 +17,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
-namespace Typemock.Examples.CSharp.AssertingCallsWhereMade
+namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
 {
     /// <summary>
     /// This test class shows different ways of verifying calls on fake objects using the Isolate.Verify API.

@@ -3,7 +3,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
-namespace Typemock.Examples.CSharp.Future
+namespace TypeMockExamples.TypeMockUnitTests.FutureFakes
 {
     /// <summary>
     /// This test class demonstrates handling of objects instantiated outside the test's scope. 

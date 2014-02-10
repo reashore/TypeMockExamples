@@ -3,7 +3,7 @@ using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
-namespace TypeMockExamples.TypeMockUnitTests
+namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
 {
     /// <summary>
     /// Basic examples of how to use Typemock Isolator Syntax.

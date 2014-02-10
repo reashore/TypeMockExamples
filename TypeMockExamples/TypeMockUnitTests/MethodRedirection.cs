@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
-namespace Typemock.Examples.CSharp.MethodRedirection
+namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
 {
     /// <summary>
     /// This test class demonstrates performing "Duck-type" swapping between objects using 

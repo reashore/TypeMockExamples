@@ -3,7 +3,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
-namespace Typemock.Examples.CSharp.ControllingProperties
+namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
 {
     /// <summary>
     /// This test class shows different ways of controlling the behavior of fake properties

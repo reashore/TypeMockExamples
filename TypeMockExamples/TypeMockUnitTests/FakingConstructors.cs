@@ -3,7 +3,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
-namespace Typemock.Examples.CSharp.FakingConstructors
+namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
 {
     /// <summary>
     /// This test class demonstrates controlling arguments passed to constructor of a fake 

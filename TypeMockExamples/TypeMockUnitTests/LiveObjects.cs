@@ -3,7 +3,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
-namespace Typemock.Examples.CSharp.LiveObjects
+namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
 {
     /// <summary>
     /// This test class demonstrates using live objects - test objects that have been instantiated normally, rather than

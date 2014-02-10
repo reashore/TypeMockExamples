@@ -3,7 +3,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
-namespace Typemock.Examples.CSharp.InvokingMethods
+namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
 {
     /// <summary>
     /// This class demonstrates the ability of firing events and invoking private methods using Isolator.
