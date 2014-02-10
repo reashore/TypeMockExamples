@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
@@ -9,36 +8,44 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
     /// This class demonstrates the ability of firing events and invoking private methods using Isolator.
     /// </summary>
     [TestClass]
-    [Isolated(DesignMode.Pragmatic)]  // Note: Use Isolated to clean up after all tests in class
+    [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
     public class InvokingMethods
     {
         [TestMethod]
         public void FireEvent_RunEvent()
         {
-            var underTest = new ClassUnderTest();
-            var counter = new Counter(underTest);
+            // arrange
+            ClassUnderTest underTest = new ClassUnderTest();
+            Counter counter = new Counter(underTest);
 
+            // act
             // Note how adding a dummy event is the way to fire it
-            Isolate.Invoke.Event(() => underTest.RunEvent+= null, 0);
+            Isolate.Invoke.Event(() => underTest.RunEvent += null, 0);
 
+            // assert
             Assert.AreEqual(1, counter.Times);
         }
 
         [TestMethod]
         public void InvokePrivateMethod()
         {
-            var underTest = new ClassUnderTest();
+            // arrange
+            ClassUnderTest underTest = new ClassUnderTest();
 
-            var result = Isolate.Invoke.Method(underTest, "Sum", 2, 5);
+            // act
+            object result = Isolate.Invoke.Method(underTest, "Sum", 2, 5);
 
+            // assert
             Assert.AreEqual(7, result);
         }
- 
+
         [TestMethod]
         public void InvokePrivateStaticMethod()
         {
-            var result = Isolate.Invoke.Method<ClassUnderTest>("Multiply", 2, 5);
+            // act
+            object result = Isolate.Invoke.Method<ClassUnderTest>("Multiply", 2, 5);
 
+            // assert
             Assert.AreEqual(10, result);
         }
     }
@@ -54,6 +61,7 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
     {
         public int Age;
         public string Name;
+
         public Dependency(int age, string name)
         {
             Age = age;
@@ -63,13 +71,14 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
 
     public class Counter
     {
-        public int Times { get; set; }
         public Counter(ClassUnderTest underTest)
         {
-            underTest.RunEvent += new Action<int>(underTest_RunEvent);
+            underTest.RunEvent += underTest_RunEvent;
         }
 
-        void underTest_RunEvent(int obj)
+        public int Times { get; set; }
+
+        private void underTest_RunEvent(int obj)
         {
             Times++;
         }
@@ -79,8 +88,6 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
     {
         public event Action<int> RunEvent;
 
-        public ClassUnderTest() { }
-
         private int Sum(int a, int b)
         {
             return a + b;
@@ -88,7 +95,7 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
 
         private static int Multiply(int a, int b)
         {
-            return a * b;
+            return a*b;
         }
     }
 }
