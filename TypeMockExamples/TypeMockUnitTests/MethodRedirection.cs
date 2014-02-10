@@ -25,19 +25,23 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
         [TestMethod]
         public void DuckTypeSwap_ReplaceADuckWithADog()
         {
+            // arrange
             Duck duck = new Duck();
             Dog dog = new Dog();
-
             Isolate.Swap.CallsOn(duck).WithCallsTo(dog);
-            // The duck object will now go 'Woof!' instead of 'Quack!'
-            Assert.AreEqual("Woof!", duck.Talk());
 
-            // It is still a duck in every aspect that a dog can't do
+            // act
+            string result = duck.Talk();
             duck.LayEgg();
-            Assert.AreEqual(1, duck.EggCount);
-
-            // Even though duck calls are now redirected to dog calls, we can still verify the duck calls are made
             duck.Walk();
+
+            // assert
+            // The duck object will now go 'Woof!' instead of 'Quack!'
+            Assert.AreEqual("Woof!", result);
+            // It is still a duck in every aspect that a dog can't do
+            Assert.AreEqual(1, duck.EggCount);
+            // Even though duck calls are now redirected to dog calls, we can still verify the duck calls are made
+            // do not convert to method group or it will break the test
             Isolate.Verify.WasCalledWithAnyArguments(() => duck.Walk());
         }
     }

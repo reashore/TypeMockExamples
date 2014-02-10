@@ -44,7 +44,7 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
             ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            int result = classUnderTest.Calculate(1, 2, dependency);
+            classUnderTest.Calculate(1, 2, dependency);
 
             // assert
             Isolate.Verify.WasCalledWithAnyArguments(() => dependency.CheckSecurity(null, null));
