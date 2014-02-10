@@ -3,10 +3,11 @@ using NUnit.Framework;
 
 namespace TypeMockExamples.MyUnitTests
 {
-    [TestFixture]
+    // TypeMock does not seem to recognize NUnit tests
+    //[TestFixture]
     public class NUnitTests
     {
-        [Test]
+        //[Test]
         public void TestNUnitTest()
         {
             Assert.IsTrue(true);
