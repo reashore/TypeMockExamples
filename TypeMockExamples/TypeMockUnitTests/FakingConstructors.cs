@@ -111,7 +111,7 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
     {
         public string GetString(Dependency user)
         {
-            return user.Name + user.Age.ToString();
+            return user.Name + user.Age;
 
         }
 

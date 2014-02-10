@@ -20,7 +20,7 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
         {
             var dependency = new Dependency();
             Isolate.WhenCalled(() => dependency.GetList())
-                .WillReturnCollectionValuesOf(new int[] { 1, 2, 3 });
+                .WillReturnCollectionValuesOf(new[] { 1, 2, 3 });
             
             var result = new ClassUnderTest().Sum(dependency);
 

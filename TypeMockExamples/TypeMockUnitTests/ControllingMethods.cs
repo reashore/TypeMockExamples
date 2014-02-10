@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -92,8 +93,7 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
             var realDependency = new Dependency();
 
             // return value dynamically
-            Isolate.WhenCalled(() => realDependency.GetID()).DoInstead(
-                x => { return returnValue; }); 
+            Isolate.WhenCalled(() => realDependency.GetID()).DoInstead(x => { return returnValue; }); 
             
             var classUnderTest = new ClassUnderTest();
             var result = classUnderTest.AddToDependency(1, realDependency);

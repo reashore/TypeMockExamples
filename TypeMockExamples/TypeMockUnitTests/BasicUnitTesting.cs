@@ -61,19 +61,18 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
         {
             if ((DateTime.Now.Month == 2) && (DateTime.Now.Day == 29))
                 return 100;
-            else
-                return 0;
+
+            return 0;
         }
 
         public static bool IsMySiteNameTypemock(Process process)
         {
-            var name = process.MachineName;
+            //var name = process.MachineName;
 
             if (process.MainModule.Site.Name.StartsWith("Typemock"))
                 return true;
-            else
-                return false;
 
+            return false;
         }
     }
 

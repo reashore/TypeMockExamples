@@ -83,7 +83,7 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
         public int Calculate(int a, int b)
         {
             d2.Check();
-            return (a + b)*d1.Multiplier+additional;
+            return (a + b)*d1.Multiplier + additional;
         }
     }
 }

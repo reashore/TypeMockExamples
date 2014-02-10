@@ -57,7 +57,7 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
         {
             throw new NotImplementedException();
         }
-        public virtual int GetID()
+        public virtual int GetId()
         {
             return 10;
         }
@@ -74,7 +74,7 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
 
         public int Calculate(int a, Dependency dependency)
         {
-            return a + dependency.GetID();
+            return a + dependency.GetId();
         }
     }
 }

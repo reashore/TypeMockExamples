@@ -70,7 +70,7 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
             List<int> list;
             dependency.SomeMethod(ref name, out list);
 
-            return name + list.Count.ToString();
+            return name + list.Count;
         }
 
         public string UseRef(Dependency dependency)

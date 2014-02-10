@@ -83,16 +83,11 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
  
     public class StaticConstructorExample
     {
-        private static bool trueOnStaticConstructor = false;
-        public static bool TrueOnStaticConstructor
-        {
-            get { return trueOnStaticConstructor; }
-            set { trueOnStaticConstructor = value; }
-        }
+        public static bool TrueOnStaticConstructor { get; set; }
 
         static StaticConstructorExample()
         {
-            trueOnStaticConstructor = true;
+            TrueOnStaticConstructor = true;
         }
 
         public static void Foo()

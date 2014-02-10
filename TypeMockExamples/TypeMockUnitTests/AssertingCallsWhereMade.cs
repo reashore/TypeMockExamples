@@ -92,8 +92,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
             new ClassUnderTest().DoAction(2, fakeDependency);
 
             Isolate.Verify.WasCalledWithArguments(() => fakeDependency.CheckSecurity(null, null)).Matching(
-                a => (a[0] as string).StartsWith("type") &&
-                     (a[1] as string).StartsWith("rule"));
+                a => (a[0] as string).StartsWith("type") && (a[1] as string).StartsWith("rule"));
         }
     }
 
