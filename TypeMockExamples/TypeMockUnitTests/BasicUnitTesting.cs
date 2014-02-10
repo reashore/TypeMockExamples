@@ -13,8 +13,8 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
     ///     - Act: here we run the method under test using the test objects we created earlier
     ///     - Assert: here we verify that the outcome of running the test code with the test set up yielded the expected results    
     /// </summary>
-    [TestClass, Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after the test
-                                    // Faking static methods requires Pragmatic mode
+    [TestClass]
+    [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after the test. Faking static methods requires Pragmatic mode
     public class BasicUnitTesting
     {
         [TestMethod] 
@@ -34,12 +34,12 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
         public void FakeAConcreteObjectExample()
         {
             // Arrange - Fake a Process, default is that all Members.ReturnRecursiveFakes 
-            var fake = Isolate.Fake.Instance<Process>();
+            var processFake = Isolate.Fake.Instance<Process>();
   
-            Isolate.WhenCalled(() => fake.MainModule.Site.Name).WillReturn("Typemock rocks");
+            Isolate.WhenCalled(() => processFake.MainModule.Site.Name).WillReturn("Typemock rocks");
 
             // Act 
-            var result = MyCode.IsMySiteNameTypemock(fake);
+            var result = MyCode.IsMySiteNameTypemock(processFake);
 
             // Assert 
             Assert.AreEqual(true, result);
@@ -66,7 +66,7 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
 
         public static bool IsMySiteNameTypemock(Process process)
         {
-            //var name = process.MachineName;
+            var name = process.MachineName;
 
             if (process.MainModule.Site.Name.StartsWith("Typemock"))
                 return true;

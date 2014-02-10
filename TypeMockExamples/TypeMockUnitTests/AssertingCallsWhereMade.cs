@@ -13,38 +13,48 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
     ///     - WasNotCalled: verifies the call was not made
     ///     - WasCalledWithArguments: use Matching to match arguments
     /// </summary>
-    [TestClass, Isolated] // Note: Use Isolated to clean up after all tests in class
+    [TestClass]
+    [Isolated] // Note: Use Isolated to clean up after all tests in class
     public class VerifyingCallsWhereMade
     {
         [TestMethod]
         public void Verify_CallWasMade_WithAnyArgument()
         {
+            // arrange
             var fakeDependency = Isolate.Fake.Instance<Dependency>();
            
+            // act
             new ClassUnderTest().DoAction(2, fakeDependency);
 
+            // assert
             Isolate.Verify.WasCalledWithAnyArguments(() => fakeDependency.CheckSecurity(null, null));
         }
 
         [TestMethod]
         public void Verify_CallWasNeverMade()
         {
+            // arrange
             var fakeDependency = Isolate.Fake.Instance<Dependency>();
 
+            // act
             new ClassUnderTest().DoAction(2, fakeDependency);
 
+            // assert
             Isolate.Verify.WasNotCalled(() => fakeDependency.CallGuard());
         }
 
         [TestMethod]
         public void Verify_CallWasMadeTwice()
         {
+            // arrange
             var fakeDependency = Isolate.Fake.Instance<Dependency>();
 
-            var cut = new ClassUnderTest();
-            cut.DoAction(2, fakeDependency);
-            cut.DoAction(3, fakeDependency);
+            // act
+            var classUnderTest = new ClassUnderTest();
+            classUnderTest.DoAction(2, fakeDependency);
+            classUnderTest.DoAction(3, fakeDependency);
 
+            // assert
             int count = Isolate.Verify.GetTimesCalled(() => fakeDependency.CheckSecurity("",""));
             Assert.AreEqual(2, count);
         }
@@ -52,30 +62,42 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
         [TestMethod]
         public void Verify_CallWasNeverMade_OnChain()
         {
+            // arrange
             var fakeDependency = Isolate.Fake.Instance<Dependency>();
+            ClassUnderTest classUnderTest = new ClassUnderTest();
 
-            new ClassUnderTest().DoAction(2, fakeDependency);
+            // act
+            classUnderTest.DoAction(2, fakeDependency);
 
-            Isolate.Verify.WasNotCalled(() => fakeDependency.CallGuard().CheckSecurity(null,null));
+            // assert
+            Isolate.Verify.WasNotCalled(() => fakeDependency.CallGuard().CheckSecurity(null, null));
         }
 
         [TestMethod]
         public void Verify_CallWasMade_WithExactArguments()
         {
+            // arrange
             var fakeDependency = Isolate.Fake.Instance<Dependency>();
+            ClassUnderTest classUnderTest = new ClassUnderTest();
 
-            new ClassUnderTest().DoAction(2, fakeDependency);
+            // act
+            classUnderTest.DoAction(2, fakeDependency);
 
+            // assert
             Isolate.Verify.WasCalledWithExactArguments(() => fakeDependency.CheckSecurity("typemock", "rules"));
         }
 
         [TestMethod]
         public void Verify_CallWasMade_WithMatchingArguments()
         {
+            // arrange
             var fakeDependency = Isolate.Fake.Instance<Dependency>();
+            ClassUnderTest classUnderTest = new ClassUnderTest();
 
-            new ClassUnderTest().DoAction(2, fakeDependency);
+            // act
+            classUnderTest.DoAction(2, fakeDependency);
 
+            // assert
             Isolate.Verify.WasCalledWithArguments(() => fakeDependency.CheckSecurity(null, null)).Matching(
                 a => (a[0] as string).StartsWith("type") && (a[1] as string).StartsWith("rule"));
         }
@@ -93,6 +115,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
         {
             throw new NotImplementedException();
         }
+
         public virtual Dependency CallGuard()
         {
             throw new NotImplementedException();
@@ -101,12 +124,12 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
 
     public class ClassUnderTest
     {
-        public void DoAction(int i, Dependency fakeDependency)
+        public void DoAction(int i, Dependency dependency)
         {
-            fakeDependency.CheckSecurity("typemock","rules");
+            dependency.CheckSecurity("typemock","rules");
    
             if (i < 2)
-                fakeDependency.CallGuard();
+                dependency.CallGuard();
         }
     }
 }
