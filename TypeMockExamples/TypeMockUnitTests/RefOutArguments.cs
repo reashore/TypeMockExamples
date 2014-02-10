@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
@@ -17,14 +16,14 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
         public void ReturnValuesInRefArgument()
         {
             string outStr = "typemock";
-            List<int> outList = new List<int>() { 100 };
+            List<int> outList = new List<int> {100};
 
-            var realDependency = new Dependency();
+            Dependency realDependency = new Dependency();
             Isolate.WhenCalled(() => realDependency.SomeMethod(ref outStr, out outList))
                 .IgnoreCall();
 
-            var classUnderTest = new ClassUnderTest();
-            var result = classUnderTest.GetString(realDependency);
+            ClassUnderTest classUnderTest = new ClassUnderTest();
+            string result = classUnderTest.GetString(realDependency);
             Assert.AreEqual("typemock1", result);
         }
 
@@ -33,11 +32,11 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
         {
             string outStr = "typemock";
 
-            var fake = new Dependency();
+            Dependency fake = new Dependency();
             Isolate.WhenCalled(() => fake.SomeMethod(ref outStr)).IgnoreCall();
 
-            var classUnderTest = new ClassUnderTest();
-            var result = classUnderTest.UseRef(fake);
+            ClassUnderTest classUnderTest = new ClassUnderTest();
+            string result = classUnderTest.UseRef(fake);
 
             string inputShouldbe = "unit testing";
             Isolate.Verify.WasCalledWithExactArguments(() => fake.SomeMethod(ref inputShouldbe));
@@ -49,7 +48,7 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
     // - Dependency: Methods are not implemented - these need to be faked out
     // - ClassUnderTest: Class that uses Dependency
     //------------------
-    
+
     public class Dependency
     {
         public virtual void SomeMethod(ref string name, out List<int> list)
@@ -67,7 +66,7 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
     {
         public string GetString(Dependency dependency)
         {
-            var name = "unit testing";
+            string name = "unit testing";
             List<int> list;
             dependency.SomeMethod(ref name, out list);
 
@@ -76,10 +75,10 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
 
         public string UseRef(Dependency dependency)
         {
-            var name = "unit testing";
+            string name = "unit testing";
             dependency.SomeMethod(ref name);
 
-            return name ;
+            return name;
         }
     }
 }

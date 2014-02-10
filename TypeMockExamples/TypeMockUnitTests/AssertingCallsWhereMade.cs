@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
@@ -21,8 +20,8 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
         public void Verify_CallWasMade_WithAnyArgument()
         {
             // arrange
-            var fakeDependency = Isolate.Fake.Instance<Dependency>();
-           
+            Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
+
             // act
             new ClassUnderTest().DoAction(2, fakeDependency);
 
@@ -34,7 +33,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
         public void Verify_CallWasNeverMade()
         {
             // arrange
-            var fakeDependency = Isolate.Fake.Instance<Dependency>();
+            Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
 
             // act
             new ClassUnderTest().DoAction(2, fakeDependency);
@@ -47,15 +46,15 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
         public void Verify_CallWasMadeTwice()
         {
             // arrange
-            var fakeDependency = Isolate.Fake.Instance<Dependency>();
+            Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
 
             // act
-            var classUnderTest = new ClassUnderTest();
+            ClassUnderTest classUnderTest = new ClassUnderTest();
             classUnderTest.DoAction(2, fakeDependency);
             classUnderTest.DoAction(3, fakeDependency);
 
             // assert
-            int count = Isolate.Verify.GetTimesCalled(() => fakeDependency.CheckSecurity("",""));
+            int count = Isolate.Verify.GetTimesCalled(() => fakeDependency.CheckSecurity("", ""));
             Assert.AreEqual(2, count);
         }
 
@@ -63,7 +62,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
         public void Verify_CallWasNeverMade_OnChain()
         {
             // arrange
-            var fakeDependency = Isolate.Fake.Instance<Dependency>();
+            Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
             ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
@@ -77,7 +76,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
         public void Verify_CallWasMade_WithExactArguments()
         {
             // arrange
-            var fakeDependency = Isolate.Fake.Instance<Dependency>();
+            Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
             ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
@@ -91,7 +90,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
         public void Verify_CallWasMade_WithMatchingArguments()
         {
             // arrange
-            var fakeDependency = Isolate.Fake.Instance<Dependency>();
+            Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
             ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
@@ -126,8 +125,8 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
     {
         public void DoAction(int i, Dependency dependency)
         {
-            dependency.CheckSecurity("typemock","rules");
-   
+            dependency.CheckSecurity("typemock", "rules");
+
             if (i < 2)
                 dependency.CallGuard();
         }

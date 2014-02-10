@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
@@ -16,16 +15,16 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
         {
             Isolate.Fake.StaticMethods<Dependency>();
 
-            var result = new ClassUnderTest().Calculate(1, 2);
+            int result = new ClassUnderTest().Calculate(1, 2);
             Assert.AreEqual(3, result);
-        }   
+        }
 
         [TestMethod]
         public void FakeOneStaticMethod()
         {
-            Isolate.WhenCalled(()=>Dependency.CheckSecurity(null,null)).IgnoreCall();
-            
-            var result = new ClassUnderTest().Calculate(1, 2);
+            Isolate.WhenCalled(() => Dependency.CheckSecurity(null, null)).IgnoreCall();
+
+            int result = new ClassUnderTest().Calculate(1, 2);
             Assert.AreEqual(3, result);
         }
 
@@ -34,7 +33,7 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
         {
             Isolate.Fake.StaticMethods<Dependency>();
 
-            var result = new ClassUnderTest().Calculate(1, 2);
+            int result = new ClassUnderTest().Calculate(1, 2);
             Isolate.Verify.WasCalledWithAnyArguments(() => Dependency.CheckSecurity(null, null));
         }
 
@@ -67,7 +66,7 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
             StaticConstructorExample.TrueOnStaticConstructor = false;
 
             // force static constructor to be called
-            Isolate.Invoke.StaticConstructor(typeof(StaticConstructorExample));
+            Isolate.Invoke.StaticConstructor(typeof (StaticConstructorExample));
             Assert.IsTrue(StaticConstructorExample.TrueOnStaticConstructor);
         }
     }
@@ -78,15 +77,15 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
     // - ClassUnderTest: Class that uses Dependency
     // - StaticConstructorExample: a class with a static constructor and a flag that indicates it was called.
     //------------------
- 
+
     public class StaticConstructorExample
     {
-        public static bool TrueOnStaticConstructor { get; set; }
-
         static StaticConstructorExample()
         {
             TrueOnStaticConstructor = true;
         }
+
+        public static bool TrueOnStaticConstructor { get; set; }
 
         public static void Foo()
         {

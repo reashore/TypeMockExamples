@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +21,11 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
         public void SwapCollection_WithFakeData()
         {
             // arrange
-            var dependency = new Dependency();
-            Isolate.WhenCalled(() => dependency.GetList()).WillReturnCollectionValuesOf(new[] { 1, 2, 3 });
-            
+            Dependency dependency = new Dependency();
+            Isolate.WhenCalled(() => dependency.GetList()).WillReturnCollectionValuesOf(new[] {1, 2, 3});
+
             // act
-            var result = new ClassUnderTest().Sum(dependency);
+            int result = new ClassUnderTest().Sum(dependency);
 
             // assert
             Assert.AreEqual(6, result);
@@ -36,17 +35,17 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
         public void ImplictCollectionCreation_ByFakingLastItem()
         {
             // arrange
-            var dependency = new Dependency();
+            Dependency dependency = new Dependency();
             // A fake collection of size of 6 is created implicitly
             Isolate.WhenCalled(() => dependency.GetList()[5]).WillReturn(3);
 
             // act
-            var result = new ClassUnderTest().Count(dependency);
+            int result = new ClassUnderTest().Count(dependency);
 
             // assert
             Assert.AreEqual(6, result);
             Assert.AreEqual(3, dependency.GetList()[5]);
-        }   
+        }
     }
 
     //------------------
@@ -77,15 +76,9 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
 
         public int this[int index]
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
+            set { throw new NotImplementedException(); }
         }
 
         public void Add(int item)
@@ -143,7 +136,7 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
             throw new NotImplementedException();
         }
     }
-    
+
     public class ClassUnderTest
     {
         public int Sum(Dependency dependency)

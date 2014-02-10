@@ -1,5 +1,4 @@
-﻿
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
 namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
@@ -25,8 +24,8 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
         [TestMethod]
         public void DuckTypeSwap_ReplaceADuckWithADog()
         {
-            var duck = new Duck();
-            var dog = new Dog();
+            Duck duck = new Duck();
+            Dog dog = new Dog();
 
             Isolate.Swap.CallsOn(duck).WithCallsTo(dog);
             // The duck object will now go 'Woof!' instead of 'Quack!'
@@ -39,7 +38,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
             // Even though duck calls are now redirected to dog calls, we can still verify the duck calls are made
             duck.Walk();
             Isolate.Verify.WasCalledWithAnyArguments(() => duck.Walk());
-        } 
+        }
     }
 
     //------------------
@@ -49,6 +48,8 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
     //------------------
     public class Duck
     {
+        public int EggCount { get; private set; }
+
         public void Walk()
         {
             Waddle();
@@ -61,15 +62,8 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
 
         public void LayEgg()
         {
-            _eggCount = EggCount + 1;
+            EggCount = EggCount + 1;
         }
-
-        public int EggCount
-        {
-            get { return _eggCount; }
-        }
-
-        private int _eggCount = 0;
 
         private void Waddle()
         {

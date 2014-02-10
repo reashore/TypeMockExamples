@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,28 +21,28 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
     [TestClass, Isolated(DesignMode.Pragmatic)]
     public class ControllingMethodBehavior
     {
-        [TestMethod] 
+        [TestMethod]
         public void ReturnRecursiveFake()
         {
-            var realDependency = new Dependency();
+            Dependency realDependency = new Dependency();
 
             // return fake objects for reference types
-            Isolate.WhenCalled(()=>realDependency.GetPatent()).ReturnRecursiveFake();
+            Isolate.WhenCalled(() => realDependency.GetPatent()).ReturnRecursiveFake();
 
-            var classUnderTest = new ClassUnderTest();
-            var result = classUnderTest.ReturnPatentName(realDependency);
+            ClassUnderTest classUnderTest = new ClassUnderTest();
+            string result = classUnderTest.ReturnPatentName(realDependency);
 
-            Assert.AreEqual("",result);
+            Assert.AreEqual("", result);
         }
 
-        [TestMethod] 
+        [TestMethod]
         public void WillReturn_ReturnValue()
         {
-            var realDependency = new Dependency();
+            Dependency realDependency = new Dependency();
             Isolate.WhenCalled(() => realDependency.GetID()).WillReturn(2);
 
-            var classUnderTest = new ClassUnderTest();
-            var result = classUnderTest.AddToDependency(1, realDependency);
+            ClassUnderTest classUnderTest = new ClassUnderTest();
+            int result = classUnderTest.AddToDependency(1, realDependency);
 
             Assert.AreEqual(3, result);
         }
@@ -51,52 +50,53 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
         [TestMethod]
         public void CallOriginal_OnFakeObject()
         {
-            var fakeDependency = Isolate.Fake.Instance<Dependency>();
-            
+            Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
+
             Isolate.WhenCalled(() => fakeDependency.GetID()).CallOriginal();
 
-            var classUnderTest = new ClassUnderTest();
-            var result = classUnderTest.AddToDependency(1, fakeDependency);
+            ClassUnderTest classUnderTest = new ClassUnderTest();
+            int result = classUnderTest.AddToDependency(1, fakeDependency);
             // original GetID returns 10
             Assert.AreEqual(11, result);
         }
 
-        [TestMethod] 
+        [TestMethod]
         public void IgnoreCall_OnRealObject()
         {
-            var realDependency = new Dependency();
+            Dependency realDependency = new Dependency();
+            // do not convert lambda expression to method group (it breaks the test)
             Isolate.WhenCalled(() => realDependency.Check()).IgnoreCall();
 
-            var classUnderTest = new ClassUnderTest();
-            var result = classUnderTest.GetIDWithCheck(realDependency);
+            ClassUnderTest classUnderTest = new ClassUnderTest();
+            int result = classUnderTest.GetIDWithCheck(realDependency);
 
             Assert.AreEqual(10, result);
         }
 
-        [TestMethod] 
-        [ExpectedException(typeof(Exception),"fakes fault")]
+        [TestMethod]
+        [ExpectedException(typeof (Exception), "fakes fault")]
         public void ThrowException_OnRealObject()
         {
-            var realDependency = new Dependency();
+            Dependency realDependency = new Dependency();
             Isolate.WhenCalled(() => realDependency.GetID())
                 .WillThrow(new Exception("fakes fault"));
 
-            var classUnderTest = new ClassUnderTest();
-            var result = classUnderTest.AddToDependency(1, realDependency); 
+            ClassUnderTest classUnderTest = new ClassUnderTest();
+            int result = classUnderTest.AddToDependency(1, realDependency);
         }
-        
-        [TestMethod] 
+
+        [TestMethod]
         public void DoInstead_OnRealObject()
         {
-            var returnValue = 2;
+            int returnValue = 2;
 
-            var realDependency = new Dependency();
+            Dependency realDependency = new Dependency();
 
             // return value dynamically
-            Isolate.WhenCalled(() => realDependency.GetID()).DoInstead(x => { return returnValue; }); 
-            
-            var classUnderTest = new ClassUnderTest();
-            var result = classUnderTest.AddToDependency(1, realDependency);
+            Isolate.WhenCalled(() => realDependency.GetID()).DoInstead(x => { return returnValue; });
+
+            ClassUnderTest classUnderTest = new ClassUnderTest();
+            int result = classUnderTest.AddToDependency(1, realDependency);
 
             Assert.AreEqual(3, result);
 
@@ -105,41 +105,41 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
             Assert.AreEqual(5, result);
         }
 
-        [TestMethod] 
+        [TestMethod]
         public void SequencedWillReturn_OnRealObject()
         {
-            var realDependency = new Dependency();
+            Dependency realDependency = new Dependency();
 
             // Sequenced calls will return values in sequence, 
             // last value will stay the default
             Isolate.WhenCalled(() => realDependency.GetID()).WillReturn(2);
             Isolate.WhenCalled(() => realDependency.GetID()).WillReturn(9);
 
-            var result = new ClassUnderTest().AddToDependency3Times(1, realDependency);
+            int result = new ClassUnderTest().AddToDependency3Times(1, realDependency);
 
             Assert.AreEqual(21, result);
         }
 
-        [TestMethod] 
+        [TestMethod]
         public void OverloadedMethodConsideredSequenced_OnFakeObject()
         {
-            var realDependency = Isolate.Fake.Instance<Dependency>();
-            
+            Dependency realDependency = Isolate.Fake.Instance<Dependency>();
+
             // Overloaded method calls without using exact argument matching
             // are considered sequenced calls
             Isolate.WhenCalled(() => realDependency.OverloadedMethod(1)).WillReturn(2);
             Isolate.WhenCalled(() => realDependency.OverloadedMethod("Typemock Rocks")).WillReturn(9);
 
-            var classUnderTest = new ClassUnderTest();
-            var result = classUnderTest.CallTwoOverloadedDependency(realDependency);
+            ClassUnderTest classUnderTest = new ClassUnderTest();
+            int result = classUnderTest.CallTwoOverloadedDependency(realDependency);
 
             Assert.AreEqual(11, result);
         }
 
-        [TestMethod] 
+        [TestMethod]
         public void SequencedOverloadedByType_OnRealObject()
         {
-            var realDependency = new Dependency();
+            Dependency realDependency = new Dependency();
 
             // Each overloaded method will act as a separate sequence
             Isolate.WhenCalled(() => realDependency.OverloadedMethod(1)).WillReturn(2);
@@ -147,27 +147,26 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
             Isolate.WhenCalled(() => realDependency.OverloadedMethod("Typemock Rocks")).WillReturn(9);
             Isolate.WhenCalled(() => realDependency.OverloadedMethod("Typemock Rocks")).WillReturn(10);
 
-            var classUnderTest = new ClassUnderTest();
+            ClassUnderTest classUnderTest = new ClassUnderTest();
 
-            var result = classUnderTest.CallTwoOverloadedDependency(realDependency);
+            int result = classUnderTest.CallTwoOverloadedDependency(realDependency);
 
             Assert.AreEqual(11, result);
 
             result = classUnderTest.CallTwoOverloadedDependency(realDependency);
 
             Assert.AreEqual(14, result);
-
         }
 
         [TestMethod]
         public void SettingBehaviorForCallChain_OnRealObject()
         {
-            var fakeDependency = new Dependency();
-            
+            Dependency fakeDependency = new Dependency();
+
             Isolate.WhenCalled(() => fakeDependency.GetPatent().GetID()).WillReturn(2);
 
-            var classUnderTest = new ClassUnderTest();
-            var result = classUnderTest.AddToChainedDependency(1, fakeDependency);
+            ClassUnderTest classUnderTest = new ClassUnderTest();
+            int result = classUnderTest.AddToChainedDependency(1, fakeDependency);
 
             Assert.AreEqual(3, result);
         }
@@ -178,10 +177,10 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
             Dependency dependency = new Dependency();
             // Call the extension method as normal (even though it is actually a static method)
             Isolate.WhenCalled(() => dependency.Multiply(6)).WillReturn(10);
-            
-            var cut = new ClassUnderTest();
 
-            var result = cut.AddToDependency(0,dependency);
+            ClassUnderTest cut = new ClassUnderTest();
+
+            int result = cut.AddToDependency(0, dependency);
             // Verify the returned values
             Assert.AreEqual(10, result);
         }
@@ -189,12 +188,12 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
         [TestMethod] // Note: Use Isolated to clean up after the test
         public void MockLinqQuery_Example()
         {
-            List<int> realList = new List<int> { 1, 2, 4, 5 };
-            var dummyData = new int[] { 10, 20 };
+            List<int> realList = new List<int> {1, 2, 4, 5};
+            int[] dummyData = new[] {10, 20};
 
             Isolate.WhenCalled(() => from c in realList where c > 3 select c).WillReturn(dummyData);
 
-            var result = new ClassUnderTest().DoLinq(realList);
+            List<int> result = new ClassUnderTest().DoLinq(realList);
 
             // Note: Returns dummyData results
             Assert.AreEqual(2, result.Count);
@@ -220,6 +219,11 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
 
     public class Dependency
     {
+        public virtual string Name
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public virtual void Check()
         {
             throw new NotImplementedException();
@@ -244,14 +248,6 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
         {
             return 10;
         }
-
-        public virtual string Name 
-        { 
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
     }
 
     public class ClassUnderTest
@@ -265,9 +261,8 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
 
         public string ReturnPatentName(Dependency dependency)
         {
-            var patent = dependency.GetPatent();
+            Dependency patent = dependency.GetPatent();
             return patent.Name;
-
         }
 
         public int GetIDWithCheck(Dependency dependency)
@@ -275,7 +270,6 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
             dependency.Check();
 
             return dependency.GetID();
-
         }
 
         public int AddToDependency(int a, Dependency dependency)
@@ -285,7 +279,7 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
 
         public int AddToDependency3Times(int a, Dependency dependency)
         {
-            return a + dependency.GetID()+dependency.GetID()+dependency.GetID();
+            return a + dependency.GetID() + dependency.GetID() + dependency.GetID();
         }
 
         public int CallTwoOverloadedDependency(Dependency dependency)

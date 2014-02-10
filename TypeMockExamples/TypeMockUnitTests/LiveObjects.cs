@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
@@ -15,35 +14,35 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
     /// This behavior applies similarly to static methods which have not had their behavior defaults set up by 
     /// using Isolate.Fake.StaticMethods().
     /// </summary>
-    [TestClass, Isolated(DesignMode.InterfaceOnly)]  // Note: Use Isolated to clean up after all tests in class
+    [TestClass, Isolated(DesignMode.InterfaceOnly)] // Note: Use Isolated to clean up after all tests in class
     public class LiveObjects
     {
         [TestMethod]
         public void CreateRealObject_FakeVoidMethod()
         {
-            var dependency = new Dependency();
+            Dependency dependency = new Dependency();
 
             Isolate.WhenCalled(() => dependency.CheckSecurity(null, null)).IgnoreCall();
 
-            var classUnderTest =  new ClassUnderTest();
-            var result = classUnderTest.Calculate(1, 2, dependency);
+            ClassUnderTest classUnderTest = new ClassUnderTest();
+            int result = classUnderTest.Calculate(1, 2, dependency);
             Assert.AreEqual(3, result);
         }
-       
+
         [TestMethod]
         public void VerifyMethods_OfRealObject()
         {
-            var dependency = new Dependency();
+            Dependency dependency = new Dependency();
 
             // Requires at least one WhenCalled, can be CallOriginal for Verify to work
             Isolate.WhenCalled(() => dependency.CheckSecurity(null, null)).IgnoreCall();
 
-            var classUnderTest = new ClassUnderTest();
-            var result = classUnderTest.Calculate(1, 2, dependency);
-            Isolate.Verify.WasCalledWithAnyArguments(()=>dependency.CheckSecurity(null,null));
-        }  
+            ClassUnderTest classUnderTest = new ClassUnderTest();
+            int result = classUnderTest.Calculate(1, 2, dependency);
+            Isolate.Verify.WasCalledWithAnyArguments(() => dependency.CheckSecurity(null, null));
+        }
     }
-    
+
     //------------------
     // Classes under test
     // - Dependency: Class with Methods that need to be faked out

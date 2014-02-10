@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
@@ -14,10 +13,11 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
     ///     - Assert: here we verify that the outcome of running the test code with the test set up yielded the expected results    
     /// </summary>
     [TestClass]
-    [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after the test. Faking static methods requires Pragmatic mode
+    [Isolated(DesignMode.Pragmatic)]
+    // Note: Use Isolated to clean up after the test. Faking static methods requires Pragmatic mode
     public class BasicUnitTesting
     {
-        [TestMethod] 
+        [TestMethod]
         public void FakingDateTime()
         {
             // Arrange - Fake DateTime to think that it is 29th of Feb 2016
@@ -30,16 +30,16 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
             Assert.AreEqual(100, result);
         }
 
-        [TestMethod] 
+        [TestMethod]
         public void FakeAConcreteObjectExample()
         {
             // Arrange - Fake a Process, default is that all Members.ReturnRecursiveFakes 
-            var processFake = Isolate.Fake.Instance<Process>();
-  
+            Process processFake = Isolate.Fake.Instance<Process>();
+
             Isolate.WhenCalled(() => processFake.MainModule.Site.Name).WillReturn("Typemock rocks");
 
             // Act 
-            var result = MyCode.IsMySiteNameTypemock(processFake);
+            bool result = MyCode.IsMySiteNameTypemock(processFake);
 
             // Assert 
             Assert.AreEqual(true, result);
@@ -66,7 +66,7 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
 
         public static bool IsMySiteNameTypemock(Process process)
         {
-            var name = process.MachineName;
+            string name = process.MachineName;
 
             if (process.MainModule.Site.Name.StartsWith("Typemock"))
                 return true;

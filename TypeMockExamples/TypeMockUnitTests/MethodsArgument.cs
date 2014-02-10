@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
@@ -20,26 +19,26 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodsArgumentExamples
         [TestMethod]
         public void FakeReturnValue_BasedOn_ExactMethodArgumentsAtRuntime()
         {
-            var fake = Isolate.Fake.Instance<Dependency>();
-            Isolate.WhenCalled(() => fake.MethodReturnInt("typemock",1)).WithExactArguments().WillReturn(10);
+            Dependency fake = Isolate.Fake.Instance<Dependency>();
+            Isolate.WhenCalled(() => fake.MethodReturnInt("typemock", 1)).WithExactArguments().WillReturn(10);
             Isolate.WhenCalled(() => fake.MethodReturnInt("unit tests", 2)).WithExactArguments().WillReturn(50);
 
-            var classUnderTest =  new ClassUnderTest();
-            var result = classUnderTest.SimpleCalculation(fake);
-            Assert.AreEqual(60,result);
+            ClassUnderTest classUnderTest = new ClassUnderTest();
+            int result = classUnderTest.SimpleCalculation(fake);
+            Assert.AreEqual(60, result);
         }
 
         [TestMethod]
         public void FakeVoidMethod_BasedOn_ExactMethodArgs()
         {
-            var realDependency = new Dependency();
+            Dependency realDependency = new Dependency();
             Isolate.WhenCalled(() => realDependency.VoidMethod(4))
                 .WithExactArguments().IgnoreCall();
 
             bool exceptionWasThrown = false;
             try
             {
-                var classUnderTest = new ClassUnderTest();
+                ClassUnderTest classUnderTest = new ClassUnderTest();
                 classUnderTest.CallVoid(realDependency, 4);
             }
             catch (NotImplementedException)
@@ -52,15 +51,15 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodsArgumentExamples
         [TestMethod]
         public void FakeReturnValue_BasedOnCustomArgumentsChecking()
         {
-            var fake = Isolate.Fake.Instance<Dependency>();
+            Dependency fake = Isolate.Fake.Instance<Dependency>();
 
             Isolate.WhenCalled((string s, int x) => fake.MethodReturnInt(s, x))
                 .AndArgumentsMatch((s, x) => s.StartsWith("Gui") && x < 300)
                 .WillReturn(1000);
 
-            var classUnderTest = new ClassUnderTest();
-            var result = classUnderTest.CallWithGuitar100(fake);
-            
+            ClassUnderTest classUnderTest = new ClassUnderTest();
+            int result = classUnderTest.CallWithGuitar100(fake);
+
             // All the arguments match our custom checker - the returned value is faked.
             Assert.AreEqual(1000, result);
         }
@@ -68,14 +67,14 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodsArgumentExamples
         [TestMethod]
         public void FakeReturnValue_BasedOnCustomArgumentsChecking_CheckOneArgument()
         {
-            var fake = Isolate.Fake.Instance<Dependency>();
+            Dependency fake = Isolate.Fake.Instance<Dependency>();
 
             Isolate.WhenCalled((int x) => fake.MethodReturnInt("", x))
-            .AndArgumentsMatch( x => x < 300)
-            .WillReturn(1000);
+                .AndArgumentsMatch(x => x < 300)
+                .WillReturn(1000);
 
-            var classUnderTest = new ClassUnderTest();
-            var result = classUnderTest.CallWithGuitar100(fake);
+            ClassUnderTest classUnderTest = new ClassUnderTest();
+            int result = classUnderTest.CallWithGuitar100(fake);
             // All the arguments match our custom checker - the returned value is faked.
             Assert.AreEqual(1000, result);
         }
@@ -83,14 +82,14 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodsArgumentExamples
         [TestMethod]
         public void FakeReturnValue_BasedOn_MixedChecker()
         {
-            var fake = Isolate.Fake.Instance<Dependency>();
+            Dependency fake = Isolate.Fake.Instance<Dependency>();
 
             Isolate.WhenCalled((int x) => fake.MethodReturnInt("Guitar", x))
                 .AndArgumentsMatch(x => x < 300)
                 .WithExactArguments()
                 .WillReturn(1000);
 
-            var result = new ClassUnderTest().CallWithGuitar100(fake);
+            int result = new ClassUnderTest().CallWithGuitar100(fake);
             // All the arguments match our custom checker - the returned value is faked.
             Assert.AreEqual(1000, result);
         }
@@ -117,12 +116,12 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodsArgumentExamples
 
     public class ClassUnderTest
     {
-        public int SimpleCalculation( Dependency dependency)
+        public int SimpleCalculation(Dependency dependency)
         {
             return dependency.MethodReturnInt("typemock", 1) + dependency.MethodReturnInt("unit tests", 2);
         }
 
-        public void CallVoid( Dependency dependency,int i)
+        public void CallVoid(Dependency dependency, int i)
         {
             dependency.VoidMethod(i);
         }
