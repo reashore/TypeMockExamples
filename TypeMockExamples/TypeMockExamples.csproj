@@ -60,6 +60,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="FluentAssertions\BooleanTests.cs" />
+    <Compile Include="FluentAssertions\DateTimeTests.cs" />
+    <Compile Include="FluentAssertions\NullableTypesTests.cs" />
+    <Compile Include="FluentAssertions\NumericTests.cs" />
+    <Compile Include="FluentAssertions\ReferenceTypeTests.cs" />
+    <Compile Include="FluentAssertions\StringTests.cs" />
+    <Compile Include="FluentAssertions\UnitTest2..cs" />
     <Compile Include="MyUnitTests\UnitTest2..cs" />
     <Compile Include="TypeMockUnitTests\BasicUnitTesting.cs" />
     <Compile Include="TypeMockUnitTests\Collections.cs" />
