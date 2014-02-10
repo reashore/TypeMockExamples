@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
 namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection

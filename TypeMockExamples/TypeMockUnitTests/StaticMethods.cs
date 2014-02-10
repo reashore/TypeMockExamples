@@ -1,5 +1,5 @@
-﻿using System;
-using System.ComponentModel;
+﻿
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
