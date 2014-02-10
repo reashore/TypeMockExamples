@@ -27,22 +27,30 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
         [TestMethod]
         public void PrivateMethod_ReturnRecursiveFake()
         {
+            // arrange
             Dependency realDependency = new Dependency();
             Isolate.NonPublic.WhenCalled(realDependency, "GetGuard").ReturnRecursiveFake<IGuard>();
-
             ClassUnderTest classUnderTest = new ClassUnderTest();
+
+            // act
             int result = classUnderTest.CalculateAndAlert(1, 2, realDependency);
+
+            // assert
             Assert.AreEqual(3, result);
         }
 
         [TestMethod]
         public void PrivateMethod_Return()
         {
+            // arrange
             Dependency realDependency = new Dependency();
             Isolate.NonPublic.WhenCalled(realDependency, "InternalNumber").WillReturn(3);
-
             ClassUnderTest classUnderTest = new ClassUnderTest();
+
+            // act
             int result = classUnderTest.Calculate(1, 2, realDependency);
+
+            // assert
             Assert.AreEqual(6, result);
         }
 
@@ -50,76 +58,100 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
         [ExpectedException(typeof (Exception), "Typemock rocks")]
         public void PrivateMethod_Throw()
         {
+            // arrange
             Dependency realDependency = new Dependency();
             Isolate.NonPublic.WhenCalled(realDependency, "InternalNumber").WillThrow(new Exception("Typemock rocks"));
-
             ClassUnderTest classUnderTest = new ClassUnderTest();
-            int result = classUnderTest.Calculate(1, 2, realDependency);
+
+            // act
+            classUnderTest.Calculate(1, 2, realDependency);
         }
 
         [TestMethod]
         public void PrivateStaticMethod_Ignore()
         {
+            // arrange
             Isolate.NonPublic.WhenCalled<Dependency>("CallGuard").IgnoreCall();
-
             ClassUnderTest classUnderTest = new ClassUnderTest();
+
+            // act
             int result = classUnderTest.Calculate(1, 2);
+
+            // assert
             Assert.AreEqual(3, result);
         }
 
         [TestMethod]
         public void PrivateMethod_CallOriginal()
         {
+            // arrange
             Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
             // private works on public too
             Isolate.NonPublic.WhenCalled(fakeDependency, "GetNumberFromDatabase").CallOriginal();
-
             ClassUnderTest classUnderTest = new ClassUnderTest();
+
+            // act
             int result = classUnderTest.Calculate(1, 2, fakeDependency);
+
+            // assert
             Assert.AreEqual(3, result);
         }
 
         [TestMethod]
         public void PrivateProperty_Return()
         {
+            // arrange
             Dependency realDependency = new Dependency();
             Isolate.NonPublic.Property.WhenGetCalled(realDependency, "PrivateProp").WillReturn(3);
-
             ClassUnderTest classUnderTest = new ClassUnderTest();
+
+            // act
             int result = classUnderTest.CalculateFromProperty(1, 2, realDependency);
+
+            // assert
             Assert.AreEqual(6, result);
         }
 
         [TestMethod]
         public void PrivateProperty_Verified()
         {
+            // arrange
             Dependency realDependency = new Dependency();
             Isolate.NonPublic.Property.WhenGetCalled(realDependency, "PrivateProp").WillReturn(3);
-
             ClassUnderTest classUnderTest = new ClassUnderTest();
-            int result = classUnderTest.CalculateFromProperty(1, 2, realDependency);
+
+            // act
+            classUnderTest.CalculateFromProperty(1, 2, realDependency);
+
+            // assert
             Isolate.Verify.NonPublic.Property.WasCalledGet(realDependency, "PrivateProp");
         }
 
         [TestMethod]
         public void VerifyPrivateStaticMethod_WasCalledWithAnyArg()
         {
+            // arrange
             Isolate.NonPublic.WhenCalled<Dependency>("CallGuard").IgnoreCall();
-
             ClassUnderTest classUnderTest = new ClassUnderTest();
-            int result = classUnderTest.Calculate(1, 2);
 
+            // act
+            classUnderTest.Calculate(1, 2);
+
+            // assert
             Isolate.Verify.NonPublic.WasCalled(typeof (Dependency), "CallGuard");
         }
 
         [TestMethod]
         public void VerifyPrivateStaticMethod_WasCalledWithExactArg()
         {
+            // arrange
             Isolate.NonPublic.WhenCalled<Dependency>("CallGuard").IgnoreCall();
-
             ClassUnderTest classUnderTest = new ClassUnderTest();
-            int result = classUnderTest.Calculate(1, 2);
 
+            // act
+            classUnderTest.Calculate(1, 2);
+
+            // assert
             Isolate.Verify.NonPublic.WasCalled(typeof (Dependency), "CallGuard").WithArguments("typemock", "rocks");
         }
     }
