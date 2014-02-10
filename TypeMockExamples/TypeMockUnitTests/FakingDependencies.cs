@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
@@ -17,32 +16,45 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
         [TestMethod]
         public void FakeAllDependenciesInTheConstructor()
         {
-            var realClassUnderTest = Isolate.Fake.Dependencies<ClassUnderTest>();
-            var result = realClassUnderTest.Calculate(1, 2);
-            Assert.AreEqual(0,result);
+            // arrange
+            ClassUnderTest realClassUnderTest = Isolate.Fake.Dependencies<ClassUnderTest>();
+
+            // act
+            int result = realClassUnderTest.Calculate(1, 2);
+
+            // assert
+            Assert.AreEqual(0, result);
         }
 
         [TestMethod]
         public void FakeAllDependencies_ChangeBehaviorOfADependency()
         {
-            var realClassUnderTest = Isolate.Fake.Dependencies<ClassUnderTest>();
-            var fakeDependency = Isolate.GetFake<Dependency>(realClassUnderTest);
+            // arrange
+            ClassUnderTest realClassUnderTest = Isolate.Fake.Dependencies<ClassUnderTest>();
+            Dependency fakeDependency = Isolate.GetFake<Dependency>(realClassUnderTest);
             Isolate.WhenCalled(() => fakeDependency.Multiplier).WillReturn(2);
 
-            var result = realClassUnderTest.Calculate(1, 2);
+            // act
+            int result = realClassUnderTest.Calculate(1, 2);
+
+            // assert
             Assert.AreEqual(6, result);
         }
 
         [TestMethod]
         public void FakeAllDependencies_OverrideDefaultArguments()
         {
-            var realDependency = new Dependency();
-            var realClassUnderTest = Isolate.Fake.Dependencies<ClassUnderTest>(realDependency,4);
+            // arrange
+            Dependency realDependency = new Dependency();
+            ClassUnderTest realClassUnderTest = Isolate.Fake.Dependencies<ClassUnderTest>(realDependency, 4);
 
-            var result = realClassUnderTest.Calculate(1, 2);
+            // act
+            int result = realClassUnderTest.Calculate(1, 2);
+
+            // assert
             Assert.AreEqual(7, result);
         }
-   }
+    }
 
     //------------------
     // Classes under test
@@ -54,11 +66,12 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
 
     public class Dependency
     {
-        public virtual int  Multiplier { get; set; }
         public Dependency()
         {
             Multiplier = 1;
         }
+
+        public virtual int Multiplier { get; set; }
     }
 
     public class Dependency2
@@ -68,23 +81,24 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
             throw new NotImplementedException();
         }
     }
+
     public class ClassUnderTest
     {
-        private int additional;
-        private Dependency2 d2;
-        private Dependency d1;
+        private readonly int _additional;
+        private readonly Dependency _d1;
+        private readonly Dependency2 _d2;
 
         public ClassUnderTest(int additional, Dependency2 d2, Dependency d1)
         {
-            this.additional = additional;
-            this.d2 = d2;
-            this.d1 = d1;
+            _additional = additional;
+            _d2 = d2;
+            _d1 = d1;
         }
 
         public int Calculate(int a, int b)
         {
-            d2.Check();
-            return (a + b)*d1.Multiplier + additional;
+            _d2.Check();
+            return (a + b)*_d1.Multiplier + _additional;
         }
     }
 }
