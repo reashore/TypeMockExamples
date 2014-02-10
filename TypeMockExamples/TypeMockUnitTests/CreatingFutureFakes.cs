@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
@@ -10,48 +9,61 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
     /// This is useful to eliminate dependencies in objects created by the business logic being tested
     /// </summary>
     [TestClass]
-    [Isolated(DesignMode.Pragmatic)]// Note: Use Isolated to clean up after all tests in class
+    [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
     public class CreatingFutureFakes
     {
         [TestMethod]
         public void Fake_SingleFutureInstance()
         {
-            var fake = Isolate.Fake.NextInstance<Dependency>();
+            // arrange
+            Isolate.Fake.NextInstance<Dependency>();
 
-            var result = ClassUnderTest.AddCheckingInternalDependency(1, 2);
+            // act
+            int result = ClassUnderTest.AddCheckingInternalDependency(1, 2);
 
+            // assert
             Assert.AreEqual(3, result);
         }
 
         [TestMethod]
         public void Fake_MultipleFutureInstances()
         {
-            var fake = Isolate.Fake.AllInstances<Dependency>();
-            
-            var result = ClassUnderTest.AddCheckingTwoInternalDependencies(1, 2);
+            // arrange
+            Isolate.Fake.AllInstances<Dependency>();
 
+            // act
+            int result = ClassUnderTest.AddCheckingTwoInternalDependencies(1, 2);
+
+            // assert
             Assert.AreEqual(3, result);
         }
 
         [TestMethod]
         public void FakeSingleton()
         {
+            // arrange
             // Here we are setting the same behavior on all instances.
             // The behavior we set on fake will apply to past instance as well
-            var fakeSingleton = Isolate.Fake.AllInstances<Singleton>();
+            Singleton fakeSingleton = Isolate.Fake.AllInstances<Singleton>();
             Isolate.WhenCalled(() => fakeSingleton.ReturnZero()).WillReturn(10);
 
-            // Assert that the behavior works.
-            Assert.AreEqual(10, Singleton.Instance.ReturnZero());
+            // act
+            int result = Singleton.Instance.ReturnZero();
+            
+            // assert
+            Assert.AreEqual(10, result);
         }
 
         [TestMethod]
         public void Fake_ImplementedDependency()
         {
-            var fake = Isolate.Fake.NextInstance<IDependency>();
-            
-            var result = ClassUnderTest.AddCheckingDerivedDependency(1, 2);
+            // arrange
+            Isolate.Fake.NextInstance<IDependency>();
 
+            // act
+            int result = ClassUnderTest.AddCheckingDerivedDependency(1, 2);
+
+            // assert
             Assert.AreEqual(3, result);
         }
     }
@@ -76,7 +88,7 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
     {
         void Check(int x, int y);
     }
-    
+
     public class ConcreteDependency : IDependency
     {
         public void Check(int x, int y)
@@ -89,27 +101,27 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
     {
         public static int AddCheckingInternalDependency(int x, int y)
         {
-            var dependency = new Dependency();
-            dependency.Check(x,y);
-            
+            Dependency dependency = new Dependency();
+            dependency.Check(x, y);
+
             return x + y;
         }
 
         public static int AddCheckingDerivedDependency(int x, int y)
         {
-            var dependency = new ConcreteDependency();
-            dependency.Check(x,y);
-            
+            ConcreteDependency dependency = new ConcreteDependency();
+            dependency.Check(x, y);
+
             return x + y;
         }
 
         public static int AddCheckingTwoInternalDependencies(int x, int y)
         {
-            var dependency = new Dependency();
-            dependency.Check(x,y);
+            Dependency dependency = new Dependency();
+            dependency.Check(x, y);
 
-            var dependency2 = new Dependency();
-            dependency2.Check(x,y);
+            Dependency dependency2 = new Dependency();
+            dependency2.Check(x, y);
 
             return x + y;
         }
@@ -117,11 +129,16 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
 
     public class Singleton
     {
-        private Singleton() { }
+        private static readonly Singleton instance = new Singleton();
 
-        static readonly Singleton instance = new Singleton();
+        private Singleton()
+        {
+        }
 
-        public static Singleton Instance { get {  return instance; } }
+        public static Singleton Instance
+        {
+            get { return instance; }
+        }
 
         public int ReturnZero()
         {

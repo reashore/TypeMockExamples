@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
@@ -13,55 +12,62 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
     [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
     public class FakingConstructors
     {
-        [TestMethod ]
+        [TestMethod]
         public void CallConstructorAndPassArguments_FakeAllMethods()
         {
+            // arrange
             // The constructor is not faked here.      
-            var fake = Isolate.Fake.Instance<Dependency>
-                (Members.ReturnRecursiveFakes, ConstructorWillBe.Called, 5, "Typemock");
-             
-            var classUnderTest = new ClassUnderTest();
-            var result = classUnderTest.GetString(fake);
+            Dependency fake = Isolate.Fake.Instance<Dependency>(Members.ReturnRecursiveFakes, ConstructorWillBe.Called, 5, "Typemock");
+            ClassUnderTest classUnderTest = new ClassUnderTest();
 
+            // act
+            string result = classUnderTest.GetString(fake);
+
+            // assert
             Assert.AreEqual("Typemock5", result);
         }
 
         [TestMethod]
         public void IgnoringOnlyConstrutor_RestOfMethodsCalled()
         {
-            var fake = Isolate.Fake.Instance<Dependency>
-                (Members.CallOriginal, ConstructorWillBe.Ignored);
+            // arrange
+            Dependency fake = Isolate.Fake.Instance<Dependency>(Members.CallOriginal, ConstructorWillBe.Ignored);
+            ClassUnderTest classUnderTest = new ClassUnderTest();
 
-            var classUnderTest = new ClassUnderTest();
-            var result = classUnderTest.GetString(fake);
+            // act
+            string result = classUnderTest.GetString(fake);
 
+            // assert
             Assert.AreEqual("0", result);
- 
         }
 
         [TestMethod]
         public void FutureInstance_VerifyThrowingExceptionOnCreation()
         {
+            // arrange
             // We want a memory handling exception to be thrown the next time a Dependency is instantiated
-            Isolate.Swap.NextInstance<Dependency>()
-                .ConstructorWillThrow(new OutOfMemoryException());
+            Isolate.Swap.NextInstance<Dependency>().ConstructorWillThrow(new OutOfMemoryException());
+            ClassUnderTest classUnderTest = new ClassUnderTest();
 
-            var classUnderTest = new ClassUnderTest();
-            var result = classUnderTest.Create();
+            // act
+            Dependency result = classUnderTest.Create();
 
+            // assert
             Assert.AreEqual(null, result);
         }
 
         [TestMethod]
         public void CallConstructor_FakeBaseClassConstructor()
         {
+            // assert
             // create an instance of Derived, but avoid calling the base class constructor
-            var dependency = Isolate.Fake.Instance<Derived>(Members.CallOriginal, ConstructorWillBe.Called,
-                                                            BaseConstructorWillBe.Ignored);
+            Derived dependency = Isolate.Fake.Instance<Derived>(Members.CallOriginal, ConstructorWillBe.Called, BaseConstructorWillBe.Ignored);
+            ClassUnderTest classUnderTest = new ClassUnderTest();
 
-            var classUnderTest = new ClassUnderTest();
-            var result = classUnderTest.GetSize(dependency);
+            // act
+            int result = classUnderTest.GetSize(dependency);
 
+            // assert
             Assert.AreEqual(100, result);
         }
     }
@@ -77,12 +83,14 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
     {
         public int Age;
         public string Name;
+
         public Dependency(int age, string name)
         {
             Age = age;
             Name = name;
         }
-        public virtual void DoSomething ()
+
+        public virtual void DoSomething()
         {
             throw new NotImplementedException();
         }
@@ -92,7 +100,7 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
     {
         public Base()
         {
-            throw new NotImplementedException(); 
+            throw new NotImplementedException();
         }
 
         public virtual int Size { get; set; }
@@ -111,7 +119,6 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
         public string GetString(Dependency user)
         {
             return user.Name + user.Age;
-
         }
 
         public Dependency Create()
