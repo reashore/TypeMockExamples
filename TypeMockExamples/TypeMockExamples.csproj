@@ -63,6 +63,7 @@
     <Compile Include="FluentAssertions\BooleanTests.cs" />
     <Compile Include="FluentAssertions\DateTimeTests.cs" />
     <Compile Include="FluentAssertions\FluentCollectionTests.cs" />
+    <Compile Include="FluentAssertions\FluentDictionaryTests.cs" />
     <Compile Include="FluentAssertions\NullableTypesTests.cs" />
     <Compile Include="FluentAssertions\NumericTests.cs" />
     <Compile Include="FluentAssertions\ReferenceTypeTests.cs" />

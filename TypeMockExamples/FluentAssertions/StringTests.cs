@@ -15,7 +15,7 @@ namespace TypeMockExamples.FluentAssertions
             theString = "";
             theString.Should().BeEmpty();
             theString.Should().HaveLength(0);
-            theString.Should().BeNullOrWhiteSpace(); 
+            theString.Should().BeNullOrWhiteSpace();
 
             theString = "This is a String";
             theString.Should().NotBeEmpty("because the string is not empty");
