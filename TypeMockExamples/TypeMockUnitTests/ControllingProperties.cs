@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.ComponentModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
@@ -13,7 +14,9 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
     ///     <item>Using True Properties - To fake property to act like an auto-property</item>
     /// </list>
     /// </summary>
-    [TestClass, Isolated]// Note: Use Isolated to clean up after all tests in class
+    [TestClass]
+    [Category("ControllingProperties")]
+    [Isolated]// Note: Use Isolated to clean up after all tests in class
     public class ControllingProperties
     {
         [TestMethod]

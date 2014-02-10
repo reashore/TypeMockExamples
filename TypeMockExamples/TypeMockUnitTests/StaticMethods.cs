@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
@@ -7,24 +8,35 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
     /// <summary>
     /// This test class shows how to fake static methods. 
     /// </summary>
-    [TestClass, Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
+    [TestClass]
+    [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
     public class StaticMethodsAndConstructors
     {
         [TestMethod]
         public void FakeAllStaticMethods()
         {
+            // arrange
             Isolate.Fake.StaticMethods<Dependency>();
+            ClassUnderTest classUnderTest = new ClassUnderTest();
 
-            int result = new ClassUnderTest().Calculate(1, 2);
+            // act
+            int result = classUnderTest.Calculate(1, 2);
+
+            // assert
             Assert.AreEqual(3, result);
         }
 
         [TestMethod]
         public void FakeOneStaticMethod()
         {
+            // arrange
             Isolate.WhenCalled(() => Dependency.CheckSecurity(null, null)).IgnoreCall();
+            ClassUnderTest classUnderTest = new ClassUnderTest();
 
-            int result = new ClassUnderTest().Calculate(1, 2);
+            // act
+            int result = classUnderTest.Calculate(1, 2);
+
+            // assert
             Assert.AreEqual(3, result);
         }
 
@@ -49,12 +61,15 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
         [TestMethod]
         public void FakingStaticConstructor()
         {
+            // arrange
             StaticConstructorExample.TrueOnStaticConstructor = false;
             Isolate.Fake.StaticConstructor<StaticConstructorExample>();
 
+            // act
             // calling a static method on the class forces the static constructor to be called
             StaticConstructorExample.Foo();
 
+            // assert
             // this verifies the static constructor was faked and not called
             Assert.IsFalse(StaticConstructorExample.TrueOnStaticConstructor);
         }
@@ -68,10 +83,14 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
         [TestMethod]
         public void CallingStaticConstructorTest()
         {
+            // arrange
             StaticConstructorExample.TrueOnStaticConstructor = false;
 
+            // act
             // force static constructor to be called
             Isolate.Invoke.StaticConstructor(typeof (StaticConstructorExample));
+
+            // assert
             Assert.IsTrue(StaticConstructorExample.TrueOnStaticConstructor);
         }
     }

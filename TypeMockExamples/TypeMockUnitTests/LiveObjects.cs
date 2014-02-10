@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using System;
+using System.ComponentModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
@@ -14,31 +16,38 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
     /// This behavior applies similarly to static methods which have not had their behavior defaults set up by 
     /// using Isolate.Fake.StaticMethods().
     /// </summary>
-    [TestClass, Isolated(DesignMode.InterfaceOnly)] // Note: Use Isolated to clean up after all tests in class
+    [TestClass]
+    [Isolated(DesignMode.InterfaceOnly)] // Note: Use Isolated to clean up after all tests in class
     public class LiveObjects
     {
         [TestMethod]
         public void CreateRealObject_FakeVoidMethod()
         {
+            // arrange
             Dependency dependency = new Dependency();
-
             Isolate.WhenCalled(() => dependency.CheckSecurity(null, null)).IgnoreCall();
-
             ClassUnderTest classUnderTest = new ClassUnderTest();
+
+            // act
             int result = classUnderTest.Calculate(1, 2, dependency);
+
+            // assert
             Assert.AreEqual(3, result);
         }
 
         [TestMethod]
         public void VerifyMethods_OfRealObject()
         {
+            // arrange
             Dependency dependency = new Dependency();
-
             // Requires at least one WhenCalled, can be CallOriginal for Verify to work
             Isolate.WhenCalled(() => dependency.CheckSecurity(null, null)).IgnoreCall();
-
             ClassUnderTest classUnderTest = new ClassUnderTest();
+
+            // act
             int result = classUnderTest.Calculate(1, 2, dependency);
+
+            // assert
             Isolate.Verify.WasCalledWithAnyArguments(() => dependency.CheckSecurity(null, null));
         }
     }

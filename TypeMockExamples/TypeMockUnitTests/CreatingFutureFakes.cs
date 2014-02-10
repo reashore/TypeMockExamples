@@ -1,15 +1,18 @@
 ﻿
 using System;
+using System.ComponentModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
-namespace TypeMockExamples.TypeMockUnitTests.FutureFakes
+namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
 {
     /// <summary>
     /// This test class demonstrates handling of objects instantiated outside the test's scope. 
     /// This is useful to eliminate dependencies in objects created by the business logic being tested
     /// </summary>
-    [TestClass, Isolated(DesignMode.Pragmatic)]// Note: Use Isolated to clean up after all tests in class
+    [TestClass]
+    [Category("CreatingFutureFakes")]
+    [Isolated(DesignMode.Pragmatic)]// Note: Use Isolated to clean up after all tests in class
     public class CreatingFutureFakes
     {
         [TestMethod]

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
@@ -9,7 +10,8 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
     /// This test class shows different ways of controlling the behavior of ref and out arguments
     /// To set the return value of a ref or out arguement, set them before calling the WhenCalled API.
     /// </summary>
-    [TestClass, Isolated] // Note: Use Isolated to clean up after all tests in class
+    [TestClass]
+    [Isolated] // Note: Use Isolated to clean up after all tests in class
     public class RefOutArguments
     {
         [TestMethod]

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.ComponentModel;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
 namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
@@ -12,7 +13,8 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
     /// When calling a method on the first object that also exists in the second object (i.e. has the same name, arguments 
     /// and return value), the second object's implementation will be called instead.
     /// </summary>
-    [TestClass, Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
+    [TestClass]
+    [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
     public class MethodRedirection
     {
         /// <summary>

@@ -1,8 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
-namespace TypeMockExamples.TypeMockUnitTests.MethodsArgumentExamples
+namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
 {
     /// <summary>
     /// This test class shows different ways of controlling the behavior of fake objects using the Isolate.WhenCalled() API.
@@ -13,7 +14,8 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodsArgumentExamples
     ///     <item>Mixing WithExactArguments and Custom Checkers</item>
     /// </list>
     /// </summary>
-    [TestClass, Isolated] // Note: Use Isolated to clean up after all tests in class
+    [TestClass]
+    [Isolated] // Note: Use Isolated to clean up after all tests in class
     public class MethodsArgument
     {
         [TestMethod]

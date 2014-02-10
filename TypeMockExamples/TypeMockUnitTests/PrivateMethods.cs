@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
@@ -20,7 +21,8 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
     ///     <item>CallOriginal - will call the method's original implementation.</item>
     /// </list>
     /// </summary>
-    [TestClass, Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
+    [TestClass]
+    [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
     public class PrivateMethods
     {
         [TestMethod]

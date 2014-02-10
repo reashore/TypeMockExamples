@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.ComponentModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
@@ -9,7 +10,9 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
     /// This test class demonstrates controlling arguments passed to constructor of a fake 
     /// and controlling the constructors that are called
     /// </summary>
-    [TestClass, Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
+    [TestClass]
+    [Category("FakingConstructors")]
+    [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
     public class FakingConstructors
     {
         [TestMethod ]

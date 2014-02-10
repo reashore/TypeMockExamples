@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.ComponentModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
@@ -8,7 +9,8 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
     /// <summary>
     /// This class demonstrates the ability of firing events and invoking private methods using Isolator.
     /// </summary>
-    [TestClass, Isolated(DesignMode.Pragmatic)]  // Note: Use Isolated to clean up after all tests in class
+    [TestClass]
+    [Isolated(DesignMode.Pragmatic)]  // Note: Use Isolated to clean up after all tests in class
     public class InvokingMethods
     {
         [TestMethod]

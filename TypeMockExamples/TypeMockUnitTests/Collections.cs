@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
@@ -14,7 +15,9 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
     /// of test data by using Isolate.WhenCalled().WillReturnCollectionValuesOf(), or by implicitly setting expectations on
     /// collection types.
     /// </summary>
-    [TestClass, Isolated] // Note: Use Isolated to clean up after all tests in class
+    [TestClass]
+    [Category("Collections")]
+    [Isolated] // Note: Use Isolated to clean up after all tests in class
     public class Collections
     {
         [TestMethod]

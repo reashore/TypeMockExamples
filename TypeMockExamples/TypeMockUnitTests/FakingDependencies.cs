@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.ComponentModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
@@ -10,7 +11,8 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
     /// This method, creates a type by creating fakes for the longest constructor and calling it.
     /// This is a great tool to make sure that adding dependencies to the type won't fail the tests.
     /// </summary>
-    [TestClass, Isolated] // Note: Use Isolated to clean up after the test
+    [TestClass]
+    [Isolated] // Note: Use Isolated to clean up after the test
     public class FakingDependencies
     {
         [TestMethod]

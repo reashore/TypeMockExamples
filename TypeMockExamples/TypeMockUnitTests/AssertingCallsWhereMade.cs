@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
@@ -13,6 +14,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
     ///     - WasCalledWithArguments: use Matching to match arguments
     /// </summary>
     [TestClass]
+    [Category("AssertingCallsWhereMade")]
     [Isolated] // Note: Use Isolated to clean up after all tests in class
     public class VerifyingCallsWhereMade
     {

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
-namespace TypeMockExamples.TypeMockUnitTests.Methods
+namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
 {
     /// <summary>
     /// This test class shows different ways of controlling the behavior of fake objects using the Isolate.WhenCalled() API.
@@ -18,7 +19,9 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
     ///     <item>WillReturnCollectionValuesOf - will replace the collection returned by the method with a provided one. Only applies to methods returning collections</item>
     /// </list>
     /// </summary>
-    [TestClass, Isolated(DesignMode.Pragmatic)]
+    [TestClass]
+    [Category("ControllingMethods")]
+    [Isolated(DesignMode.Pragmatic)]
     public class ControllingMethodBehavior
     {
         [TestMethod]
