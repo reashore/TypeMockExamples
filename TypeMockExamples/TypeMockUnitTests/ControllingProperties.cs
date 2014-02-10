@@ -15,7 +15,6 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
     /// </list>
     /// </summary>
     [TestClass]
-    [Category("ControllingProperties")]
     [Isolated]// Note: Use Isolated to clean up after all tests in class
     public class ControllingProperties
     {

@@ -11,7 +11,6 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
     /// This is useful to eliminate dependencies in objects created by the business logic being tested
     /// </summary>
     [TestClass]
-    [Category("CreatingFutureFakes")]
     [Isolated(DesignMode.Pragmatic)]// Note: Use Isolated to clean up after all tests in class
     public class CreatingFutureFakes
     {

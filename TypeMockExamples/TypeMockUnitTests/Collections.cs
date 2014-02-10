@@ -16,7 +16,6 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
     /// collection types.
     /// </summary>
     [TestClass]
-    [Category("Collections")]
     [Isolated] // Note: Use Isolated to clean up after all tests in class
     public class Collections
     {

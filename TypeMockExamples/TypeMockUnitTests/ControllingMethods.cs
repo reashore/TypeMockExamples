@@ -20,7 +20,6 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
     /// </list>
     /// </summary>
     [TestClass]
-    [Category("ControllingMethods")]
     [Isolated(DesignMode.Pragmatic)]
     public class ControllingMethodBehavior
     {
