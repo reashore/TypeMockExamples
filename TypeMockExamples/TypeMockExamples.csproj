@@ -59,22 +59,22 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AssertingCallsWhereMade.cs" />
-    <Compile Include="BasicUnitTesting.cs" />
-    <Compile Include="Collections.cs" />
-    <Compile Include="ControllingMethods.cs" />
-    <Compile Include="ControllingProperties.cs" />
-    <Compile Include="CreatingFutureFakes.cs" />
-    <Compile Include="FakingConstructors.cs" />
-    <Compile Include="FakingDependencies.cs" />
-    <Compile Include="InvokingMethods.cs" />
-    <Compile Include="LiveObjects.cs" />
-    <Compile Include="MethodRedirection.cs" />
-    <Compile Include="MethodsArgument.cs" />
-    <Compile Include="PrivateMethods.cs" />
-    <Compile Include="RefOutArguments.cs" />
-    <Compile Include="StaticMethods.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="UnitTests\AssertingCallsWhereMade.cs" />
+    <Compile Include="UnitTests\BasicUnitTesting.cs" />
+    <Compile Include="UnitTests\Collections.cs" />
+    <Compile Include="UnitTests\ControllingMethods.cs" />
+    <Compile Include="UnitTests\ControllingProperties.cs" />
+    <Compile Include="UnitTests\CreatingFutureFakes.cs" />
+    <Compile Include="UnitTests\FakingConstructors.cs" />
+    <Compile Include="UnitTests\FakingDependencies.cs" />
+    <Compile Include="UnitTests\InvokingMethods.cs" />
+    <Compile Include="UnitTests\LiveObjects.cs" />
+    <Compile Include="UnitTests\MethodRedirection.cs" />
+    <Compile Include="UnitTests\MethodsArgument.cs" />
+    <Compile Include="UnitTests\PrivateMethods.cs" />
+    <Compile Include="UnitTests\RefOutArguments.cs" />
+    <Compile Include="UnitTests\StaticMethods.cs" />
+    <Compile Include="MyUnitTests\UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
