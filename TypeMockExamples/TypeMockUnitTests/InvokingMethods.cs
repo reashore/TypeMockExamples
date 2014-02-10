@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
+using TypeMockExamples.Annotations;
 
 namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
 {
@@ -86,13 +87,17 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
 
     public class ClassUnderTest
     {
+        // ReSharper annotation to disable warning that event is not used
+        [UsedImplicitly]
         public event Action<int> RunEvent;
 
+        [UsedImplicitly]
         private int Sum(int a, int b)
         {
             return a + b;
         }
 
+        [UsedImplicitly]
         private static int Multiply(int a, int b)
         {
             return a*b;

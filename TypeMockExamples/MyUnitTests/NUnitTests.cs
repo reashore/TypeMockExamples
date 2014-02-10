@@ -7,7 +7,7 @@ namespace TypeMockExamples.MyUnitTests
     public class NUnitTests
     {
         [Test]
-        public void TestMethod1()
+        public void TestNUnitTest()
         {
             Assert.IsTrue(true);
         }

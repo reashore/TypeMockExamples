@@ -68,6 +68,7 @@
     <Compile Include="FluentAssertions\ReferenceTypeTests.cs" />
     <Compile Include="FluentAssertions\StringTests.cs" />
     <Compile Include="MyUnitTests\NUnitTests.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="TypeMockUnitTests\BasicUnitTesting.cs" />
     <Compile Include="TypeMockUnitTests\Collections.cs" />
     <Compile Include="TypeMockUnitTests\ControllingMethods.cs" />
