@@ -17,7 +17,7 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
     /// </summary>
     [TestClass]
     [Isolated(DesignMode.InterfaceOnly)] // Note: Use Isolated to clean up after all tests in class
-    public class LiveObjects
+    public class LiveObjectTests
     {
         [TestMethod]
         public void CreateRealObject_FakeVoidMethod()

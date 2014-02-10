@@ -16,7 +16,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
     /// </summary>
     [TestClass]
     [Isolated] // Note: Use Isolated to clean up after all tests in class
-    public class MethodsArgument
+    public class MethodsArgumentTests
     {
         [TestMethod]
         public void FakeReturnValue_BasedOn_ExactMethodArgumentsAtRuntime()

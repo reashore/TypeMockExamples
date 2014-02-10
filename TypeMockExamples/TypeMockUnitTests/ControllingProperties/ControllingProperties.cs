@@ -15,7 +15,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
     /// </summary>
     [TestClass]
     [Isolated] // Note: Use Isolated to clean up after all tests in class
-    public class ControllingProperties
+    public class ControllingPropertiesTests
     {
         [TestMethod]
         public void FakePropertyGetter_UsingWhenCalled()

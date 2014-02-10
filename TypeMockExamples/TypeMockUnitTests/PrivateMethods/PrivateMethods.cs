@@ -2,6 +2,7 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
+using TypeMockExamples.Annotations;
 
 namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
 {
@@ -23,7 +24,7 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
     /// </summary>
     [TestClass]
     [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
-    public class PrivateMethods
+    public class PrivateMethodTests
     {
         [TestMethod]
         public void PrivateMethod_ReturnRecursiveFake()
@@ -171,7 +172,7 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
 
     public class Dependency
     {
-        private int PrivateProp { get; set; }
+        private int PrivateProp { get; [UsedImplicitly] set; }
 
         public static void CheckSecurity(string name, string password)
         {

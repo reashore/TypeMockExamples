@@ -10,7 +10,7 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
     /// </summary>
     [TestClass]
     [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
-    public class InvokingMethods
+    public class InvokingMethodsTests
     {
         [TestMethod]
         public void FireEvent_RunEvent()

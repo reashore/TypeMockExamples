@@ -20,7 +20,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
     /// </summary>
     [TestClass]
     [Isolated(DesignMode.Pragmatic)]
-    public class ControllingMethodBehavior
+    public class ControllingMethodTests
     {
         [TestMethod]
         public void ReturnRecursiveFake()

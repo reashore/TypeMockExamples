@@ -11,7 +11,7 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
     /// </summary>
     [TestClass]
     [Isolated] // Note: Use Isolated to clean up after the test
-    public class FakingDependencies
+    public class FakingDependenciesTests
     {
         [TestMethod]
         public void FakeAllDependenciesInTheConstructor()

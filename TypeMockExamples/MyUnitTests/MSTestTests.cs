@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace TypeMockExamples.MyUnitTests
 {
     [TestClass]
-    public class MSTestTests
+    public class MsTestTests
     {
         [TestMethod]
-        public void TestMSTestTest()
+        public void TestMsTestTest()
         {
             Assert.IsTrue(true);
         }

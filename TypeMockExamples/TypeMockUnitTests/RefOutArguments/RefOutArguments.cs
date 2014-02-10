@@ -12,7 +12,7 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
     /// </summary>
     [TestClass]
     [Isolated] // Note: Use Isolated to clean up after all tests in class
-    public class RefOutArguments
+    public class RefOutArgumentTests
     {
         [TestMethod]
         public void ReturnValuesInRefArgument()

@@ -14,9 +14,8 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
     ///     - Assert: here we verify that the outcome of running the test code with the test set up yielded the expected results    
     /// </summary>
     [TestClass]
-    [Isolated(DesignMode.Pragmatic)]
-    // Note: Use Isolated to clean up after the test. Faking static methods requires Pragmatic mode
-    public class BasicUnitTesting
+    [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after the test. Faking static methods requires Pragmatic mode
+    public class BasicUnitTestingTests
     {
         [TestMethod]
         public void FakingDateTime()
@@ -66,7 +65,7 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
 
         public static bool IsMySiteNameTypemock(Process process)
         {
-            string name = process.MachineName;
+            //string name = process.MachineName;
 
             if (process.MainModule.Site.Name.StartsWith("Typemock"))
                 return true;

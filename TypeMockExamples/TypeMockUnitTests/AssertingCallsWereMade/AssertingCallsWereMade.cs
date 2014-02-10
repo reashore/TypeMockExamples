@@ -3,7 +3,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
 
-namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
+namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
 {
     /// <summary>
     /// This test class shows different ways of verifying calls on fake objects using the Isolate.Verify API.
@@ -15,7 +15,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWhereMade
     /// </summary>
     [TestClass]
     [Isolated] // Note: Use Isolated to clean up after all tests in class
-    public class VerifyingCallsWhereMade
+    public class VerifyingCallsWereMadeTests
     {
         [TestMethod]
         public void Verify_CallWasMade_WithAnyArgument()

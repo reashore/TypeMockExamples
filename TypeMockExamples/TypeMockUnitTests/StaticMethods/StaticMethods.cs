@@ -10,7 +10,7 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
     /// </summary>
     [TestClass]
     [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
-    public class StaticMethodsAndConstructors
+    public class StaticMethodAndConstructorTests
     {
         [TestMethod]
         public void FakeAllStaticMethods()

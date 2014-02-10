@@ -10,7 +10,7 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
     /// </summary>
     [TestClass]
     [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
-    public class CreatingFutureFakes
+    public class CreatingFutureFakesTests
     {
         [TestMethod]
         public void Fake_SingleFutureInstance()

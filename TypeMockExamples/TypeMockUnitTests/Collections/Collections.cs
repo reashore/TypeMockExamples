@@ -16,7 +16,7 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
     /// </summary>
     [TestClass]
     [Isolated] // Note: Use Isolated to clean up after all tests in class
-    public class Collections
+    public class CollectionTests
     {
         [TestMethod]
         public void SwapCollection_WithFakeData()

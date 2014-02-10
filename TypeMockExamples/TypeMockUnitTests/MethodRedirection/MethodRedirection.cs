@@ -14,7 +14,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
     /// </summary>
     [TestClass]
     [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
-    public class MethodRedirection
+    public class MethodRedirectionTests
     {
         /// <summary>
         /// This test demonstrates swapping method calls between two partially compatible objects - a duck and a dog.
