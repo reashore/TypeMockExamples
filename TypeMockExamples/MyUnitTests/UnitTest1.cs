@@ -9,6 +9,7 @@ namespace TypeMockExamples.MyUnitTests
         [TestMethod]
         public void TestMethod1()
         {
+            Assert.IsTrue(true);
         }
     }
 }
