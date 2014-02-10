@@ -124,7 +124,6 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
         }
     }
 
-
     //------------------
     // Classes under test
     // - Dependency: Class with private Methods that need to be faked out
@@ -136,12 +135,14 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
     {
         void Alart();
     }
+
     public class Dependency
     {
         public static void CheckSecurity(string name, string password)
         {
             CallGuard( name,  password);
         }
+
         private static void CallGuard(string name, string password)
         {
             throw new NotImplementedException();
@@ -171,6 +172,7 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
         {
             return PrivateProp;
         }
+
         private int PrivateProp { get; set; }
     }
 

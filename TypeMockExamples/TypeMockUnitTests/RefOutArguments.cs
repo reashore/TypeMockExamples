@@ -56,6 +56,7 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
         {
             throw new NotImplementedException();
         }
+
         public virtual void SomeMethod(ref string name)
         {
             throw new NotImplementedException();

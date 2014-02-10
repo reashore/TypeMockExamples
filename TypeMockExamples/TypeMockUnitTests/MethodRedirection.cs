@@ -61,15 +61,15 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
 
         public void LayEgg()
         {
-            eggCount = EggCount + 1;
+            _eggCount = EggCount + 1;
         }
 
         public int EggCount
         {
-            get { return eggCount; }
+            get { return _eggCount; }
         }
 
-        private int eggCount = 0;
+        private int _eggCount = 0;
 
         private void Waddle()
         {

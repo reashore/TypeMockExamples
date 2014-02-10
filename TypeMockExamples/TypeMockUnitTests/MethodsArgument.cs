@@ -29,7 +29,6 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodsArgumentExamples
             Assert.AreEqual(60,result);
         }
 
-
         [TestMethod]
         public void FakeVoidMethod_BasedOn_ExactMethodArgs()
         {
@@ -109,6 +108,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodsArgumentExamples
         {
             throw new NotImplementedException();
         }
+
         public virtual void VoidMethod(int n)
         {
             throw new NotImplementedException();

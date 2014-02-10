@@ -60,7 +60,6 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
         }
     }
 
-
     public class Counter
     {
         public int Times { get; set; }
@@ -74,7 +73,6 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
             Times++;
         }
     }
-
 
     public class ClassUnderTest
     {

@@ -88,6 +88,5 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
             dependency.Number = result;
             return result;
         }
-
     }
 }

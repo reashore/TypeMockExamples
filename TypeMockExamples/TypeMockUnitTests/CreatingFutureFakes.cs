@@ -53,7 +53,6 @@ namespace TypeMockExamples.TypeMockUnitTests.FutureFakes
 
             Assert.AreEqual(3, result);
         }
-
     }
 
 
@@ -69,7 +68,6 @@ namespace TypeMockExamples.TypeMockUnitTests.FutureFakes
         {
             throw new Exception("Not checked!");
         }
-
     }
 
 
@@ -85,7 +83,6 @@ namespace TypeMockExamples.TypeMockUnitTests.FutureFakes
             throw new Exception("Not checked!");
         }
     }
-        
 
     public class ClassUnderTest
     {
@@ -120,6 +117,7 @@ namespace TypeMockExamples.TypeMockUnitTests.FutureFakes
     public class Singleton
     {
         private Singleton() { }
+
         static readonly Singleton instance = new Singleton();
 
         public static Singleton Instance { get {  return instance; } }

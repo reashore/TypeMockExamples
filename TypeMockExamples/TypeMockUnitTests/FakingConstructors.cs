@@ -24,7 +24,6 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
 
             Assert.AreEqual("Typemock5", result);
         }
-          
 
         [TestMethod]
         public void IgnoringOnlyConstrutor_RestOfMethodsCalled()
@@ -82,7 +81,6 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
             Age = age;
             Name = name;
         }
-
         public virtual void DoSomething ()
         {
             throw new NotImplementedException();

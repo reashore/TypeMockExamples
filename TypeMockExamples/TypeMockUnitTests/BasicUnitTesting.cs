@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TypeMock.ArrangeActAssert;
@@ -28,8 +29,6 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
             // Assert 
             Assert.AreEqual(100, result);
         }
-
-
 
         [TestMethod] 
         public void FakeAConcreteObjectExample()
@@ -75,7 +74,4 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
             return false;
         }
     }
-
-
-   
 }

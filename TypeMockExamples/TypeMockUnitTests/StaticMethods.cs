@@ -72,8 +72,6 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
         }
     }
 
-
-
     //------------------
     // Classes under test
     // - Dependency: Methods are not implemented - these need to be faked out
@@ -101,6 +99,7 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
         {
             throw new NotImplementedException();
         }
+
         public static void CallGuard()
         {
             throw new NotImplementedException();

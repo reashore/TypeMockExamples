@@ -29,7 +29,6 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
             var result = classUnderTest.Calculate(1, 2, dependency);
             Assert.AreEqual(3, result);
         }
-
        
         [TestMethod]
         public void VerifyMethods_OfRealObject()
@@ -57,6 +56,7 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
         {
             throw new NotImplementedException();
         }
+
         public virtual int GetId()
         {
             return 10;

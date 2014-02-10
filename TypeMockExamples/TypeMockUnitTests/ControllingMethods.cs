@@ -105,9 +105,6 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
             Assert.AreEqual(5, result);
         }
 
-
-
-
         [TestMethod] 
         public void SequencedWillReturn_OnRealObject()
         {
@@ -175,7 +172,6 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
             Assert.AreEqual(3, result);
         }
 
-
         [TestMethod] // Note: Use Isolated to clean up after the test
         public void ExtensionMethod_Example()
         {
@@ -189,7 +185,6 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
             // Verify the returned values
             Assert.AreEqual(10, result);
         }
-
 
         [TestMethod] // Note: Use Isolated to clean up after the test
         public void MockLinqQuery_Example()
@@ -221,7 +216,6 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
         {
             return extendedInstance.GetID()*scalar;
         }
-
     }
 
     public class Dependency
@@ -245,6 +239,7 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
         {
             return 10;
         }
+
         public virtual int OverloadedMethod(string arg)
         {
             return 10;
@@ -257,7 +252,6 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
                 throw new NotImplementedException();
             }
         }
-        
     }
 
     public class ClassUnderTest
@@ -283,6 +277,7 @@ namespace TypeMockExamples.TypeMockUnitTests.Methods
             return dependency.GetID();
 
         }
+
         public int AddToDependency(int a, Dependency dependency)
         {
             return a + dependency.GetID();
