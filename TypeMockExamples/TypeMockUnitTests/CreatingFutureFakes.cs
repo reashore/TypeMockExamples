@@ -68,7 +68,6 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
         }
     }
 
-
     //------------------
     // Classes under test
     // - Dependency: Methods are not implemented - these need to be faked out
@@ -82,7 +81,6 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
             throw new Exception("Not checked!");
         }
     }
-
 
     public interface IDependency
     {
