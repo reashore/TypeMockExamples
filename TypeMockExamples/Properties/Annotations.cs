@@ -265,7 +265,7 @@ namespace TypeMockExamples.Annotations
     /// public class MyComponent : IComponent { }
     /// </code></example>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
-    [BaseTypeRequired(typeof (Attribute))]
+    [BaseTypeRequired(typeof(Attribute))]
     public sealed class BaseTypeRequiredAttribute : Attribute
     {
         public BaseTypeRequiredAttribute([NotNull] Type baseType)

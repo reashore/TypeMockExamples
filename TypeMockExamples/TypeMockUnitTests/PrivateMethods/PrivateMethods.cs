@@ -177,19 +177,9 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
             CallGuard(name, password);
         }
 
-        private static void CallGuard(string name, string password)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Alert()
         {
             GetGuard("unit", "testing");
-        }
-
-        private IGuard GetGuard(string name, string password)
-        {
-            throw new NotImplementedException();
         }
 
         public int GetNumberFromDatabase()
@@ -197,14 +187,24 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
             return InternalNumber();
         }
 
-        private int InternalNumber()
+        public int GetNumberFromProperty()
+        {
+            return PrivateProp;
+        }
+
+        private static void CallGuard(string name, string password)
         {
             throw new NotImplementedException();
         }
 
-        public int GetNumberFromProperty()
+        private IGuard GetGuard(string name, string password)
         {
-            return PrivateProp;
+            throw new NotImplementedException();
+        }
+
+        private int InternalNumber()
+        {
+            throw new NotImplementedException();
         }
     }
 

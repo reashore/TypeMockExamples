@@ -129,7 +129,7 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
 
     public class Singleton
     {
-        private static readonly Singleton instance = new Singleton();
+        private static readonly Singleton SingletonInstance = new Singleton();
 
         private Singleton()
         {
@@ -137,7 +137,7 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
 
         public static Singleton Instance
         {
-            get { return instance; }
+            get { return SingletonInstance; }
         }
 
         public int ReturnZero()

@@ -70,6 +70,13 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
             get { throw new NotImplementedException(); }
         }
 
+        public int this[int index]
+        {
+            get { throw new NotImplementedException(); }
+
+            set { throw new NotImplementedException(); }
+        }
+
         public int IndexOf(int item)
         {
             throw new NotImplementedException();
@@ -83,13 +90,6 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
         public void RemoveAt(int index)
         {
             throw new NotImplementedException();
-        }
-
-        public int this[int index]
-        {
-            get { throw new NotImplementedException(); }
-
-            set { throw new NotImplementedException(); }
         }
 
         public void Add(int item)

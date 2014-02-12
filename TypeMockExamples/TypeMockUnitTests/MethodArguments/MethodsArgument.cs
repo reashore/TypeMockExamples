@@ -80,7 +80,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
         {
             // arrange
             Dependency fake = Isolate.Fake.Instance<Dependency>();
-            Isolate.WhenCalled((int x) => fake.MethodReturnInt("", x))
+            Isolate.WhenCalled((int x) => fake.MethodReturnInt(string.Empty, x))
                 .AndArgumentsMatch(x => x < 300)
                 .WillReturn(1000);
             ClassUnderTest classUnderTest = new ClassUnderTest();

@@ -62,6 +62,7 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
     public class Dependency
     {
         public int Age;
+
         public string Name;
 
         public Dependency(int age, string name)
@@ -75,12 +76,12 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
     {
         public Counter(ClassUnderTest underTest)
         {
-            underTest.RunEvent += underTest_RunEvent;
+            underTest.RunEvent += UnderTest_RunEvent;
         }
 
         public int Times { get; set; }
 
-        private void underTest_RunEvent(int obj)
+        private void UnderTest_RunEvent(int obj)
         {
             Times++;
         }
@@ -93,15 +94,15 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
         public event Action<int> RunEvent;
 
         [UsedImplicitly]
-        private int Sum(int a, int b)
-        {
-            return a + b;
-        }
-
-        [UsedImplicitly]
         private static int Multiply(int a, int b)
         {
             return a * b;
+        }
+
+        [UsedImplicitly]
+        private int Sum(int a, int b)
+        {
+            return a + b;
         }
     }
 }
