@@ -218,8 +218,8 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         public void MockLinqQuery_Example()
         {
             // arrange
-            List<int> realList = new List<int> {1, 2, 4, 5};
-            int[] dummyData = {10, 20};
+            List<int> realList = new List<int> { 1, 2, 4, 5 };
+            int[] dummyData = { 10, 20 };
             Isolate.WhenCalled(() => from c in realList where c > 3 select c).WillReturn(dummyData);
 
             // act

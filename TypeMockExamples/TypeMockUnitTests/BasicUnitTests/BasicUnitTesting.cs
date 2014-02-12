@@ -58,7 +58,9 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
         public static int DoSomethingSpecialOnALeapYear()
         {
             if ((DateTime.Now.Month == 2) && (DateTime.Now.Day == 29))
+            {
                 return 100;
+            }
 
             return 0;
         }

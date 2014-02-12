@@ -66,7 +66,6 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
         }
     }
 
-
     ////------------------
     //// Classes under test
     //// - Dependency: Methods are not implemented - these need to be faked out
@@ -83,6 +82,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
             {
                 return _number;
             }
+
             set
             {
                 CheckSecurity();

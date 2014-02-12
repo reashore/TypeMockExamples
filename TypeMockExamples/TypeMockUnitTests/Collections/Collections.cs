@@ -60,6 +60,16 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
     {
         #region IList implementation
 
+        public int Count
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool IsReadOnly
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public int IndexOf(int item)
         {
             throw new NotImplementedException();
@@ -100,16 +110,6 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
         public void CopyTo(int[] array, int arrayIndex)
         {
             throw new NotImplementedException();
-        }
-
-        public int Count
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool IsReadOnly
-        {
-            get { throw new NotImplementedException(); }
         }
 
         public bool Remove(int item)

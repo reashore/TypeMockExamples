@@ -75,17 +75,18 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
     // - ClassUnderTest: Class that uses Dependency
     // - Singleton: A Singleton 
     //------------------
+
+    public interface IDependency
+    {
+        void Check(int x, int y);
+    }
+
     public class Dependency
     {
         public void Check(int x, int y)
         {
             throw new Exception("Not checked!");
         }
-    }
-
-    public interface IDependency
-    {
-        void Check(int x, int y);
     }
 
     public class ConcreteDependency : IDependency

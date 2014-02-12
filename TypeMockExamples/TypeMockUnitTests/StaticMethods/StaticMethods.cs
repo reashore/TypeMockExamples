@@ -87,7 +87,7 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
 
             // act
             // force static constructor to be called
-            Isolate.Invoke.StaticConstructor(typeof (StaticConstructorExample));
+            Isolate.Invoke.StaticConstructor(typeof(StaticConstructorExample));
 
             // assert
             Assert.IsTrue(StaticConstructorExample.TrueOnStaticConstructor);
