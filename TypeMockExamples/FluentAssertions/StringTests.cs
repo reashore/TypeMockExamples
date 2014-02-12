@@ -1,8 +1,9 @@
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TypeMockExamples.FluentAssertions
 {
+    using global::FluentAssertions;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class FluentStringTests
     {
@@ -12,7 +13,7 @@ namespace TypeMockExamples.FluentAssertions
             string theString = null;
             theString.Should().BeNull();
 
-            theString = "";
+            theString = string.Empty;
             theString.Should().BeEmpty();
             theString.Should().HaveLength(0);
             theString.Should().BeNullOrWhiteSpace();

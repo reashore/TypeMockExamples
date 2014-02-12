@@ -1,10 +1,10 @@
 ﻿
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FluentAssertions;
-
 namespace TypeMockExamples.FluentAssertions
 {
+    using System;
+    using global::FluentAssertions;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class FluentReferenceTypeTests
     {
@@ -15,20 +15,20 @@ namespace TypeMockExamples.FluentAssertions
             theObject.Should().BeNull("because the value is null");
 
             theObject = "whatever";
-            theObject.Should().BeOfType<String>("because a {0} is set", typeof(String));
+            theObject.Should().BeOfType<string>("because a {0} is set", typeof(string));
             theObject.Should().NotBeNull();
 
-            const string otherObject = "whatever";
-            theObject.Should().Be(otherObject, "because they have the same values");
+            const string OtherObject = "whatever";
+            theObject.Should().Be(OtherObject, "because they have the same values");
 
-            theObject = otherObject;
-            theObject.Should().BeSameAs(otherObject);
+            theObject = OtherObject;
+            theObject.Should().BeSameAs(OtherObject);
             //theObject.Should().NotBeSameAs(otherObject);
 
             ArgumentException ex = new ArgumentException();
             ex.Should().BeAssignableTo<Exception>("because it is an exception");
 
-            object dummy = new Object();
+            object dummy = new object();
             dummy.Should().Match(d => (d.ToString() == "System.Object"));
             //dummy.Should().Match<string>(d => (d == "System.Object"));
             //dummy.Should().Match((string d) => (d == "System.Object"));

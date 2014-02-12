@@ -1,11 +1,11 @@
 ﻿
-using System.Collections;
-using System.Collections.Generic;
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 namespace TypeMockExamples.FluentAssertions
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using global::FluentAssertions;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class FluentCollectionTests
     {

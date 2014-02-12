@@ -1,9 +1,10 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TypeMock.ArrangeActAssert;
-
+﻿
 namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
 {
+    using System;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using TypeMock.ArrangeActAssert;
+
     /// <summary>
     /// This test class demonstrates handling of objects instantiated outside the test's scope. 
     /// This is useful to eliminate dependencies in objects created by the business logic being tested

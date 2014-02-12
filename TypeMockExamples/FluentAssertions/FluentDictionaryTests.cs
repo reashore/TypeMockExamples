@@ -1,10 +1,10 @@
 
-using System.Collections.Generic;
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 namespace TypeMockExamples.FluentAssertions
 {
+    using System.Collections.Generic;
+    using global::FluentAssertions;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class FluentDictionaryTests
     {
@@ -18,19 +18,19 @@ namespace TypeMockExamples.FluentAssertions
 
             Dictionary<int, string> dictionary1 = new Dictionary<int, string>
             {
-                {1, "One"},
-                {2, "Two"}
+                { 1, "One" },
+                { 2, "Two" }
             };
 
             Dictionary<int, string> dictionary2 = new Dictionary<int, string>
             {
-                {1, "One"},
-                {2, "Two"}
+                { 1, "One" },
+                { 2, "Two" }
             };
 
             Dictionary<int, string> dictionary3 = new Dictionary<int, string>
             {
-                {3, "Three"},
+                { 3, "Three" },
             };
 
             dictionary1.Should().NotBeNull();

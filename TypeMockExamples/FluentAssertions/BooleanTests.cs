@@ -1,8 +1,9 @@
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TypeMockExamples.FluentAssertions
 {
+    using global::FluentAssertions;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class FluentBooleanTests
     {

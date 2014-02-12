@@ -1,10 +1,11 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TypeMock.ArrangeActAssert;
-using TypeMockExamples.Annotations;
-
+﻿
 namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
 {
+    using System;
+    using Annotations;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using TypeMock.ArrangeActAssert;
+
     /// <summary>
     /// This class demonstrates the ability of firing events and invoking private methods using Isolator.
     /// </summary>
@@ -51,12 +52,12 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
         }
     }
 
-    //------------------
-    // Classes under test
-    // - Dependency: Class with Methods that need to be faked out
-    // - ClassUnderTest: Class that creates and uses Dependency
-    // - Counter: A Class that registers to our ClassUnderTest events
-    //------------------
+    ////------------------
+    //// Classes under test
+    //// - Dependency: Class with Methods that need to be faked out
+    //// - ClassUnderTest: Class that creates and uses Dependency
+    //// - Counter: A Class that registers to our ClassUnderTest events
+    ////------------------
 
     public class Dependency
     {
@@ -100,7 +101,7 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
         [UsedImplicitly]
         private static int Multiply(int a, int b)
         {
-            return a*b;
+            return a * b;
         }
     }
 }

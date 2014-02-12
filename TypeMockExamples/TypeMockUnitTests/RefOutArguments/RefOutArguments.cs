@@ -1,11 +1,11 @@
 ﻿
-using System;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TypeMock.ArrangeActAssert;
-
 namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
 {
+    using System;
+    using System.Collections.Generic;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using TypeMock.ArrangeActAssert;
+
     /// <summary>
     /// This test class shows different ways of controlling the behavior of ref and out arguments
     /// To set the return value of a ref or out arguement, set them before calling the WhenCalled API.
@@ -19,7 +19,7 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
         {
             // arrange
             string outStr = "typemock";
-            // todo: if this is an out parameter why is an initial value necessary?
+            //// todo: if this is an out parameter why is an initial value necessary?
             List<int> outList = new List<int> {100};
             Dependency realDependency = new Dependency();
             Isolate.WhenCalled(() => realDependency.SomeMethod(ref outStr, out outList)).IgnoreCall();
@@ -50,11 +50,11 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
         }
     }
 
-    //------------------
-    // Classes under test
-    // - Dependency: Methods are not implemented - these need to be faked out
-    // - ClassUnderTest: Class that uses Dependency
-    //------------------
+    ////------------------
+    //// Classes under test
+    //// - Dependency: Methods are not implemented - these need to be faked out
+    //// - ClassUnderTest: Class that uses Dependency
+    ////------------------
 
     public class Dependency
     {

@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TypeMock.ArrangeActAssert;
-
+﻿
 namespace TypeMockExamples.TypeMockUnitTests.Collections
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using TypeMock.ArrangeActAssert;
+
     /// <summary>
     /// This test class shows ways to control methods and properties returning collections using Typemock Isolator.
-    /// 
     /// Collection handling in done either explicitly by swapping collection values returned by a method with a collection
     /// of test data by using Isolate.WhenCalled().WillReturnCollectionValuesOf(), or by implicitly setting expectations on
     /// collection types.
@@ -23,7 +23,7 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
         {
             // arrange
             Dependency dependency = new Dependency();
-            Isolate.WhenCalled(() => dependency.GetList()).WillReturnCollectionValuesOf(new[] {1, 2, 3});
+            Isolate.WhenCalled(() => dependency.GetList()).WillReturnCollectionValuesOf(new[] { 1, 2, 3 });
 
             // act
             int result = new ClassUnderTest().Sum(dependency);
@@ -49,12 +49,12 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
         }
     }
 
-    //------------------
-    // Classes under test
-    // - MyList - a non implemented collection
-    // - Dependency: Methods are not implemented - these need to be faked out, one returns a MyList
-    // - ClassUnderTest: Class that uses Dependency
-    //------------------
+    ////------------------
+    //// Classes under test
+    //// - MyList - a non implemented collection
+    //// - Dependency: Methods are not implemented - these need to be faked out, one returns a MyList
+    //// - ClassUnderTest: Class that uses Dependency
+    ////------------------
 
     public class MyList : IList<int>
     {

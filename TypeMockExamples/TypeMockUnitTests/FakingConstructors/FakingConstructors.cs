@@ -1,9 +1,10 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TypeMock.ArrangeActAssert;
-
+﻿
 namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
 {
+    using System;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using TypeMock.ArrangeActAssert;
+
     /// <summary>
     /// This test class demonstrates controlling arguments passed to constructor of a fake 
     /// and controlling the constructors that are called
@@ -72,17 +73,21 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
         }
     }
 
-    //------------------
-    // Classes under test
-    // - Dependency: Class with Methods that need to be faked out
-    // - ClassUnderTest: Class that creates and uses Dependency
-    // - Base and Derived: Class Hierarchy but Base still needs to implement its constructor
-    //------------------
+    ////------------------
+    //// Classes under test
+    //// - Dependency: Class with Methods that need to be faked out
+    //// - ClassUnderTest: Class that creates and uses Dependency
+    //// - Base and Derived: Class Hierarchy but Base still needs to implement its constructor
+    ////------------------
 
     public class Dependency
     {
         public int Age;
         public string Name;
+
+        // replacing public fields with properties causes test to fail
+        //public int Age { get; set; }
+        //public string Name { get; set; }
 
         public Dependency(int age, string name)
         {
@@ -125,7 +130,7 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
         {
             try
             {
-                return new Dependency(0, "");
+                return new Dependency(0, string.Empty);
             }
             catch (Exception)
             {

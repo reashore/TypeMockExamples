@@ -1,8 +1,9 @@
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TypeMockExamples.FluentAssertions
 {
+    using global::FluentAssertions;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class FluentNumericTests
     {
@@ -26,11 +27,11 @@ namespace TypeMockExamples.FluentAssertions
             int? nullableInt = 3;
             nullableInt.Should().Be(3);
 
-            const double theDouble = 5.1;
-            theDouble.Should().BeGreaterThan(5);
+            const double TheDouble = 5.1;
+            TheDouble.Should().BeGreaterThan(5);
 
-            const byte theByte = 2;
-            theByte.Should().Be(2);
+            const byte TheByte = 2;
+            TheByte.Should().Be(2);
         }
     }
 }

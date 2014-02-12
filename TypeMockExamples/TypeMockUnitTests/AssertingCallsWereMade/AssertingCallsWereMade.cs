@@ -1,10 +1,10 @@
 ﻿
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TypeMock.ArrangeActAssert;
-
 namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
 {
+    using System;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using TypeMock.ArrangeActAssert;
+
     /// <summary>
     /// This test class shows different ways of verifying calls on fake objects using the Isolate.Verify API.
     /// Calls can be verified in the following ways:
@@ -57,7 +57,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
             classUnderTest.DoAction(3, fakeDependency);
 
             // assert
-            int count = Isolate.Verify.GetTimesCalled(() => fakeDependency.CheckSecurity("", ""));
+            int count = Isolate.Verify.GetTimesCalled(() => fakeDependency.CheckSecurity(string.Empty, string.Empty));
             Assert.AreEqual(2, count);
         }
 
@@ -132,7 +132,9 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
             dependency.CheckSecurity("typemock", "rules");
 
             if (i < 2)
+            {
                 dependency.CallGuard();
+            }
         }
     }
 }

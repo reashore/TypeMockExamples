@@ -1,17 +1,15 @@
 ﻿
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TypeMock.ArrangeActAssert;
-
 namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
 {
+    using System;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using TypeMock.ArrangeActAssert;
+
     /// <summary>
     /// This test class demonstrates using live objects - test objects that have been instantiated normally, rather than
     /// as fake objects using Isolate.Fake.Instance(). These objects' behavior can still be modified by using WhenCalled methods
     /// and verified using Verify.
-    /// 
     /// When a live object is used in WasCalled or its NonPublic counterparts, it will become a viable fake object. 
-    /// 
     /// This behavior applies similarly to static methods which have not had their behavior defaults set up by 
     /// using Isolate.Fake.StaticMethods().
     /// </summary>
@@ -39,7 +37,7 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
         {
             // arrange
             Dependency dependency = new Dependency();
-            // Requires at least one WhenCalled, can be CallOriginal for Verify to work
+            //// Requires at least one WhenCalled, can be CallOriginal for Verify to work
             Isolate.WhenCalled(() => dependency.CheckSecurity(null, null)).IgnoreCall();
             ClassUnderTest classUnderTest = new ClassUnderTest();
 

@@ -1,9 +1,10 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TypeMock.ArrangeActAssert;
-
+﻿
 namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
 {
+    using System;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using TypeMock.ArrangeActAssert;
+
     /// <summary>
     /// This test class shows different ways of faking dependencies of a class.
     /// This method, creates a type by creating fakes for the longest constructor and calling it.
@@ -56,12 +57,12 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
         }
     }
 
-    //------------------
-    // Classes under test
-    // - Dependency: A dependency of ClassUnderTest
-    // - Dependency2: Methods are not implemented - these need to be faked out
-    // - ClassUnderTest: Class that uses Dependency
-    //------------------
+    ////------------------
+    //// Classes under test
+    //// - Dependency: A dependency of ClassUnderTest
+    //// - Dependency2: Methods are not implemented - these need to be faked out
+    //// - ClassUnderTest: Class that uses Dependency
+    ////------------------
 
 
     public class Dependency
@@ -98,7 +99,7 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
         public int Calculate(int a, int b)
         {
             _d2.Check();
-            return (a + b)*_d1.Multiplier + _additional;
+            return ((a + b) * _d1.Multiplier) + _additional;
         }
     }
 }

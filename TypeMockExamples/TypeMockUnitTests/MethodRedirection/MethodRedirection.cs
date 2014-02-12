@@ -1,12 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TypeMock.ArrangeActAssert;
-
+﻿
 namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using TypeMock.ArrangeActAssert;
+
     /// <summary>
     /// This test class demonstrates performing "Duck-type" swapping between objects using 
     /// Isolate.Swap.CallsOn(object).WithCallsTo(object). 
-    /// 
     /// The concept of duck-typing can be phrased simply as "if it walks like a duck and talks like a duck, it must be a duck". 
     /// In this context duck-typing is used to substitute behavior between two objects that are not necessarily identical. 
     /// When calling a method on the first object that also exists in the second object (i.e. has the same name, arguments 
@@ -38,10 +38,10 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
             // assert
             // The duck object will now go 'Woof!' instead of 'Quack!'
             Assert.AreEqual("Woof!", result);
-            // It is still a duck in every aspect that a dog can't do
+            //// It is still a duck in every aspect that a dog can't do
             Assert.AreEqual(1, duck.EggCount);
-            // Even though duck calls are now redirected to dog calls, we can still verify the duck calls are made
-            // do not convert to method group or it will break the test
+            //// Even though duck calls are now redirected to dog calls, we can still verify the duck calls are made
+            // Note: converting to method group will break the test
             Isolate.Verify.WasCalledWithAnyArguments(() => duck.Walk());
         }
     }
@@ -67,7 +67,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
 
         public void LayEgg()
         {
-            EggCount = EggCount + 1;
+            EggCount += 1;
         }
 
         private void Waddle()

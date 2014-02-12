@@ -1,10 +1,10 @@
 ﻿
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TypeMock.ArrangeActAssert;
-
 namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
 {
+    using System;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using TypeMock.ArrangeActAssert;
+
     /// <summary>
     /// This test class shows how to fake static methods. 
     /// </summary>
@@ -77,7 +77,6 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
         /// <summary>
         /// As static constructors for a type is only executed once, if we fake it we need a way to invoke it in a test that 
         /// requires normal execution.
-        /// 
         /// Typemock Isolator does this automatically, but here is a way to force a static-constructor call
         /// </summary>
         [TestMethod]
@@ -95,12 +94,12 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
         }
     }
 
-    //------------------
-    // Classes under test
-    // - Dependency: Methods are not implemented - these need to be faked out
-    // - ClassUnderTest: Class that uses Dependency
-    // - StaticConstructorExample: a class with a static constructor and a flag that indicates it was called.
-    //------------------
+    ////------------------
+    //// Classes under test
+    //// - Dependency: Methods are not implemented - these need to be faked out
+    //// - ClassUnderTest: Class that uses Dependency
+    //// - StaticConstructorExample: a class with a static constructor and a flag that indicates it was called.
+    ////------------------
 
     public class StaticConstructorExample
     {

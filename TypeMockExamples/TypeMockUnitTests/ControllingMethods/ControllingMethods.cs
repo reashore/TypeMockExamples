@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TypeMock.ArrangeActAssert;
-
+﻿
 namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using TypeMock.ArrangeActAssert;
+
     /// <summary>
     /// This test class shows different ways of controlling the behavior of fake objects using the Isolate.WhenCalled() API.
     /// The supported behaviors are:
@@ -27,6 +28,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         {
             // arrange
             Dependency realDependency = new Dependency();
+
             // return fake objects for reference types
             Isolate.WhenCalled(() => realDependency.GetPatent()).ReturnRecursiveFake();
             ClassUnderTest classUnderTest = new ClassUnderTest();
@@ -35,7 +37,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
             string result = classUnderTest.ReturnPatentName(realDependency);
 
             // assert
-            Assert.AreEqual("", result);
+            Assert.AreEqual(string.Empty, result);
         }
 
         [TestMethod]
@@ -74,6 +76,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         {
             // arrange
             Dependency realDependency = new Dependency();
+
             // do not convert lambda expression to method group (as it breaks the test)
             Isolate.WhenCalled(() => realDependency.Check()).IgnoreCall();
             ClassUnderTest classUnderTest = new ClassUnderTest();
@@ -86,7 +89,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         }
 
         [TestMethod]
-        [ExpectedException(typeof (Exception), "fakes fault")]
+        [ExpectedException(typeof(Exception), "fakes fault")]
         public void ThrowException_OnRealObject()
         {
             // arrange
@@ -104,7 +107,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
             // arrange
             int returnValue = 2;
             Dependency realDependency = new Dependency();
-            // return value dynamically
+            //// return value dynamically
             Isolate.WhenCalled(() => realDependency.GetId()).DoInstead(x => { return returnValue; });
             ClassUnderTest classUnderTest = new ClassUnderTest();
 
@@ -129,7 +132,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         {
             // arrange
             Dependency realDependency = new Dependency();
-            // Sequenced calls will return values in sequence, 
+            //// Sequenced calls will return values in sequence, 
             // last value will stay the default
             Isolate.WhenCalled(() => realDependency.GetId()).WillReturn(2);
             Isolate.WhenCalled(() => realDependency.GetId()).WillReturn(9);
@@ -146,7 +149,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         {
             // arrange
             Dependency realDependency = Isolate.Fake.Instance<Dependency>();
-            // Overloaded method calls without using exact argument matching are considered sequenced calls
+            //// Overloaded method calls without using exact argument matching are considered sequenced calls
             Isolate.WhenCalled(() => realDependency.OverloadedMethod(1)).WillReturn(2);
             Isolate.WhenCalled(() => realDependency.OverloadedMethod("Typemock Rocks")).WillReturn(9);
             ClassUnderTest classUnderTest = new ClassUnderTest();
@@ -163,7 +166,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         {
             // arrange
             Dependency realDependency = new Dependency();
-            // Each overloaded method will act as a separate sequence
+            //// Each overloaded method will act as a separate sequence
             Isolate.WhenCalled(() => realDependency.OverloadedMethod(1)).WillReturn(2);
             Isolate.WhenCalled(() => realDependency.OverloadedMethod(1)).WillReturn(4);
             Isolate.WhenCalled(() => realDependency.OverloadedMethod("Typemock Rocks")).WillReturn(9);
@@ -199,7 +202,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         {
             // arrange
             Dependency dependency = new Dependency();
-            // Call the extension method as normal (even though it is actually a static method)
+            //// Call the extension method as normal (even though it is actually a static method)
             Isolate.WhenCalled(() => dependency.Multiply(6)).WillReturn(10);
             ClassUnderTest cut = new ClassUnderTest();
 
@@ -219,7 +222,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
             int[] dummyData = {10, 20};
             Isolate.WhenCalled(() => from c in realList where c > 3 select c).WillReturn(dummyData);
 
-            //act
+            // act
             List<int> result = new ClassUnderTest().DoLinq(realList);
 
             // assert
@@ -230,18 +233,18 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         }
     }
 
-    //------------------
-    // Classes under test
-    // - ExtendDependency - an extension method of Dependency
-    // - Dependency: Methods are not implemented - these need to be faked out
-    // - ClassUnderTest: Class that uses Dependency
-    //------------------
+    ////------------------
+    //// Classes under test
+    //// - ExtendDependency - an extension method of Dependency
+    //// - Dependency: Methods are not implemented - these need to be faked out
+    //// - ClassUnderTest: Class that uses Dependency
+    ////------------------
 
     public static class ExtendDependency
     {
         public static int Multiply(this Dependency extendedInstance, int scalar)
         {
-            return extendedInstance.GetId()*scalar;
+            return extendedInstance.GetId() * scalar;
         }
     }
 

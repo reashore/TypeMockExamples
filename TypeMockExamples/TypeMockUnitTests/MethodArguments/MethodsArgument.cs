@@ -1,10 +1,10 @@
 ﻿
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TypeMock.ArrangeActAssert;
-
 namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
 {
+    using System;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using TypeMock.ArrangeActAssert;
+
     /// <summary>
     /// This test class shows different ways of controlling the behavior of fake objects using the Isolate.WhenCalled() API.
     /// The supported behaviors are:
@@ -112,11 +112,11 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
         }
     }
 
-    //------------------
-    // Classes under test
-    // - Dependency: Class with Methods that need to be faked out
-    // - ClassUnderTest: Class that uses Dependency
-    //------------------
+    ////------------------
+    //// Classes under test
+    //// - Dependency: Class with Methods that need to be faked out
+    //// - ClassUnderTest: Class that uses Dependency
+    ////------------------
 
     public class Dependency
     {

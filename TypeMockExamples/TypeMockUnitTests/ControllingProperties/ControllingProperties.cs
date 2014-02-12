@@ -1,10 +1,12 @@
 ﻿
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TypeMock.ArrangeActAssert;
+using System.Diagnostics.CodeAnalysis;
 
 namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
 {
+    using System;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using TypeMock.ArrangeActAssert;
+
     /// <summary>
     /// This test class shows different ways of controlling the behavior of fake properties
     /// The supported behaviors are:
@@ -65,11 +67,11 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
     }
 
 
-    //------------------
-    // Classes under test
-    // - Dependency: Methods are not implemented - these need to be faked out
-    // - ClassUnderTest: Class that uses Dependency
-    //------------------
+    ////------------------
+    //// Classes under test
+    //// - Dependency: Methods are not implemented - these need to be faked out
+    //// - ClassUnderTest: Class that uses Dependency
+    ////------------------
 
     public class Dependency
     {
@@ -77,7 +79,10 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
 
         public virtual int Number
         {
-            get { return _number; }
+            [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1101:PrefixLocalCallsWithThis", Justification = "Reviewed. Suppression is OK here.")] get
+            {
+                return _number;
+            }
             set
             {
                 CheckSecurity();

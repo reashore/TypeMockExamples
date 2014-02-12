@@ -1,11 +1,11 @@
 ﻿
-using System;
-using System.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TypeMock.ArrangeActAssert;
-
 namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
 {
+    using System;
+    using System.Diagnostics;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using TypeMock.ArrangeActAssert;
+
     /// <summary>
     /// Basic examples of how to use Typemock Isolator Syntax.
     /// The concept behind Arrange-Act-Assert is simple; we aspire for the test code to be divided into three stages:
@@ -45,10 +45,10 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
         }
     }
 
-    //------------------
-    // Classes under test
-    // - MyCode: Class that are Dependant on DateTime and Process and needs to be isolated from them to be unit tested
-    //------------------
+    ////------------------
+    //// Classes under test
+    //// - MyCode: Class that are Dependant on DateTime and Process and needs to be isolated from them to be unit tested
+    ////------------------
 
     public class MyCode
     {
@@ -65,10 +65,12 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
 
         public static bool IsMySiteNameTypemock(Process process)
         {
-            //string name = process.MachineName;
+            ////string name = process.MachineName;
 
             if (process.MainModule.Site.Name.StartsWith("Typemock"))
+            {
                 return true;
+            }
 
             return false;
         }
