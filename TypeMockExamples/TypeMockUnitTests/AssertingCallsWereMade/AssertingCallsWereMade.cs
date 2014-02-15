@@ -14,95 +14,121 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
     ///     - WasCalledWithArguments: use Matching to match arguments
     /// </summary>
     [TestClass]
-    [Isolated] // Note: Use Isolated to clean up after all tests in class
+    [Isolated]
     public class VerifyingCallsWereMadeTests
     {
+        private ClassUnderTest _classUnderTest;
+
+        [TestInitialize]
+        public void InitializeTest()
+        {
+            _classUnderTest = new ClassUnderTest();
+        }
+
+        [TestCleanup]
+        public void CleanupTest()
+        {
+            _classUnderTest = null;
+        }
+
         [TestMethod]
         public void Verify_CallWasMade_WithAnyArgument()
         {
             // arrange
-            Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
 
             // act
-            classUnderTest.DoAction(2, fakeDependency);
+            _classUnderTest.DoAction(2, dependencyFake);
 
             // assert
-            Isolate.Verify.WasCalledWithAnyArguments(() => fakeDependency.CheckSecurity(null, null));
+            Isolate.Verify.WasCalledWithAnyArguments(() => dependencyFake.CheckSecurity(null, null));
         }
 
         [TestMethod]
         public void Verify_CallWasNeverMade()
         {
             // arrange
-            Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
 
             // act
-            classUnderTest.DoAction(2, fakeDependency);
+            _classUnderTest.DoAction(2, dependencyFake);
 
             // assert
-            Isolate.Verify.WasNotCalled(() => fakeDependency.CallGuard());
+            Isolate.Verify.WasNotCalled(() => dependencyFake.CallGuard());
         }
 
         [TestMethod]
         public void Verify_CallWasMadeTwice()
         {
             // arrange
-            Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
 
             // act
-            classUnderTest.DoAction(2, fakeDependency);
-            classUnderTest.DoAction(3, fakeDependency);
+            _classUnderTest.DoAction(2, dependencyFake);
+            _classUnderTest.DoAction(3, dependencyFake);
 
             // assert
-            int count = Isolate.Verify.GetTimesCalled(() => fakeDependency.CheckSecurity(string.Empty, string.Empty));
-            Assert.AreEqual(2, count);
+            const int expectedTimesCalled = 2;
+            int actualTimesCalled = Isolate.Verify.GetTimesCalled(() => dependencyFake.CheckSecurity(string.Empty, string.Empty));
+            Assert.AreEqual(expectedTimesCalled, actualTimesCalled);
         }
 
         [TestMethod]
         public void Verify_CallWasNeverMade_OnChain()
         {
             // arrange
-            Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
 
             // act
-            classUnderTest.DoAction(2, fakeDependency);
+            _classUnderTest.DoAction(2, dependencyFake);
 
             // assert
-            Isolate.Verify.WasNotCalled(() => fakeDependency.CallGuard().CheckSecurity(null, null));
+            Isolate.Verify.WasNotCalled(() => dependencyFake.CallGuard().CheckSecurity(null, null));
         }
 
         [TestMethod]
         public void Verify_CallWasMade_WithExactArguments()
         {
             // arrange
-            Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
 
             // act
-            classUnderTest.DoAction(2, fakeDependency);
+            _classUnderTest.DoAction(2, dependencyFake);
 
             // assert
-            Isolate.Verify.WasCalledWithExactArguments(() => fakeDependency.CheckSecurity("typemock", "rules"));
+            Isolate.Verify.WasCalledWithExactArguments(() => dependencyFake.CheckSecurity("username", "password"));
         }
 
         [TestMethod]
         public void Verify_CallWasMade_WithMatchingArguments()
         {
             // arrange
-            Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
 
             // act
-            classUnderTest.DoAction(2, fakeDependency);
+            _classUnderTest.DoAction(2, dependencyFake);
 
             // assert
-            // todo: fix possible null reference exception
-            Isolate.Verify.WasCalledWithArguments(() => fakeDependency.CheckSecurity(null, null)).Matching(
-                a => (a[0] as string).StartsWith("type") && (a[1] as string).StartsWith("rule"));
+            Isolate.Verify.WasCalledWithArguments(() => dependencyFake.CheckSecurity(null, null)).Matching(args => VerifyArguments(args, "user", "pass"));
+        }
+
+        private static bool VerifyArguments(object[] arguments, string value1, string value2)
+        {
+            if (arguments == null)
+            {
+                return false;
+            }
+
+            string argument0 = arguments[0] as string;
+            string argument1 = arguments[1] as string;
+
+            // cast to string failed
+            if (argument0 == null || argument1 == null)
+            {
+                return false;
+            }
+
+            return argument0.StartsWith(value1) && argument1.StartsWith(value2);
         }
     }
 
@@ -129,7 +155,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
     {
         public void DoAction(int i, Dependency dependency)
         {
-            dependency.CheckSecurity("typemock", "rules");
+            dependency.CheckSecurity("username", "password");
 
             if (i < 2)
             {
