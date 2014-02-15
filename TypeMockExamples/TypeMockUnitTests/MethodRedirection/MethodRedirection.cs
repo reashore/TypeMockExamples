@@ -13,36 +13,70 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
     /// and return value), the second object's implementation will be called instead.
     /// </summary>
     [TestClass]
-    [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
+    [Isolated(DesignMode.Pragmatic)]
     public class MethodRedirectionTests
     {
-        /// <summary>
-        /// This test demonstrates swapping method calls between two partially compatible objects - a duck and a dog.
-        /// Both a duck and a dog can walk and talk, so when a duck is swapped by a dog it will go 'woof' instead of
-        /// 'quack' when talking, and chase cars instead of waddle when walking. However, a duck can lay eggs while a 
-        /// dog can't - this behavior is preserved by the swapped object.
-        /// </summary>
+        private Duck _duck;
+        private Dog _dog;
+
+        [TestInitialize]
+        public void InitializeTest()
+        {
+            _duck = new Duck();
+            _dog = new Dog();
+        }
+
+        [TestCleanup]
+        public void CleanupTest()
+        {
+            _duck = null;
+            _dog = null; 
+        }
+
+         // These tests demonstrates swapping method calls between two partially compatible objects - a duck and a dog.
+         // Both a duck and a dog can walk and talk, so when a duck is swapped by a dog it will go 'woof' instead of
+         // 'quack' when talking, and chase cars instead of waddle when walking. However, a duck can lay eggs while a 
+         // dog can't - this behavior is preserved by the swapped object.
+
         [TestMethod]
-        public void DuckTypeSwap_ReplaceADuckWithADog()
+        public void DuckTypeSwap_ReplaceADuckWithADog1()
         {
             // arrange
-            Duck duck = new Duck();
-            Dog dog = new Dog();
-            Isolate.Swap.CallsOn(duck).WithCallsTo(dog);
+            Isolate.Swap.CallsOn(_duck).WithCallsTo(_dog);
 
             // act
-            string result = duck.Talk();
-            duck.LayEgg();
-            duck.Walk();
+            string result = _duck.Talk();
 
             // assert
             // The duck object will now go 'Woof!' instead of 'Quack!'
             Assert.AreEqual("Woof!", result);
-            //// It is still a duck in every aspect that a dog can't do
-            Assert.AreEqual(1, duck.EggCount);
-            //// Even though duck calls are now redirected to dog calls, we can still verify the duck calls are made
-            // Note: converting to method group will break the test
-            Isolate.Verify.WasCalledWithAnyArguments(() => duck.Walk());
+        }
+
+        [TestMethod]
+        public void DuckTypeSwap_ReplaceADuckWithADog2()
+        {
+            // arrange
+            Isolate.Swap.CallsOn(_duck).WithCallsTo(_dog);
+
+            // act
+            _duck.LayEgg();
+
+            // assert
+            Assert.AreEqual(1, _duck.EggCount);
+        }
+
+        [TestMethod]
+        public void DuckTypeSwap_ReplaceADuckWithADog3()
+        {
+            // arrange
+            Isolate.Swap.CallsOn(_duck).WithCallsTo(_dog);
+
+            // act
+            _duck.Walk();
+
+            // assert
+            // Note that converting lambda expression to method group will break the test
+            Isolate.Verify.WasCalledWithAnyArguments(() => _duck.Walk());
         }
     }
 

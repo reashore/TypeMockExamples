@@ -136,9 +136,10 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
             // last value will stay the default
             Isolate.WhenCalled(() => realDependency.GetId()).WillReturn(2);
             Isolate.WhenCalled(() => realDependency.GetId()).WillReturn(9);
+            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            int result = new ClassUnderTest().AddToDependency3Times(1, realDependency);
+            int result = classUnderTest.AddToDependency3Times(1, realDependency);
 
             // assert
             Assert.AreEqual(21, result);

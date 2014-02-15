@@ -8,6 +8,7 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
+    // todo demonstrate Pragmatic and InterfaceOnly mode
     /// <summary>
     /// This test class shows ways to control methods and properties returning collections using Typemock Isolator.
     /// Collection handling in done either explicitly by swapping collection values returned by a method with a collection
@@ -18,43 +19,59 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
     [Isolated] // Note: Use Isolated to clean up after all tests in class
     public class CollectionTests
     {
+        private ClassUnderTest _classUnderTest;
+        private Dependency _dependency;
+
+        [TestInitialize]
+        public void InitializeTest()
+        {
+            _classUnderTest = new ClassUnderTest();
+            _dependency = new Dependency();
+        }
+
+        [TestCleanup]
+        public void CleanupTest()
+        {
+            _classUnderTest = null;
+            _dependency = null;
+        }
+
         [TestMethod]
-        public void SwapCollection_WithFakeData()
+        public void SwapCollection_WithFakeData2()
         {
             // arrange
-            Dependency dependency = new Dependency();
-            Isolate.WhenCalled(() => dependency.GetList()).WillReturnCollectionValuesOf(new[] { 1, 2, 3 });
+            //
+            Isolate.WhenCalled(() => _dependency.GetList()).WillReturnCollectionValuesOf(new[] { 1, 2, 3 });
 
             // act
-            int result = new ClassUnderTest().Sum(dependency);
+            int result = _classUnderTest.Sum(_dependency);
 
             // assert
             Assert.AreEqual(6, result);
         }
 
         [TestMethod]
-        public void ImplictCollectionCreation_ByFakingLastItem()
+        public void ImplictCollectionCreation_ByFakingLastItem2()
         {
             // arrange
-            Dependency dependency = new Dependency();
-            // A fake collection of size of 6 is created implicitly
-            Isolate.WhenCalled(() => dependency.GetList()[5]).WillReturn(3);
+            // configure index 5 of list to return 3
+            Isolate.WhenCalled(() => _dependency.GetList()[5]).WillReturn(3);
 
             // act
-            int result = new ClassUnderTest().Count(dependency);
+            int result = _classUnderTest.Count(_dependency);
 
             // assert
             Assert.AreEqual(6, result);
-            Assert.AreEqual(3, dependency.GetList()[5]);
+            Assert.AreEqual(3, _dependency.GetList()[5]);
         }
     }
 
-    ////------------------
-    //// Classes under test
-    //// - MyList - a non implemented collection
-    //// - Dependency: Methods are not implemented - these need to be faked out, one returns a MyList
-    //// - ClassUnderTest: Class that uses Dependency
-    ////------------------
+    //------------------
+    // Classes under test
+    // - MyList - a partially implemented collection
+    // - Dependency: Methods are not implemented - these need to be faked out, one returns a MyList
+    // - ClassUnderTest: Class that uses Dependency
+    //------------------
 
     public class MyList : IList<int>
     {

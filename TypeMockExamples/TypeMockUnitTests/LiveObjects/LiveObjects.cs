@@ -17,16 +17,31 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
     [Isolated(DesignMode.InterfaceOnly)] // Note: Use Isolated to clean up after all tests in class
     public class LiveObjectTests
     {
+        private ClassUnderTest _classUnderTest;
+        private Dependency _dependency;
+
+        [TestInitialize]
+        public void InitializeTest()
+        {
+            _classUnderTest = new ClassUnderTest();
+            _dependency = new Dependency();
+        }
+
+        [TestCleanup]
+        public void CleanupTest()
+        {
+            _classUnderTest = null;
+            _dependency = null;
+        }
+
         [TestMethod]
         public void CreateRealObject_FakeVoidMethod()
         {
             // arrange
-            Dependency dependency = new Dependency();
-            Isolate.WhenCalled(() => dependency.CheckSecurity(null, null)).IgnoreCall();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Isolate.WhenCalled(() => _dependency.CheckSecurity(null, null)).IgnoreCall();
 
             // act
-            int result = classUnderTest.Calculate(1, 2, dependency);
+            int result = _classUnderTest.Calculate(1, 2, _dependency);
 
             // assert
             Assert.AreEqual(3, result);
@@ -36,16 +51,14 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
         public void VerifyMethods_OfRealObject()
         {
             // arrange
-            Dependency dependency = new Dependency();
             //// Requires at least one WhenCalled, can be CallOriginal for Verify to work
-            Isolate.WhenCalled(() => dependency.CheckSecurity(null, null)).IgnoreCall();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Isolate.WhenCalled(() => _dependency.CheckSecurity(null, null)).IgnoreCall();
 
             // act
-            classUnderTest.Calculate(1, 2, dependency);
+            _classUnderTest.Calculate(1, 2, _dependency);
 
             // assert
-            Isolate.Verify.WasCalledWithAnyArguments(() => dependency.CheckSecurity(null, null));
+            Isolate.Verify.WasCalledWithAnyArguments(() => _dependency.CheckSecurity(null, null));
         }
     }
 
@@ -72,7 +85,7 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
     {
         public int Calculate(int a, int b, Dependency dependency)
         {
-            dependency.CheckSecurity("typemock", "rules");
+            dependency.CheckSecurity("username", "password");
 
             return a + b;
         }

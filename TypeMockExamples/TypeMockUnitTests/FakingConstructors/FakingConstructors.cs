@@ -13,16 +13,29 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
     [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
     public class FakingConstructorTests
     {
+        private ClassUnderTest _classUnderTest;
+
+        [TestInitialize]
+        public void InitializeTest()
+        {
+            _classUnderTest = new ClassUnderTest();
+        }
+
+        [TestCleanup]
+        public void CleanupTest()
+        {
+            _classUnderTest = null;
+        }
+
         [TestMethod]
         public void CallConstructorAndPassArguments_FakeAllMethods()
         {
             // arrange
             // The constructor is not faked here.      
             Dependency fake = Isolate.Fake.Instance<Dependency>(Members.ReturnRecursiveFakes, ConstructorWillBe.Called, 5, "Typemock");
-            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            string result = classUnderTest.GetString(fake);
+            string result = _classUnderTest.GetString(fake);
 
             // assert
             Assert.AreEqual("Typemock5", result);
@@ -33,10 +46,9 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
         {
             // arrange
             Dependency fake = Isolate.Fake.Instance<Dependency>(Members.CallOriginal, ConstructorWillBe.Ignored);
-            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            string result = classUnderTest.GetString(fake);
+            string result = _classUnderTest.GetString(fake);
 
             // assert
             Assert.AreEqual("0", result);
@@ -48,10 +60,9 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
             // arrange
             // We want a memory handling exception to be thrown the next time a Dependency is instantiated
             Isolate.Swap.NextInstance<Dependency>().ConstructorWillThrow(new OutOfMemoryException());
-            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            Dependency result = classUnderTest.Create();
+            Dependency result = _classUnderTest.Create();
 
             // assert
             Assert.AreEqual(null, result);
@@ -63,10 +74,9 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
             // assert
             // create an instance of Derived, but avoid calling the base class constructor
             Derived dependency = Isolate.Fake.Instance<Derived>(Members.CallOriginal, ConstructorWillBe.Called, BaseConstructorWillBe.Ignored);
-            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            int result = classUnderTest.GetSize(dependency);
+            int result = _classUnderTest.GetSize(dependency);
 
             // assert
             Assert.AreEqual(100, result);

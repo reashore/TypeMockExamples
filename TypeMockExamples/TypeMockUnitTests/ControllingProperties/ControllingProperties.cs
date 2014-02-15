@@ -18,16 +18,31 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
     [Isolated] // Note: Use Isolated to clean up after all tests in class
     public class ControllingPropertiesTests
     {
+        private ClassUnderTest _classUnderTest;
+        private Dependency _dependency;
+
+        [TestInitialize]
+        public void InitializeTest()
+        {
+            _classUnderTest = new ClassUnderTest();
+            _dependency = new Dependency();
+        }
+
+        [TestCleanup]
+        public void CleanupTest()
+        {
+            _classUnderTest = null;
+            _dependency = null;
+        }
+
         [TestMethod]
         public void FakePropertyGetter_UsingWhenCalled()
         {
             // arrange
-            Dependency fakeDependency = new Dependency();
-            Isolate.WhenCalled(() => fakeDependency.Number).WillReturn(5);
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Isolate.WhenCalled(() => _dependency.Number).WillReturn(5);
 
             // act
-            int result = classUnderTest.SimpleCalculation(2, fakeDependency);
+            int result = _classUnderTest.SimpleCalculation(2, _dependency);
 
             // assert
             Assert.AreEqual(7, result);
@@ -37,12 +52,11 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
         public void FakePropertyGetter_UsingTrueProperty()
         {
             // arrange
-            Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
-            fakeDependency.Number = 5;
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            _dependency = Isolate.Fake.Instance<Dependency>();
+            _dependency.Number = 5;
 
             // act
-            int result = classUnderTest.SimpleCalculation(2, fakeDependency);
+            int result = _classUnderTest.SimpleCalculation(2, _dependency);
 
             // assert
             Assert.AreEqual(7, result);
@@ -52,13 +66,11 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
         public void FakePropertySetter_UsingWhenCalled()
         {
             // arrange
-            Dependency fakeDependency = new Dependency();
             int countCalls = 0;
-            Isolate.WhenCalled(() => fakeDependency.Number = 5).DoInstead(c => countCalls++);
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Isolate.WhenCalled(() => _dependency.Number = 5).DoInstead(c => countCalls++);
 
             // act
-            classUnderTest.SimpleCalculation(2, fakeDependency);
+            _classUnderTest.SimpleCalculation(2, _dependency);
 
             // assert
             Assert.AreEqual(1, countCalls);
@@ -77,7 +89,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
 
         public virtual int Number
         {
-            [SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1101:PrefixLocalCallsWithThis", Justification = "Reviewed. Suppression is OK here.")] get
+            get
             {
                 return _number;
             }

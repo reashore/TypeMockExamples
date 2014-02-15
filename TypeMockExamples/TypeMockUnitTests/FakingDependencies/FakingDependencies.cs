@@ -64,14 +64,14 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
     // - ClassUnderTest: Class that uses Dependency
     //------------------
 
-    public class Dependency
+    public sealed class Dependency
     {
         public Dependency()
         {
             Multiplier = 1;
         }
 
-        public virtual int Multiplier { get; set; }
+        public int Multiplier { get; set; }
     }
 
     public class Dependency2
@@ -85,20 +85,20 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
     public class ClassUnderTest
     {
         private readonly int _additional;
-        private readonly Dependency _d1;
-        private readonly Dependency2 _d2;
+        private readonly Dependency _depenency1;
+        private readonly Dependency2 _dependency2;
 
-        public ClassUnderTest(int additional, Dependency2 d2, Dependency d1)
+        public ClassUnderTest(int additional, Dependency2 dependency2, Dependency depenency1)
         {
             _additional = additional;
-            _d2 = d2;
-            _d1 = d1;
+            _dependency2 = dependency2;
+            _depenency1 = depenency1;
         }
 
         public int Calculate(int a, int b)
         {
-            _d2.Check();
-            return ((a + b) * _d1.Multiplier) + _additional;
+            _dependency2.Check();
+            return ((a + b) * _depenency1.Multiplier) + _additional;
         }
     }
 }
