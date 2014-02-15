@@ -21,19 +21,32 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
     /// </list>
     /// </summary>
     [TestClass]
-    [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
+    [Isolated(DesignMode.Pragmatic)]
     public class PrivateMethodTests
     {
+        private ClassUnderTest _classUnderTest;
+
+        [TestInitialize]
+        public void InitializeTest()
+        {
+            _classUnderTest = new ClassUnderTest();
+        }
+
+        [TestCleanup]
+        public void CleanupTest()
+        {
+            _classUnderTest = null;
+        }
+
         [TestMethod]
         public void PrivateMethod_ReturnRecursiveFake()
         {
             // arrange
             Dependency realDependency = new Dependency();
             Isolate.NonPublic.WhenCalled(realDependency, "GetGuard").ReturnRecursiveFake<IGuard>();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            int result = classUnderTest.CalculateAndAlert(1, 2, realDependency);
+            int result = _classUnderTest.CalculateAndAlert(1, 2, realDependency);
 
             // assert
             Assert.AreEqual(3, result);
@@ -45,10 +58,9 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
             // arrange
             Dependency realDependency = new Dependency();
             Isolate.NonPublic.WhenCalled(realDependency, "InternalNumber").WillReturn(3);
-            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            int result = classUnderTest.Calculate(1, 2, realDependency);
+            int result = _classUnderTest.Calculate(1, 2, realDependency);
 
             // assert
             Assert.AreEqual(6, result);
@@ -61,10 +73,9 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
             // arrange
             Dependency realDependency = new Dependency();
             Isolate.NonPublic.WhenCalled(realDependency, "InternalNumber").WillThrow(new Exception("Typemock rocks"));
-            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            classUnderTest.Calculate(1, 2, realDependency);
+            _classUnderTest.Calculate(1, 2, realDependency);
         }
 
         [TestMethod]
@@ -72,10 +83,9 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
         {
             // arrange
             Isolate.NonPublic.WhenCalled<Dependency>("CallGuard").IgnoreCall();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            int result = classUnderTest.Calculate(1, 2);
+            int result = _classUnderTest.Calculate(1, 2);
 
             // assert
             Assert.AreEqual(3, result);
@@ -86,12 +96,11 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
         {
             // arrange
             Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
-            //// private works on public too
+            // private works on public too
             Isolate.NonPublic.WhenCalled(fakeDependency, "GetNumberFromDatabase").CallOriginal();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            int result = classUnderTest.Calculate(1, 2, fakeDependency);
+            int result = _classUnderTest.Calculate(1, 2, fakeDependency);
 
             // assert
             Assert.AreEqual(3, result);
@@ -103,10 +112,10 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
             // arrange
             Dependency realDependency = new Dependency();
             Isolate.NonPublic.Property.WhenGetCalled(realDependency, "PrivateProp").WillReturn(3);
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            //ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            int result = classUnderTest.CalculateFromProperty(1, 2, realDependency);
+            int result = _classUnderTest.CalculateFromProperty(1, 2, realDependency);
 
             // assert
             Assert.AreEqual(6, result);
@@ -118,10 +127,10 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
             // arrange
             Dependency realDependency = new Dependency();
             Isolate.NonPublic.Property.WhenGetCalled(realDependency, "PrivateProp").WillReturn(3);
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            //ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            classUnderTest.CalculateFromProperty(1, 2, realDependency);
+            _classUnderTest.CalculateFromProperty(1, 2, realDependency);
 
             // assert
             Isolate.Verify.NonPublic.Property.WasCalledGet(realDependency, "PrivateProp");
@@ -132,10 +141,10 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
         {
             // arrange
             Isolate.NonPublic.WhenCalled<Dependency>("CallGuard").IgnoreCall();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            //ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            classUnderTest.Calculate(1, 2);
+            _classUnderTest.Calculate(1, 2);
 
             // assert
             Isolate.Verify.NonPublic.WasCalled(typeof(Dependency), "CallGuard");
@@ -146,26 +155,26 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
         {
             // arrange
             Isolate.NonPublic.WhenCalled<Dependency>("CallGuard").IgnoreCall();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            //ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            classUnderTest.Calculate(1, 2);
+            _classUnderTest.Calculate(1, 2);
 
             // assert
             Isolate.Verify.NonPublic.WasCalled(typeof(Dependency), "CallGuard").WithArguments("typemock", "rocks");
         }
     }
 
-    ////------------------
-    //// Classes under test
-    //// - Dependency: Class with private Methods that need to be faked out
-    //// - ClassUnderTest: Class that uses Dependency
-    //// - IGuard: an unimplemented interface
-    ////------------------
+    //------------------
+    // Classes under test
+    // - Dependency: Class with private Methods that need to be faked out
+    // - ClassUnderTest: Class that uses Dependency
+    // - IGuard: an unimplemented interface
+    //------------------
 
     public interface IGuard
     {
-        void Alart();
+        void Alert();
     }
 
     public class Dependency

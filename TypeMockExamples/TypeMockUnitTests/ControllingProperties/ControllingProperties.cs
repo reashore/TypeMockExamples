@@ -77,11 +77,11 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
         }
     }
 
-    ////------------------
-    //// Classes under test
-    //// - Dependency: Methods are not implemented - these need to be faked out
-    //// - ClassUnderTest: Class that uses Dependency
-    ////------------------
+    //------------------
+    // Classes under test
+    // - Dependency: Methods are not implemented - these need to be faked out
+    // - ClassUnderTest: Class that uses Dependency
+    //------------------
 
     public class Dependency
     {

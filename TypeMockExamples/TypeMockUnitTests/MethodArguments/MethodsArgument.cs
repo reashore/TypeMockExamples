@@ -122,11 +122,11 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
         }
     }
 
-    ////------------------
-    //// Classes under test
-    //// - Dependency: Class with Methods that need to be faked out
-    //// - ClassUnderTest: Class that uses Dependency
-    ////------------------
+    //------------------
+    // Classes under test
+    // - Dependency: Class with Methods that need to be faked out
+    // - ClassUnderTest: Class that uses Dependency
+    //------------------
 
     public class Dependency
     {

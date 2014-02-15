@@ -19,7 +19,7 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
         {
             // arrange
             string outStr = "typemock";
-            //// todo: if this is an out parameter why is an initial value necessary?
+            // todo: why is an initial value necessary on an out parameter?
             List<int> outList = new List<int> { 100 };
             Dependency realDependency = new Dependency();
             Isolate.WhenCalled(() => realDependency.SomeMethod(ref outStr, out outList)).IgnoreCall();
@@ -50,11 +50,11 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
         }
     }
 
-    ////------------------
-    //// Classes under test
-    //// - Dependency: Methods are not implemented - these need to be faked out
-    //// - ClassUnderTest: Class that uses Dependency
-    ////------------------
+    //------------------
+    // Classes under test
+    // - Dependency: Methods are not implemented - these need to be faked out
+    // - ClassUnderTest: Class that uses Dependency
+    //------------------
 
     public class Dependency
     {

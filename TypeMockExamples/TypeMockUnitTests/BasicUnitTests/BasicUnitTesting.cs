@@ -45,10 +45,10 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
         }
     }
 
-    ////------------------
-    //// Classes under test
-    //// - MyCode: Class that are Dependant on DateTime and Process and needs to be isolated from them to be unit tested
-    ////------------------
+    //------------------
+    // Classes under test
+    // - MyCode: Class that are Dependant on DateTime and Process and needs to be isolated from them to be unit tested
+    //------------------
 
     public class MyCode
     {
@@ -67,7 +67,7 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
 
         public static bool IsMySiteNameTypemock(Process process)
         {
-            ////string name = process.MachineName;
+            //string name = process.MachineName;
 
             if (process.MainModule.Site.Name.StartsWith("Typemock"))
             {

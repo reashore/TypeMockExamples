@@ -83,12 +83,12 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
         }
     }
 
-    ////------------------
-    //// Classes under test
-    //// - Dependency: Class with Methods that need to be faked out
-    //// - ClassUnderTest: Class that creates and uses Dependency
-    //// - Base and Derived: Class Hierarchy but Base still needs to implement its constructor
-    ////------------------
+    //------------------
+    // Classes under test
+    // - Dependency: Class with Methods that need to be faked out
+    // - ClassUnderTest: Class that creates and uses Dependency
+    // - Base and Derived: Class Hierarchy but Base still needs to implement its constructor
+    //------------------
 
     public class Dependency
     {
