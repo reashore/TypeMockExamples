@@ -5,22 +5,32 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
-    /// <summary>
-    /// This test class shows how to fake static methods. 
-    /// </summary>
     [TestClass]
-    [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
-    public class StaticMethodAndConstructorTests
+    [Isolated(DesignMode.Pragmatic)]
+    public class StaticMethodAndConstructorTests1
     {
+        private ClassUnderTest _classUnderTest;
+
+        [TestInitialize]
+        public void InitializeTest()
+        {
+            _classUnderTest = new ClassUnderTest();
+        }
+
+        [TestCleanup]
+        public void CleanupTest()
+        {
+            _classUnderTest = null;
+        }
+
         [TestMethod]
         public void FakeAllStaticMethods()
         {
             // arrange
             Isolate.Fake.StaticMethods<Dependency>();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            int result = classUnderTest.Calculate(1, 2);
+            int result = _classUnderTest.Calculate(1, 2);
 
             // assert
             Assert.AreEqual(3, result);
@@ -31,10 +41,9 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
         {
             // arrange
             Isolate.WhenCalled(() => Dependency.CheckSecurity(null, null)).IgnoreCall();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            int result = classUnderTest.Calculate(1, 2);
+            int result = _classUnderTest.Calculate(1, 2);
 
             // assert
             Assert.AreEqual(3, result);
@@ -45,15 +54,19 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
         {
             // arrange
             Isolate.Fake.StaticMethods<Dependency>();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            classUnderTest.Calculate(1, 2);
+            _classUnderTest.Calculate(1, 2);
 
             // assert
             Isolate.Verify.WasCalledWithAnyArguments(() => Dependency.CheckSecurity(null, null));
         }
+    }
 
+    [TestClass]
+    [Isolated(DesignMode.Pragmatic)]
+    public class StaticMethodAndConstructorTests2
+    {
         /// <summary>
         /// This test shows to to fake calls to static constructors using Isolate.Fake.StaticConstructor().
         /// By default static constructors are called to fake them use Fake.StaticConstructor()
@@ -132,7 +145,7 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
     {
         public int Calculate(int a, int b)
         {
-            Dependency.CheckSecurity("typemock", "rules");
+            Dependency.CheckSecurity("username", "password");
 
             return a + b;
         }

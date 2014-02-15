@@ -14,19 +14,34 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
     [Isolated] // Note: Use Isolated to clean up after all tests in class
     public class RefOutArgumentTests
     {
+        private ClassUnderTest _classUnderTest;
+        private Dependency _dependency;
+
+        [TestInitialize]
+        public void InitializeTest()
+        {
+            _classUnderTest = new ClassUnderTest();
+            _dependency = new Dependency();
+        }
+
+        [TestCleanup]
+        public void CleanupTest()
+        {
+            _classUnderTest = null;
+            _dependency = null;
+        }
+
         [TestMethod]
         public void ReturnValuesInRefArgument()
         {
             // arrange
-            string outStr = "typemock";
-            // todo: why is an initial value necessary on an out parameter?
+            string refString = "typemock";
+            // todo: why is an initial value required on an out parameter?
             List<int> outList = new List<int> { 100 };
-            Dependency realDependency = new Dependency();
-            Isolate.WhenCalled(() => realDependency.SomeMethod(ref outStr, out outList)).IgnoreCall();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Isolate.WhenCalled(() => _dependency.SomeMethod(ref refString, out outList)).IgnoreCall();
 
             // act
-            string result = classUnderTest.GetString(realDependency);
+            string result = _classUnderTest.GetString(_dependency);
 
             // assert
             Assert.AreEqual("typemock1", result);
@@ -36,17 +51,15 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
         public void VerifyRefArguments()
         {
             // arrange
-            string outStr = "typemock";
-            Dependency fake = new Dependency();
-            Isolate.WhenCalled(() => fake.SomeMethod(ref outStr)).IgnoreCall();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            string refString = "typemock";
+            Isolate.WhenCalled(() => _dependency.SomeMethod(ref refString)).IgnoreCall();
 
             // act
-            classUnderTest.UseRef(fake);
+            _classUnderTest.UseRef(_dependency);
 
             // assert
             string inputShouldbe = "unit testing";
-            Isolate.Verify.WasCalledWithExactArguments(() => fake.SomeMethod(ref inputShouldbe));
+            Isolate.Verify.WasCalledWithExactArguments(() => _dependency.SomeMethod(ref inputShouldbe));
         }
     }
 
