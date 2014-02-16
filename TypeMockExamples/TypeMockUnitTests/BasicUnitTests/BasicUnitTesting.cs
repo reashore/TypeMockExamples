@@ -36,10 +36,10 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
         {
             // Arrange - Fake a Process, default is that all Members.ReturnRecursiveFakes 
             Process processFake = Isolate.Fake.Instance<Process>();
-            Isolate.WhenCalled(() => processFake.MainModule.Site.Name).WillReturn("Typemock rocks");
+            Isolate.WhenCalled(() => processFake.MainModule.Site.Name).WillReturn("SpecialSiteName");
 
             // Act 
-            bool result = ClassUnderTest.IsMySiteNameTypemock(processFake);
+            bool result = ClassUnderTest.IsSpecialSiteName(processFake);
 
             // Assert 
             Assert.AreEqual(true, result);
@@ -63,9 +63,9 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
             return 0;
         }
 
-        public static bool IsMySiteNameTypemock(Process process)
+        public static bool IsSpecialSiteName(Process process)
         {
-            if (process.MainModule.Site.Name.StartsWith("Typemock"))
+            if (process.MainModule.Site.Name.StartsWith("SpecialSiteName"))
             {
                 return true;
             }

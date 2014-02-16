@@ -42,6 +42,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
 
             // assert
             Isolate.Verify.WasCalledWithAnyArguments(() => dependencyFake.CheckSecurity(null, null));
+            Isolate.Verify.WasCalledWithExactArguments(() => dependencyFake.CheckSecurity("username", "password"));
         }
 
         [TestMethod]
@@ -55,6 +56,20 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
 
             // assert
             Isolate.Verify.WasNotCalled(() => dependencyFake.CallGuard());
+        }
+
+        [TestMethod]
+        public void VerifyCallWasMade()
+        {
+            // arrange
+            Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
+
+            // act
+            _classUnderTest.DoAction(1, dependencyFake);
+
+            // assert
+            Isolate.Verify.WasCalledWithAnyArguments(() => dependencyFake.CallGuard());
+            Isolate.Verify.WasCalledWithExactArguments(() => dependencyFake.CallGuard());
         }
 
         [TestMethod]
@@ -122,7 +137,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
             string argument0 = arguments[0] as string;
             string argument1 = arguments[1] as string;
 
-            // cast to strings failed
+            // return if string casts failed
             if (argument0 == null || argument1 == null)
             {
                 return false;
