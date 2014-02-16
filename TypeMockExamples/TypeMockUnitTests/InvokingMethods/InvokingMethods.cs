@@ -17,12 +17,12 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
         public void FireEvent_RunEvent()
         {
             // arrange
-            ClassUnderTest underTest = new ClassUnderTest();
-            Counter counter = new Counter(underTest);
+            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Counter counter = new Counter(classUnderTest);
 
             // act
             // Note how adding a dummy event is the way to fire it
-            Isolate.Invoke.Event(() => underTest.RunEvent += null, 0);
+            Isolate.Invoke.Event(() => classUnderTest.RunEvent += null, 0);
 
             // assert
             Assert.AreEqual(1, counter.Times);
@@ -32,10 +32,10 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
         public void InvokePrivateMethod()
         {
             // arrange
-            ClassUnderTest underTest = new ClassUnderTest();
+            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            object result = Isolate.Invoke.Method(underTest, "Sum", 2, 5);
+            object result = Isolate.Invoke.Method(classUnderTest, "Sum", 2, 5);
 
             // assert
             Assert.AreEqual(7, result);

@@ -122,7 +122,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
             string argument0 = arguments[0] as string;
             string argument1 = arguments[1] as string;
 
-            // cast to string failed
+            // cast to strings failed
             if (argument0 == null || argument1 == null)
             {
                 return false;

@@ -20,14 +20,15 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
         [TestMethod]
         public void FakingDateTime()
         {
-            // Arrange - Fake DateTime to think that it is 29th of Feb 2016
-            Isolate.WhenCalled(() => DateTime.Now).WillReturn(new DateTime(2016, 2, 29));
+            // Arrange
+            DateTime futureDateTime = new DateTime(2016, 2, 29);
+            Isolate.WhenCalled(() => DateTime.Now).WillReturn(futureDateTime);
 
             // Act 
-            int result = MyCode.DoSomethingSpecialOnALeapYear();
+            int result = ClassUnderTest.Return1234OnFutureDate(futureDateTime);
 
             // Assert 
-            Assert.AreEqual(100, result);
+            Assert.AreEqual(1234, result);
         }
 
         [TestMethod]
@@ -38,7 +39,7 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
             Isolate.WhenCalled(() => processFake.MainModule.Site.Name).WillReturn("Typemock rocks");
 
             // Act 
-            bool result = MyCode.IsMySiteNameTypemock(processFake);
+            bool result = ClassUnderTest.IsMySiteNameTypemock(processFake);
 
             // Assert 
             Assert.AreEqual(true, result);
@@ -47,19 +48,16 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
 
     //------------------
     // Classes under test
-    // - MyCode: Class that are Dependant on DateTime and Process and needs to be isolated from them to be unit tested
+    // Class that are Dependant on DateTime and Process and needs to be isolated from them to be unit tested
     //------------------
 
-    public class MyCode
+    public class ClassUnderTest
     {
-        /// <summary>
-        /// return 100 if we are on the 29th of February.
-        /// </summary>
-        public static int DoSomethingSpecialOnALeapYear()
+        public static int Return1234OnFutureDate(DateTime dateTime)
         {
-            if ((DateTime.Now.Month == 2) && (DateTime.Now.Day == 29))
+            if (DateTime.Now == dateTime)
             {
-                return 100;
+                return 1234;
             }
 
             return 0;
@@ -67,8 +65,6 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
 
         public static bool IsMySiteNameTypemock(Process process)
         {
-            //string name = process.MachineName;
-
             if (process.MainModule.Site.Name.StartsWith("Typemock"))
             {
                 return true;

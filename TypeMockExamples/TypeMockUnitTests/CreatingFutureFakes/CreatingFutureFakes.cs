@@ -45,8 +45,8 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
             // arrange
             // Here we are setting the same behavior on all instances.
             // The behavior we set on fake will apply to past instance as well
-            Singleton fakeSingleton = Isolate.Fake.AllInstances<Singleton>();
-            Isolate.WhenCalled(() => fakeSingleton.ReturnZero()).WillReturn(10);
+            Singleton singletonFake = Isolate.Fake.AllInstances<Singleton>();
+            Isolate.WhenCalled(() => singletonFake.ReturnZero()).WillReturn(10);
 
             // act
             int result = Singleton.Instance.ReturnZero();

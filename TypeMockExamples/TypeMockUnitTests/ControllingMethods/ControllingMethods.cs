@@ -21,20 +21,34 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
     /// </summary>
     [TestClass]
     [Isolated(DesignMode.Pragmatic)]
-    public class ControllingMethodTests
+    public class ControllingMethodTests1
     {
+        private ClassUnderTest _classUnderTest;
+        private Dependency _dependency;
+
+        [TestInitialize]
+        public void InitializeTest()
+        {
+            _classUnderTest = new ClassUnderTest();
+            _dependency = new Dependency();
+        }
+
+        [TestCleanup]
+        public void CleanupTest()
+        {
+            _classUnderTest = null;
+            _dependency = null;
+        }
+
         [TestMethod]
         public void ReturnRecursiveFake()
         {
             // arrange
-            Dependency realDependency = new Dependency();
-
             // return fake objects for reference types
-            Isolate.WhenCalled(() => realDependency.GetPatent()).ReturnRecursiveFake();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Isolate.WhenCalled(() => _dependency.GetPatent()).ReturnRecursiveFake();
 
             // act
-            string result = classUnderTest.ReturnPatentName(realDependency);
+            string result = _classUnderTest.ReturnPatentName(_dependency);
 
             // assert
             Assert.AreEqual(string.Empty, result);
@@ -44,45 +58,24 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         public void WillReturn_ReturnValue()
         {
             // arrange
-            Dependency realDependency = new Dependency();
-            Isolate.WhenCalled(() => realDependency.GetId()).WillReturn(2);
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Isolate.WhenCalled(() => _dependency.GetId()).WillReturn(2);
 
             // act
-            int result = classUnderTest.AddToDependency(1, realDependency);
+            int result = _classUnderTest.AddToDependency(1, _dependency);
 
             // assert
             Assert.AreEqual(3, result);
         }
 
         [TestMethod]
-        public void CallOriginal_OnFakeObject()
-        {
-            // arrange
-            Dependency fakeDependency = Isolate.Fake.Instance<Dependency>();
-            Isolate.WhenCalled(() => fakeDependency.GetId()).CallOriginal();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
-
-            // act
-            int result = classUnderTest.AddToDependency(1, fakeDependency);
-
-            // assert
-            // original GetID returns 10
-            Assert.AreEqual(11, result);
-        }
-
-        [TestMethod]
         public void IgnoreCall_OnRealObject()
         {
             // arrange
-            Dependency realDependency = new Dependency();
-
-            // do not convert lambda expression to method group (as it breaks the test)
-            Isolate.WhenCalled(() => realDependency.Check()).IgnoreCall();
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            // Note: do not convert lambda expression to method group (as it breaks the test)
+            Isolate.WhenCalled(() => _dependency.Check()).IgnoreCall();
 
             // act
-            int result = classUnderTest.GetIdWithCheck(realDependency);
+            int result = _classUnderTest.GetIdWithCheck(_dependency);
 
             // assert
             Assert.AreEqual(10, result);
@@ -93,12 +86,10 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         public void ThrowException_OnRealObject()
         {
             // arrange
-            Dependency realDependency = new Dependency();
-            Isolate.WhenCalled(() => realDependency.GetId()).WillThrow(new Exception("fakes fault"));
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Isolate.WhenCalled(() => _dependency.GetId()).WillThrow(new Exception("fakes fault"));
 
             // act
-            classUnderTest.AddToDependency(1, realDependency);
+            _classUnderTest.AddToDependency(1, _dependency);
         }
 
         [TestMethod]
@@ -106,13 +97,11 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         {
             // arrange
             int returnValue = 2;
-            Dependency realDependency = new Dependency();
             // return value dynamically
-            Isolate.WhenCalled(() => realDependency.GetId()).DoInstead(x => { return returnValue; });
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Isolate.WhenCalled(() => _dependency.GetId()).DoInstead(x => returnValue);
 
             // act
-            int result1 = classUnderTest.AddToDependency(1, realDependency);
+            int result1 = _classUnderTest.AddToDependency(1, _dependency);
 
             // assert
             Assert.AreEqual(3, result1);
@@ -121,7 +110,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
             returnValue = 4;
 
             // act
-            int result2 = classUnderTest.AddToDependency(1, realDependency);
+            int result2 = _classUnderTest.AddToDependency(1, _dependency);
 
             // assert
             Assert.AreEqual(5, result2);
@@ -131,52 +120,31 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         public void SequencedWillReturn_OnRealObject()
         {
             // arrange
-            Dependency realDependency = new Dependency();
             // Sequenced calls will return values in sequence, 
             // last value will stay the default
-            Isolate.WhenCalled(() => realDependency.GetId()).WillReturn(2);
-            Isolate.WhenCalled(() => realDependency.GetId()).WillReturn(9);
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Isolate.WhenCalled(() => _dependency.GetId()).WillReturn(2);
+            Isolate.WhenCalled(() => _dependency.GetId()).WillReturn(9);
 
             // act
-            int result = classUnderTest.AddToDependency3Times(1, realDependency);
+            int result = _classUnderTest.AddToDependency3Times(1, _dependency);
 
             // assert
             Assert.AreEqual(21, result);
         }
 
         [TestMethod]
-        public void OverloadedMethodConsideredSequenced_OnFakeObject()
-        {
-            // arrange
-            Dependency realDependency = Isolate.Fake.Instance<Dependency>();
-            // Overloaded method calls without using exact argument matching are considered sequenced calls
-            Isolate.WhenCalled(() => realDependency.OverloadedMethod(1)).WillReturn(2);
-            Isolate.WhenCalled(() => realDependency.OverloadedMethod("Typemock Rocks")).WillReturn(9);
-            ClassUnderTest classUnderTest = new ClassUnderTest();
-
-            // act
-            int result = classUnderTest.CallTwoOverloadedDependency(realDependency);
-
-            // assert
-            Assert.AreEqual(11, result);
-        }
-
-        [TestMethod]
         public void SequencedOverloadedByType_OnRealObject()
         {
             // arrange
-            Dependency realDependency = new Dependency();
             // Each overloaded method will act as a separate sequence
-            Isolate.WhenCalled(() => realDependency.OverloadedMethod(1)).WillReturn(2);
-            Isolate.WhenCalled(() => realDependency.OverloadedMethod(1)).WillReturn(4);
-            Isolate.WhenCalled(() => realDependency.OverloadedMethod("Typemock Rocks")).WillReturn(9);
-            Isolate.WhenCalled(() => realDependency.OverloadedMethod("Typemock Rocks")).WillReturn(10);
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Isolate.WhenCalled(() => _dependency.OverloadedMethod(1)).WillReturn(2);
+            Isolate.WhenCalled(() => _dependency.OverloadedMethod(1)).WillReturn(4);
+            Isolate.WhenCalled(() => _dependency.OverloadedMethod("Typemock Rocks")).WillReturn(9);
+            Isolate.WhenCalled(() => _dependency.OverloadedMethod("Typemock Rocks")).WillReturn(10);
 
             // act
-            int result1 = classUnderTest.CallTwoOverloadedDependency(realDependency);
-            int result2 = classUnderTest.CallTwoOverloadedDependency(realDependency);
+            int result1 = _classUnderTest.CallTwoOverloadedDependency(_dependency);
+            int result2 = _classUnderTest.CallTwoOverloadedDependency(_dependency);
 
             // asset
             Assert.AreEqual(11, result1);
@@ -187,12 +155,10 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         public void SettingBehaviorForCallChain_OnRealObject()
         {
             // arrange
-            Dependency fakeDependency = new Dependency();
-            Isolate.WhenCalled(() => fakeDependency.GetPatent().GetId()).WillReturn(2);
-            ClassUnderTest classUnderTest = new ClassUnderTest();
+            Isolate.WhenCalled(() => _dependency.GetPatent().GetId()).WillReturn(2);
 
             // act
-            int result = classUnderTest.AddToChainedDependency(1, fakeDependency);
+            int result = _classUnderTest.AddToChainedDependency(1, _dependency);
             
             // assert
             Assert.AreEqual(3, result);
@@ -202,19 +168,73 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         public void ExtensionMethod_Example()
         {
             // arrange
-            Dependency dependency = new Dependency();
             // Call the extension method as normal (even though it is actually a static method)
-            Isolate.WhenCalled(() => dependency.Multiply(6)).WillReturn(10);
-            ClassUnderTest cut = new ClassUnderTest();
+            Isolate.WhenCalled(() => _dependency.Multiply(6)).WillReturn(10);
 
             // act
-            int result = cut.AddToDependency(0, dependency);
+            int result = _classUnderTest.AddToDependency(0, _dependency);
 
             // assert
             // Verify the returned values
             Assert.AreEqual(10, result);
         }
+    }
 
+    [TestClass]
+    [Isolated(DesignMode.Pragmatic)]
+    public class ControllingMethodTests2
+    {
+        private ClassUnderTest _classUnderTest;
+        private Dependency _dependencyFake;
+
+        [TestInitialize]
+        public void InitializeTest()
+        {
+            _classUnderTest = new ClassUnderTest();
+            _dependencyFake = Isolate.Fake.Instance<Dependency>();
+        }
+
+        [TestCleanup]
+        public void CleanupTest()
+        {
+            _classUnderTest = null;
+            _dependencyFake = null;
+        }
+
+        [TestMethod]
+        public void CallOriginal_OnFakeObject()
+        {
+            // arrange
+            Isolate.WhenCalled(() => _dependencyFake.GetId()).CallOriginal();
+
+            // act
+            int result = _classUnderTest.AddToDependency(1, _dependencyFake);
+
+            // assert
+            // original GetID returns 10
+            Assert.AreEqual(11, result);
+        }
+
+        [TestMethod]
+        public void OverloadedMethodConsideredSequenced_OnFakeObject()
+        {
+            // arrange
+            // Overloaded method calls without using exact argument matching are considered sequenced calls
+            Isolate.WhenCalled(() => _dependencyFake.OverloadedMethod(1)).WillReturn(2);
+            Isolate.WhenCalled(() => _dependencyFake.OverloadedMethod("Typemock Rocks")).WillReturn(9);
+
+            // act
+            int result = _classUnderTest.CallTwoOverloadedDependency(_dependencyFake);
+
+            // assert
+            Assert.AreEqual(11, result);
+        }
+    }
+
+    [TestClass]
+    [Isolated(DesignMode.Pragmatic)]
+    public class ControllingMethodTests3
+    {
         [TestMethod]
         public void MockLinqQuery_Example()
         {
@@ -222,9 +242,10 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
             List<int> realList = new List<int> { 1, 2, 4, 5 };
             int[] dummyData = { 10, 20 };
             Isolate.WhenCalled(() => from c in realList where c > 3 select c).WillReturn(dummyData);
+            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            List<int> result = new ClassUnderTest().DoLinq(realList);
+            List<int> result = classUnderTest.DoLinq(realList);
 
             // assert
             // Note: Returns dummyData results

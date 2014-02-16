@@ -112,7 +112,6 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
             // arrange
             Dependency realDependency = new Dependency();
             Isolate.NonPublic.Property.WhenGetCalled(realDependency, "PrivateProp").WillReturn(3);
-            //ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
             int result = _classUnderTest.CalculateFromProperty(1, 2, realDependency);
@@ -127,7 +126,6 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
             // arrange
             Dependency realDependency = new Dependency();
             Isolate.NonPublic.Property.WhenGetCalled(realDependency, "PrivateProp").WillReturn(3);
-            //ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
             _classUnderTest.CalculateFromProperty(1, 2, realDependency);
@@ -141,7 +139,6 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
         {
             // arrange
             Isolate.NonPublic.WhenCalled<Dependency>("CallGuard").IgnoreCall();
-            //ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
             _classUnderTest.Calculate(1, 2);
@@ -155,7 +152,6 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
         {
             // arrange
             Isolate.NonPublic.WhenCalled<Dependency>("CallGuard").IgnoreCall();
-            //ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
             _classUnderTest.Calculate(1, 2);

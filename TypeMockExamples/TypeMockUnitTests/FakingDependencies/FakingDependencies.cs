@@ -18,10 +18,10 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
         public void FakeAllDependenciesInTheConstructor()
         {
             // arrange
-            ClassUnderTest realClassUnderTest = Isolate.Fake.Dependencies<ClassUnderTest>();
+            ClassUnderTest classUnderTestFake = Isolate.Fake.Dependencies<ClassUnderTest>();
 
             // act
-            int result = realClassUnderTest.Calculate(1, 2);
+            int result = classUnderTestFake.Calculate(1, 2);
 
             // assert
             Assert.AreEqual(0, result);
@@ -31,12 +31,12 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
         public void FakeAllDependencies_ChangeBehaviorOfADependency()
         {
             // arrange
-            ClassUnderTest realClassUnderTest = Isolate.Fake.Dependencies<ClassUnderTest>();
-            Dependency fakeDependency = Isolate.GetFake<Dependency>(realClassUnderTest);
-            Isolate.WhenCalled(() => fakeDependency.Multiplier).WillReturn(2);
+            ClassUnderTest classUnderTestFake = Isolate.Fake.Dependencies<ClassUnderTest>();
+            Dependency dependencyFake = Isolate.GetFake<Dependency>(classUnderTestFake);
+            Isolate.WhenCalled(() => dependencyFake.Multiplier).WillReturn(2);
 
             // act
-            int result = realClassUnderTest.Calculate(1, 2);
+            int result = classUnderTestFake.Calculate(1, 2);
 
             // assert
             Assert.AreEqual(6, result);
@@ -46,11 +46,11 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
         public void FakeAllDependencies_OverrideDefaultArguments()
         {
             // arrange
-            Dependency realDependency = new Dependency();
-            ClassUnderTest realClassUnderTest = Isolate.Fake.Dependencies<ClassUnderTest>(realDependency, 4);
+            Dependency dependency = new Dependency();
+            ClassUnderTest classUnderTestFake = Isolate.Fake.Dependencies<ClassUnderTest>(dependency, 4);
 
             // act
-            int result = realClassUnderTest.Calculate(1, 2);
+            int result = classUnderTestFake.Calculate(1, 2);
 
             // assert
             Assert.AreEqual(7, result);
