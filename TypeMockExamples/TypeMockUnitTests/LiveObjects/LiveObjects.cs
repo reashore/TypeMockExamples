@@ -35,9 +35,53 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
         }
 
         [TestMethod]
-        public void CreateRealObject_FakeVoidMethod()
+        public void CreateRealObjectFakeVoidMethod()
         {
             // arrange
+            Isolate.WhenCalled(() => _dependency.CheckSecurity(null, null)).IgnoreCall();
+
+            // act
+            int result = _classUnderTest.Calculate(1, 2, _dependency, null, null);
+
+            // assert
+            Assert.AreEqual(3, result);
+        }
+
+        // incorrect test
+        //[TestMethod]
+        //public void VerifyMethodsOfRealObject()
+        //{
+        //    // arrange
+        //    // Requires at least one WhenCalled, can be CallOriginal for Verify to work
+        //    Isolate.WhenCalled(() => _dependency.CheckSecurity(null, null)).IgnoreCall();
+
+        //    // act
+        //    _classUnderTest.Calculate(1, 2, _dependency);
+
+        //    // assert
+        //    Isolate.Verify.WasCalledWithAnyArguments(() => _dependency.CheckSecurity(null, null));
+        //}
+
+        [TestMethod]
+        public void VerifyMethodsOfRealObject1()
+        {
+            // arrange
+            // Requires at least one WhenCalled, can be CallOriginal for Verify to work
+            Isolate.WhenCalled(() => _dependency.CheckSecurity(null, null)).IgnoreCall();
+
+            // act
+            int result = _classUnderTest.Calculate(1, 2, _dependency, null, null);
+
+            // assert
+            Assert.AreEqual(3, result);
+            Isolate.Verify.WasCalledWithExactArguments(() => _dependency.CheckSecurity(null, null));
+        }
+
+        [TestMethod]
+        public void VerifyMethodsOfRealObject2()
+        {
+            // arrange
+            // Requires at least one WhenCalled, can be CallOriginal for Verify to work
             Isolate.WhenCalled(() => _dependency.CheckSecurity(null, null)).IgnoreCall();
 
             // act
@@ -45,19 +89,6 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
 
             // assert
             Assert.AreEqual(3, result);
-        }
-
-        [TestMethod]
-        public void VerifyMethods_OfRealObject()
-        {
-            // arrange
-            // Requires at least one WhenCalled, can be CallOriginal for Verify to work
-            Isolate.WhenCalled(() => _dependency.CheckSecurity(null, null)).IgnoreCall();
-
-            // act
-            _classUnderTest.Calculate(1, 2, _dependency);
-
-            // assert
             Isolate.Verify.WasCalledWithAnyArguments(() => _dependency.CheckSecurity(null, null));
         }
     }
@@ -70,9 +101,10 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
 
     public class ClassUnderTest
     {
-        public int Calculate(int a, int b, Dependency dependency)
+        public int Calculate(int a, int b, Dependency dependency, string username = "username", string password = "password")
         {
-            dependency.CheckSecurity("username", "password");
+            //dependency.CheckSecurity("username", "password");
+            dependency.CheckSecurity(username, password);
 
             return a + b;
         }

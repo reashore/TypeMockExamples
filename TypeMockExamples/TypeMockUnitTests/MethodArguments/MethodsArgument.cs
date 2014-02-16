@@ -37,8 +37,8 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
         {
             // arrange
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
-            Isolate.WhenCalled(() => dependencyFake.MethodReturnInt("typemock", 1)).WithExactArguments().WillReturn(10);
-            Isolate.WhenCalled(() => dependencyFake.MethodReturnInt("unit tests", 2)).WithExactArguments().WillReturn(50);
+            Isolate.WhenCalled(() => dependencyFake.MethodReturnInt("string1", 1)).WithExactArguments().WillReturn(10);
+            Isolate.WhenCalled(() => dependencyFake.MethodReturnInt("string2", 2)).WithExactArguments().WillReturn(50);
 
             // act
             int result = _classUnderTest.SimpleCalculation(dependencyFake);
@@ -47,27 +47,72 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
             Assert.AreEqual(60, result);
         }
 
-        // todo: use expected exception
+        // wierd test
+        //[TestMethod]
+        //public void FakeVoidMethodBasedOnExactMethodArgs()
+        //{
+        //    // arrange
+        //    Dependency dependency = new Dependency();
+        //    Isolate.WhenCalled(() => dependency.MethodReturnVoid(4)).WithExactArguments().IgnoreCall();
+        //    bool exceptionWasThrown = false;
+
+        //    // act
+        //    try
+        //    {
+        //        _classUnderTest.CallVoid(dependency, 4);
+        //    }
+        //    catch (NotImplementedException)
+        //    {
+        //        exceptionWasThrown = true;
+        //    }
+
+        //    // assert
+        //    Assert.IsFalse(exceptionWasThrown);
+        //}
+
         [TestMethod]
-        public void FakeVoidMethodBasedOnExactMethodArgs()
+        public void FakeVoidMethodBasedOnExactMethodArgs1()
         {
             // arrange
             Dependency dependency = new Dependency();
             Isolate.WhenCalled(() => dependency.MethodReturnVoid(4)).WithExactArguments().IgnoreCall();
-            bool exceptionWasThrown = false;
 
             // act
-            try
-            {
-                _classUnderTest.CallVoid(dependency, 4);
-            }
-            catch (NotImplementedException)
-            {
-                exceptionWasThrown = true;
-            }
+            _classUnderTest.CallVoid(dependency, 4);
 
             // assert
-            Assert.IsFalse(exceptionWasThrown);
+            // got here because exception was not thrown
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void FakeVoidMethodBasedOnExactMethodArgs2()
+        {
+            // arrange
+            Dependency dependency = new Dependency();
+            Isolate.WhenCalled(() => dependency.MethodReturnVoid(4)).WithExactArguments().IgnoreCall();
+
+            // act
+            _classUnderTest.CallVoid(dependency, 5);
+
+            // assert
+            // got here because exception was not thrown
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotImplementedException))]
+        public void FakeVoidMethodBasedOnExactMethodArgs3()
+        {
+            // arrange
+            Dependency dependency = new Dependency();
+
+            // act
+            _classUnderTest.CallVoid(dependency, 4);
+
+            // assert
+            // exception is thrown
         }
 
         [TestMethod]
@@ -76,11 +121,11 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
             // arrange
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
             Isolate.WhenCalled((string s, int x) => dependencyFake.MethodReturnInt(s, x))
-                .AndArgumentsMatch((s, x) => s.StartsWith("Gui") && x < 300)
+                .AndArgumentsMatch((s, x) => s.StartsWith("string3") && x < 300)
                 .WillReturn(1000);
 
             // act
-            int result = _classUnderTest.CallWithGuitar100(dependencyFake);
+            int result = _classUnderTest.CallWithString3And200(dependencyFake);
 
             // assert
             // All the arguments match our custom checker - the returned value is faked.
@@ -97,7 +142,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
                 .WillReturn(1000);
 
             // act
-            int result = _classUnderTest.CallWithGuitar100(dependencyFake);
+            int result = _classUnderTest.CallWithString3And200(dependencyFake);
 
             // assert
             // All the arguments match our custom checker - the returned value is faked.
@@ -109,13 +154,13 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
         {
             // arrange
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
-            Isolate.WhenCalled((int x) => dependencyFake.MethodReturnInt("Guitar", x))
+            Isolate.WhenCalled((int x) => dependencyFake.MethodReturnInt("string3", x))
                 .AndArgumentsMatch(x => x < 300)
                 .WithExactArguments()
                 .WillReturn(1000);
 
             // act
-            int result = _classUnderTest.CallWithGuitar100(dependencyFake);
+            int result = _classUnderTest.CallWithString3And200(dependencyFake);
 
             // assert
             // All the arguments match our custom checker - the returned value is faked.
@@ -133,8 +178,8 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
     {
         public int SimpleCalculation(Dependency dependency)
         {
-            int value1 = dependency.MethodReturnInt("typemock", 1);
-            int value2 = dependency.MethodReturnInt("unit tests", 2);
+            int value1 = dependency.MethodReturnInt("string1", 1);
+            int value2 = dependency.MethodReturnInt("string2", 2);
 
             return value1 + value2;
         }
@@ -144,9 +189,9 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
             dependency.MethodReturnVoid(i);
         }
 
-        public int CallWithGuitar100(Dependency dependency)
+        public int CallWithString3And200(Dependency dependency)
         {
-            return dependency.MethodReturnInt("Guitar", 200);
+            return dependency.MethodReturnInt("string3", 200);
         }
     }
 
