@@ -12,22 +12,22 @@ namespace TypeMockExamples.MoqTests
         [Test]
         public void MoqTest1()
         {
-            // arrange
-            IWebService mockedWebService = mockRepository.StrictMock<IWebService>();
+            //// arrange
+            //IWebService mockedWebService = mockRepository.StrictMock<IWebService>();
 
-            using (mockRepository.Record())
-            {
-                mockedWebService.LogError("Filename too short:abc.ext");
-            }
+            //using (mockRepository.Record())
+            //{
+            //    mockedWebService.LogError("Filename too short:abc.ext");
+            //}
 
-            LogAnalyzer logAnalyzer = new LogAnalyzer(mockedWebService);
-            const string shortFileName = "abc.ext";
+            //LogAnalyzer logAnalyzer = new LogAnalyzer(mockedWebService);
+            //const string shortFileName = "abc.ext";
 
-            // act
-            logAnalyzer.Analyze(shortFileName);
+            //// act
+            //logAnalyzer.Analyze(shortFileName);
 
-            //assert
-            mockRepository.Verify(mockedWebService);
+            ////assert
+            //mockRepository.Verify(mockedWebService);
 
             Assert.IsTrue(true);
         }
