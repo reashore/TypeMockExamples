@@ -2,7 +2,6 @@
 namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
@@ -36,7 +35,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
         }
 
         [TestMethod]
-        public void FakePropertyGetter_UsingWhenCalled()
+        public void FakePropertyGetterUsingWhenCalled()
         {
             // arrange
             Isolate.WhenCalled(() => _dependency.Number).WillReturn(5);
@@ -49,7 +48,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
         }
 
         [TestMethod]
-        public void FakePropertyGetter_UsingTrueProperty()
+        public void FakePropertyGetterUsingTrueProperty()
         {
             // arrange
             _dependency = Isolate.Fake.Instance<Dependency>();
@@ -63,7 +62,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
         }
 
         [TestMethod]
-        public void FakePropertySetter_UsingWhenCalled()
+        public void FakePropertySetterUsingWhenCalled()
         {
             // arrange
             int countCalls = 0;
@@ -82,6 +81,16 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
     // - Dependency: Methods are not implemented - these need to be faked out
     // - ClassUnderTest: Class that uses Dependency
     //------------------
+
+    public class ClassUnderTest
+    {
+        public int SimpleCalculation(int a, Dependency dependency)
+        {
+            int result = a + dependency.Number;
+            dependency.Number = result;
+            return result;
+        }
+    }
 
     public class Dependency
     {
@@ -104,16 +113,6 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
         public void CheckSecurity()
         {
             throw new NotImplementedException();
-        }
-    }
-
-    public class ClassUnderTest
-    {
-        public int SimpleCalculation(int a, Dependency dependency)
-        {
-            int result = a + dependency.Number;
-            dependency.Number = result;
-            return result;
         }
     }
 }

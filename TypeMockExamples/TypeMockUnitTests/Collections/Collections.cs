@@ -8,7 +8,6 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
-    // todo demonstrate Pragmatic and InterfaceOnly mode
     /// <summary>
     /// This test class shows ways to control methods and properties returning collections using Typemock Isolator.
     /// Collection handling in done either explicitly by swapping collection values returned by a method with a collection
@@ -37,11 +36,11 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
         }
 
         [TestMethod]
-        public void SwapCollection_WithFakeData2()
+        public void SwapCollectionWithFakeData2()
         {
             // arrange
-            //
-            Isolate.WhenCalled(() => _dependency.GetList()).WillReturnCollectionValuesOf(new[] { 1, 2, 3 });
+            List<int> intList = new List<int> {1, 2, 3};
+            Isolate.WhenCalled(() => _dependency.GetList()).WillReturnCollectionValuesOf(intList);
 
             // act
             int result = _classUnderTest.Sum(_dependency);
@@ -51,7 +50,7 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
         }
 
         [TestMethod]
-        public void ImplictCollectionCreation_ByFakingLastItem2()
+        public void ImplictCollectionCreationByFakingLastItem2()
         {
             // arrange
             // configure index 5 of list to return 3
@@ -73,7 +72,20 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
     // - ClassUnderTest: Class that uses Dependency
     //------------------
 
-    public class MyList : IList<int>
+    public class ClassUnderTest
+    {
+        public int Sum(Dependency dependency)
+        {
+            return dependency.GetList().Sum();
+        }
+
+        public int Count(Dependency dependency)
+        {
+            return dependency.GetList().Count;
+        }
+    }
+
+    public class IntList : IList<int>
     {
         #region IList implementation
 
@@ -149,22 +161,9 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
 
     public class Dependency
     {
-        public virtual MyList GetList()
+        public virtual IntList GetList()
         {
             throw new NotImplementedException();
-        }
-    }
-
-    public class ClassUnderTest
-    {
-        public int Sum(Dependency dependency)
-        {
-            return dependency.GetList().Sum();
-        }
-
-        public int Count(Dependency dependency)
-        {
-            return dependency.GetList().Count;
         }
     }
 }

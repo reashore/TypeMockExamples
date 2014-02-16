@@ -55,7 +55,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         }
 
         [TestMethod]
-        public void WillReturn_ReturnValue()
+        public void WillReturnValue()
         {
             // arrange
             Isolate.WhenCalled(() => _dependency.GetId()).WillReturn(2);
@@ -68,7 +68,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         }
 
         [TestMethod]
-        public void IgnoreCall_OnRealObject()
+        public void IgnoreCallOnRealObject()
         {
             // arrange
             // Note: do not convert lambda expression to method group (as it breaks the test)
@@ -83,7 +83,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
 
         [TestMethod]
         [ExpectedException(typeof(Exception), "fakes fault")]
-        public void ThrowException_OnRealObject()
+        public void ThrowExceptionOnRealObject()
         {
             // arrange
             Isolate.WhenCalled(() => _dependency.GetId()).WillThrow(new Exception("fakes fault"));
@@ -93,7 +93,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         }
 
         [TestMethod]
-        public void DoInstead_OnRealObject()
+        public void DoInsteadOnRealObject()
         {
             // arrange
             int returnValue = 2;
@@ -117,7 +117,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         }
 
         [TestMethod]
-        public void SequencedWillReturn_OnRealObject()
+        public void SequencedWillReturnOnRealObject()
         {
             // arrange
             // Sequenced calls will return values in sequence, 
@@ -133,7 +133,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         }
 
         [TestMethod]
-        public void SequencedOverloadedByType_OnRealObject()
+        public void SequencedOverloadedByTypeOnRealObject()
         {
             // arrange
             // Each overloaded method will act as a separate sequence
@@ -152,7 +152,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         }
 
         [TestMethod]
-        public void SettingBehaviorForCallChain_OnRealObject()
+        public void SettingBehaviorForCallChainOnRealObject()
         {
             // arrange
             Isolate.WhenCalled(() => _dependency.GetPatent().GetId()).WillReturn(2);
@@ -165,7 +165,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         }
 
         [TestMethod]
-        public void ExtensionMethod_Example()
+        public void ExtensionMethodExample()
         {
             // arrange
             // Call the extension method as normal (even though it is actually a static method)
@@ -202,7 +202,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         }
 
         [TestMethod]
-        public void CallOriginal_OnFakeObject()
+        public void CallOriginalOnFakeObject()
         {
             // arrange
             Isolate.WhenCalled(() => _dependencyFake.GetId()).CallOriginal();
@@ -216,7 +216,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         }
 
         [TestMethod]
-        public void OverloadedMethodConsideredSequenced_OnFakeObject()
+        public void OverloadedMethodConsideredSequencedOnFakeObject()
         {
             // arrange
             // Overloaded method calls without using exact argument matching are considered sequenced calls
@@ -236,7 +236,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
     public class ControllingMethodTests3
     {
         [TestMethod]
-        public void MockLinqQuery_Example()
+        public void MockLinqQueryExample()
         {
             // arrange
             List<int> realList = new List<int> { 1, 2, 4, 5 };
@@ -261,6 +261,57 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
     // - Dependency: Methods are not implemented - these need to be faked out
     // - ClassUnderTest: Class that uses Dependency
     //------------------
+
+    public class ClassUnderTest
+    {
+        public int SimpleCalculation(int a, int b, Dependency dependency)
+        {
+            dependency.Check();
+
+            return a + b;
+        }
+
+        public string ReturnPatentName(Dependency dependency)
+        {
+            Dependency patent = dependency.GetPatent();
+
+            return patent.Name;
+        }
+
+        public int GetIdWithCheck(Dependency dependency)
+        {
+            dependency.Check();
+
+            return dependency.GetId();
+        }
+
+        public int AddToDependency(int a, Dependency dependency)
+        {
+            return a + dependency.GetId();
+        }
+
+        public int AddToDependency3Times(int a, Dependency dependency)
+        {
+            return a + dependency.GetId() + dependency.GetId() + dependency.GetId();
+        }
+
+        public int CallTwoOverloadedDependency(Dependency dependency)
+        {
+            return dependency.OverloadedMethod(12) + dependency.OverloadedMethod("typemock");
+        }
+
+        public int AddToChainedDependency(int a, Dependency dependency)
+        {
+            return a + dependency.GetPatent().GetId();
+        }
+
+        public List<int> DoLinq(List<int> list)
+        {
+            IEnumerable<int> query = (from c in list where c > 3 select c);
+
+            return query.ToList();
+        }
+    }
 
     public static class ExtendDependency
     {
@@ -300,54 +351,6 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         public virtual int OverloadedMethod(string arg)
         {
             return 10;
-        }
-    }
-
-    public class ClassUnderTest
-    {
-        public int SimpleCalculation(int a, int b, Dependency dependency)
-        {
-            dependency.Check();
-
-            return a + b;
-        }
-
-        public string ReturnPatentName(Dependency dependency)
-        {
-            Dependency patent = dependency.GetPatent();
-            return patent.Name;
-        }
-
-        public int GetIdWithCheck(Dependency dependency)
-        {
-            dependency.Check();
-
-            return dependency.GetId();
-        }
-
-        public int AddToDependency(int a, Dependency dependency)
-        {
-            return a + dependency.GetId();
-        }
-
-        public int AddToDependency3Times(int a, Dependency dependency)
-        {
-            return a + dependency.GetId() + dependency.GetId() + dependency.GetId();
-        }
-
-        public int CallTwoOverloadedDependency(Dependency dependency)
-        {
-            return dependency.OverloadedMethod(12) + dependency.OverloadedMethod("typemock");
-        }
-
-        public int AddToChainedDependency(int a, Dependency dependency)
-        {
-            return a + dependency.GetPatent().GetId();
-        }
-
-        public List<int> DoLinq(List<int> list)
-        {
-            return (from c in list where c > 3 select c).ToList();
         }
     }
 }

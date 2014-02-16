@@ -14,7 +14,7 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
     public class CreatingFutureFakesTests
     {
         [TestMethod]
-        public void Fake_SingleFutureInstance()
+        public void FakeSingleFutureInstance()
         {
             // arrange
             Isolate.Fake.NextInstance<Dependency>();
@@ -27,7 +27,7 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
         }
 
         [TestMethod]
-        public void Fake_MultipleFutureInstances()
+        public void FakeMultipleFutureInstances()
         {
             // arrange
             Isolate.Fake.AllInstances<Dependency>();
@@ -56,7 +56,7 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
         }
 
         [TestMethod]
-        public void Fake_ImplementedDependency()
+        public void FakeImplementedDependency()
         {
             // arrange
             Isolate.Fake.NextInstance<IDependency>();
@@ -75,27 +75,6 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
     // - ClassUnderTest: Class that uses Dependency
     // - Singleton: A Singleton 
     //------------------
-
-    public interface IDependency
-    {
-        void Check(int x, int y);
-    }
-
-    public class Dependency
-    {
-        public void Check(int x, int y)
-        {
-            throw new Exception("Not checked!");
-        }
-    }
-
-    public class ConcreteDependency : IDependency
-    {
-        public void Check(int x, int y)
-        {
-            throw new Exception("Not checked!");
-        }
-    }
 
     public class ClassUnderTest
     {
@@ -117,8 +96,8 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
 
         public static int AddCheckingTwoInternalDependencies(int x, int y)
         {
-            Dependency dependency = new Dependency();
-            dependency.Check(x, y);
+            Dependency dependency1 = new Dependency();
+            dependency1.Check(x, y);
 
             Dependency dependency2 = new Dependency();
             dependency2.Check(x, y);
@@ -143,6 +122,27 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
         public int ReturnZero()
         {
             return 10;
+        }
+    }
+
+    public interface IDependency
+    {
+        void Check(int x, int y);
+    }
+
+    public class Dependency : IDependency
+    {
+        public void Check(int x, int y)
+        {
+            throw new Exception("Not checked!");
+        }
+    }
+
+    public class ConcreteDependency : IDependency
+    {
+        public void Check(int x, int y)
+        {
+            throw new Exception("Not checked!");
         }
     }
 }

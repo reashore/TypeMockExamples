@@ -1,5 +1,5 @@
 ﻿
-namespace TypeMockExamples.MyUnitTests
+namespace TypeMockExamples.NUnitTests
 {
     using System.Diagnostics;
     using NUnit.Framework;

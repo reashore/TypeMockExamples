@@ -32,7 +32,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
         }
 
         [TestMethod]
-        public void Verify_CallWasMade_WithAnyArgument()
+        public void VerifyCallWasMadeWithAnyArgument()
         {
             // arrange
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
@@ -45,7 +45,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
         }
 
         [TestMethod]
-        public void Verify_CallWasNeverMade()
+        public void VerifyCallWasNeverMade()
         {
             // arrange
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
@@ -58,7 +58,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
         }
 
         [TestMethod]
-        public void Verify_CallWasMadeTwice()
+        public void VerifyCallWasMadeTwice()
         {
             // arrange
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
@@ -74,7 +74,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
         }
 
         [TestMethod]
-        public void Verify_CallWasNeverMade_OnChain()
+        public void VerifyCallWasNeverMade_OnChain()
         {
             // arrange
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
@@ -87,7 +87,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
         }
 
         [TestMethod]
-        public void Verify_CallWasMade_WithExactArguments()
+        public void VerifyCallWasMadeWithExactArguments()
         {
             // arrange
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
@@ -100,7 +100,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
         }
 
         [TestMethod]
-        public void Verify_CallWasMade_WithMatchingArguments()
+        public void VerifyCallWasMadeWithMatchingArguments()
         {
             // arrange
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
@@ -138,19 +138,6 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
     // - ClassUnderTest: Class that uses Dependency
     //------------------
 
-    public class Dependency
-    {
-        public virtual void CheckSecurity(string name, string password)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual Dependency CallGuard()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public class ClassUnderTest
     {
         public void DoAction(int i, Dependency dependency)
@@ -161,6 +148,19 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
             {
                 dependency.CallGuard();
             }
+        }
+    }
+
+    public class Dependency
+    {
+        public virtual void CheckSecurity(string name, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Dependency CallGuard()
+        {
+            throw new NotImplementedException();
         }
     }
 }

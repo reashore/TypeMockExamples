@@ -33,7 +33,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
         }
 
         [TestMethod]
-        public void FakeReturnValue_BasedOn_ExactMethodArgumentsAtRuntime()
+        public void FakeReturnValueBasedOnExactMethodArgumentsAtRuntime()
         {
             // arrange
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
@@ -47,12 +47,13 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
             Assert.AreEqual(60, result);
         }
 
+        // todo: use expected exception
         [TestMethod]
-        public void FakeVoidMethod_BasedOn_ExactMethodArgs()
+        public void FakeVoidMethodBasedOnExactMethodArgs()
         {
             // arrange
             Dependency dependency = new Dependency();
-            Isolate.WhenCalled(() => dependency.VoidMethod(4)).WithExactArguments().IgnoreCall();
+            Isolate.WhenCalled(() => dependency.MethodReturnVoid(4)).WithExactArguments().IgnoreCall();
             bool exceptionWasThrown = false;
 
             // act
@@ -70,7 +71,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
         }
 
         [TestMethod]
-        public void FakeReturnValue_BasedOnCustomArgumentsChecking()
+        public void FakeReturnValueBasedOnCustomArgumentsChecking()
         {
             // arrange
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
@@ -87,7 +88,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
         }
 
         [TestMethod]
-        public void FakeReturnValue_BasedOnCustomArgumentsChecking_CheckOneArgument()
+        public void FakeReturnValueBasedOnCustomArgumentsChecking_CheckOneArgument()
         {
             // arrange
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
@@ -104,7 +105,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
         }
 
         [TestMethod]
-        public void FakeReturnValue_BasedOn_MixedChecker()
+        public void FakeReturnValueBasedOnMixedChecker()
         {
             // arrange
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
@@ -128,6 +129,27 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
     // - ClassUnderTest: Class that uses Dependency
     //------------------
 
+    public class ClassUnderTest
+    {
+        public int SimpleCalculation(Dependency dependency)
+        {
+            int value1 = dependency.MethodReturnInt("typemock", 1);
+            int value2 = dependency.MethodReturnInt("unit tests", 2);
+
+            return value1 + value2;
+        }
+
+        public void CallVoid(Dependency dependency, int i)
+        {
+            dependency.MethodReturnVoid(i);
+        }
+
+        public int CallWithGuitar100(Dependency dependency)
+        {
+            return dependency.MethodReturnInt("Guitar", 200);
+        }
+    }
+
     public class Dependency
     {
         public virtual int MethodReturnInt(string arg1, int arg2)
@@ -135,27 +157,9 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
             throw new NotImplementedException();
         }
 
-        public virtual void VoidMethod(int n)
+        public virtual void MethodReturnVoid(int n)
         {
             throw new NotImplementedException();
-        }
-    }
-
-    public class ClassUnderTest
-    {
-        public int SimpleCalculation(Dependency dependency)
-        {
-            return dependency.MethodReturnInt("typemock", 1) + dependency.MethodReturnInt("unit tests", 2);
-        }
-
-        public void CallVoid(Dependency dependency, int i)
-        {
-            dependency.VoidMethod(i);
-        }
-
-        public int CallWithGuitar100(Dependency dependency)
-        {
-            return dependency.MethodReturnInt("Guitar", 200);
         }
     }
 }

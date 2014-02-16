@@ -28,11 +28,11 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
         }
 
         [TestMethod]
-        public void FakeAllDependencies_ChangeBehaviorOfADependency()
+        public void FakeAllDependenciesChangeBehaviorOfADependency()
         {
             // arrange
             ClassUnderTest classUnderTestFake = Isolate.Fake.Dependencies<ClassUnderTest>();
-            Dependency dependencyFake = Isolate.GetFake<Dependency>(classUnderTestFake);
+            Dependency1 dependencyFake = Isolate.GetFake<Dependency1>(classUnderTestFake);
             Isolate.WhenCalled(() => dependencyFake.Multiplier).WillReturn(2);
 
             // act
@@ -43,10 +43,10 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
         }
 
         [TestMethod]
-        public void FakeAllDependencies_OverrideDefaultArguments()
+        public void FakeAllDependenciesOverrideDefaultArguments()
         {
             // arrange
-            Dependency dependency = new Dependency();
+            Dependency1 dependency = new Dependency1();
             ClassUnderTest classUnderTestFake = Isolate.Fake.Dependencies<ClassUnderTest>(dependency, 4);
 
             // act
@@ -64,9 +64,9 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
     // - ClassUnderTest: Class that uses Dependency
     //------------------
 
-    public sealed class Dependency
+    public sealed class Dependency1
     {
-        public Dependency()
+        public Dependency1()
         {
             Multiplier = 1;
         }
@@ -85,14 +85,14 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
     public class ClassUnderTest
     {
         private readonly int _additional;
-        private readonly Dependency _depenency1;
+        private readonly Dependency1 _depenency1;
         private readonly Dependency2 _dependency2;
 
-        public ClassUnderTest(int additional, Dependency2 dependency2, Dependency depenency1)
+        public ClassUnderTest(int additional, Dependency2 dependency2, Dependency1 depenency1)
         {
             _additional = additional;
-            _dependency2 = dependency2;
             _depenency1 = depenency1;
+            _dependency2 = dependency2;
         }
 
         public int Calculate(int a, int b)

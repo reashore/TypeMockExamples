@@ -78,7 +78,7 @@
     <Compile Include="FluentAssertions\ReferenceTypeTests.cs" />
     <Compile Include="FluentAssertions\StringTests.cs" />
     <Compile Include="MoqTests\MoqTests.cs" />
-    <Compile Include="MyUnitTests\NUnitTests.cs" />
+    <Compile Include="NUnitTests\NUnitTests.cs" />
     <Compile Include="NSubstituteTests\NSubstituteTests.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="RhinoMockTests\RhinoMockTests.cs" />
@@ -95,7 +95,6 @@
     <Compile Include="TypeMockUnitTests\MethodArguments\MethodsArgument.cs" />
     <Compile Include="TypeMockUnitTests\PrivateMethods\PrivateMethods.cs" />
     <Compile Include="TypeMockUnitTests\RefOutArguments\RefOutArguments.cs" />
-    <Compile Include="MyUnitTests\MSTestTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeMockUnitTests\AssertingCallsWereMade\AssertingCallsWereMade.cs" />
     <Compile Include="TypeMockUnitTests\StaticMethods\StaticMethods.cs" />

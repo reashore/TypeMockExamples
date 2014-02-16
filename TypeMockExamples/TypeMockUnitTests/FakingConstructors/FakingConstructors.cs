@@ -28,21 +28,21 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
         }
 
         [TestMethod]
-        public void CallConstructorAndPassArguments_FakeAllMethods()
+        public void CallConstructorAndPassArgumentsFakeAllMethods()
         {
             // arrange
             // The constructor is not faked here.      
-            Dependency dependencyFake = Isolate.Fake.Instance<Dependency>(Members.ReturnRecursiveFakes, ConstructorWillBe.Called, 5, "Typemock");
+            Dependency dependencyFake = Isolate.Fake.Instance<Dependency>(Members.ReturnRecursiveFakes, ConstructorWillBe.Called, 5, "ConstructorArgument");
 
             // act
             string result = _classUnderTest.GetString(dependencyFake);
 
             // assert
-            Assert.AreEqual("Typemock5", result);
+            Assert.AreEqual("ConstructorArgument5", result);
         }
 
         [TestMethod]
-        public void IgnoringOnlyConstrutor_RestOfMethodsCalled()
+        public void IgnoringOnlyConstrutorRestOfMethodsCalled()
         {
             // arrange
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>(Members.CallOriginal, ConstructorWillBe.Ignored);
@@ -55,7 +55,7 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
         }
 
         [TestMethod]
-        public void FutureInstance_VerifyThrowingExceptionOnCreation()
+        public void FutureInstanceVerifyThrowingExceptionOnCreation()
         {
             // arrange
             // We want a memory handling exception to be thrown the next time a Dependency is instantiated
@@ -70,7 +70,7 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
         }
 
         [TestMethod]
-        public void CallConstructor_FakeBaseClassConstructor()
+        public void CallConstructorFakeBaseClassConstructor()
         {
             // assert
             // create an instance of Derived, but avoid calling the base class constructor
@@ -90,6 +90,31 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
     // - ClassUnderTest: Class that creates and uses Dependency
     // - Base and Derived: Class Hierarchy but Base still needs to implement its constructor
     //------------------
+
+    public class ClassUnderTest
+    {
+        public string GetString(Dependency dependency)
+        {
+            return dependency.Name + dependency.Age;
+        }
+
+        public Dependency Create()
+        {
+            try
+            {
+                return new Dependency(0, string.Empty);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public int GetSize(Derived derived)
+        {
+            return derived.Size;
+        }
+    }
 
     public class Dependency
     {
@@ -127,31 +152,6 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
         public Derived()
         {
             Size = 100;
-        }
-    }
-
-    public class ClassUnderTest
-    {
-        public string GetString(Dependency user)
-        {
-            return user.Name + user.Age;
-        }
-
-        public Dependency Create()
-        {
-            try
-            {
-                return new Dependency(0, string.Empty);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        public int GetSize(Derived derived)
-        {
-            return derived.Size;
         }
     }
 }

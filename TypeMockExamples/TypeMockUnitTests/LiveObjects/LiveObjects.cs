@@ -68,19 +68,6 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
     // - ClassUnderTest: Class that uses Dependency
     //------------------
 
-    public class Dependency
-    {
-        public virtual void CheckSecurity(string name, string password)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual int GetId()
-        {
-            return 10;
-        }
-    }
-
     public class ClassUnderTest
     {
         public int Calculate(int a, int b, Dependency dependency)
@@ -93,6 +80,19 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
         public int Calculate(int a, Dependency dependency)
         {
             return a + dependency.GetId();
+        }
+    }
+
+    public class Dependency
+    {
+        public virtual void CheckSecurity(string name, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual int GetId()
+        {
+            return 10;
         }
     }
 }

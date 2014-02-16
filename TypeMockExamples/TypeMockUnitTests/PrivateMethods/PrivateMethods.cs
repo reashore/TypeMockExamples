@@ -1,8 +1,9 @@
 ﻿
+using TypeMockExamples.Properties;
+
 namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
 {
     using System;
-    using Annotations;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 

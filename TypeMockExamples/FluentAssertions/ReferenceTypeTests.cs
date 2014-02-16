@@ -18,11 +18,11 @@ namespace TypeMockExamples.FluentAssertions
             theObject.Should().BeOfType<string>("because a {0} is set", typeof(string));
             theObject.Should().NotBeNull();
 
-            const string OtherObject = "whatever";
-            theObject.Should().Be(OtherObject, "because they have the same values");
+            const string otherObject = "whatever";
+            theObject.Should().Be(otherObject, "because they have the same values");
 
-            theObject = OtherObject;
-            theObject.Should().BeSameAs(OtherObject);
+            theObject = otherObject;
+            theObject.Should().BeSameAs(otherObject);
             //theObject.Should().NotBeSameAs(otherObject);
 
             ArgumentException ex = new ArgumentException();

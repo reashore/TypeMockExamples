@@ -1,10 +1,11 @@
 ﻿
 
+using TypeMockExamples.Properties;
+
 namespace TypeMockExamples.RhinoMockTests
 {
     using NUnit.Framework;
     using Rhino.Mocks;
-    using Annotations;
 
     [TestFixture]
     class RhinoMockTests

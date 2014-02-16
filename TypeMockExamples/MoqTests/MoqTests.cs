@@ -1,5 +1,5 @@
 ﻿
-using TypeMockExamples.Annotations;
+using TypeMockExamples.Properties;
 
 namespace TypeMockExamples.MoqTests
 {

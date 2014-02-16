@@ -69,19 +69,6 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
     // - ClassUnderTest: Class that uses Dependency
     //------------------
 
-    public class Dependency
-    {
-        public virtual void SomeMethod(ref string name, out List<int> list)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void SomeMethod(ref string name)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public class ClassUnderTest
     {
         public string GetString(Dependency dependency)
@@ -99,6 +86,19 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
             dependency.SomeMethod(ref name);
 
             return name;
+        }
+    }
+
+    public class Dependency
+    {
+        public virtual void SomeMethod(ref string name, out List<int> list)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void SomeMethod(ref string name)
+        {
+            throw new NotImplementedException();
         }
     }
 }
