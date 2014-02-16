@@ -13,7 +13,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
     /// and return value), the second object's implementation will be called instead.
     /// </summary>
     [TestClass]
-    [Isolated(DesignMode.Pragmatic)]
+    [Isolated]
     public class MethodRedirectionTests
     {
         private Duck _duck;

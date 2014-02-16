@@ -15,7 +15,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
     /// </list>
     /// </summary>
     [TestClass]
-    [Isolated] // Note: Use Isolated to clean up after all tests in class
+    [Isolated]
     public class ControllingPropertiesTests
     {
         private ClassUnderTest _classUnderTest;

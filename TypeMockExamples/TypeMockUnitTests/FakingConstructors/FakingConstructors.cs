@@ -10,7 +10,7 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
     /// and controlling the constructors that are called
     /// </summary>
     [TestClass]
-    [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
+    [Isolated]
     public class FakingConstructorTests
     {
         private ClassUnderTest _classUnderTest;

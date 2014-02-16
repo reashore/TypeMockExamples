@@ -10,7 +10,7 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
     /// This class demonstrates the ability of firing events and invoking private methods using Isolator.
     /// </summary>
     [TestClass]
-    [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after all tests in class
+    [Isolated]
     public class InvokingMethodsTests
     {
         [TestMethod]

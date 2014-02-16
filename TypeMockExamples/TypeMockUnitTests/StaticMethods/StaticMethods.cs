@@ -6,7 +6,7 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
     using TypeMock.ArrangeActAssert;
 
     [TestClass]
-    [Isolated(DesignMode.Pragmatic)]
+    [Isolated]
     public class StaticMethodAndConstructorTests1
     {
         private ClassUnderTest _classUnderTest;
@@ -64,7 +64,7 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
     }
 
     [TestClass]
-    [Isolated(DesignMode.Pragmatic)]
+    [Isolated]
     public class StaticMethodAndConstructorTests2
     {
         /// <summary>

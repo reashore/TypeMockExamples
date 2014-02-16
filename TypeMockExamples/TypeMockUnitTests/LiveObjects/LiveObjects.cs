@@ -14,7 +14,7 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
     /// using Isolate.Fake.StaticMethods().
     /// </summary>
     [TestClass]
-    [Isolated(DesignMode.InterfaceOnly)] // Note: Use Isolated to clean up after all tests in class
+    [Isolated]  //[Isolated(DesignMode.InterfaceOnly)]
     public class LiveObjectTests
     {
         private ClassUnderTest _classUnderTest;

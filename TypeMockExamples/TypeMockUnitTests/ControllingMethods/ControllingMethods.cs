@@ -20,7 +20,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
     /// </list>
     /// </summary>
     [TestClass]
-    [Isolated(DesignMode.Pragmatic)]
+    [Isolated]
     public class ControllingMethodTests1
     {
         private ClassUnderTest _classUnderTest;
@@ -181,7 +181,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
     }
 
     [TestClass]
-    [Isolated(DesignMode.Pragmatic)]
+    [Isolated]
     public class ControllingMethodTests2
     {
         private ClassUnderTest _classUnderTest;
@@ -232,7 +232,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
     }
 
     [TestClass]
-    [Isolated(DesignMode.Pragmatic)]
+    [Isolated]
     public class ControllingMethodTests3
     {
         [TestMethod]

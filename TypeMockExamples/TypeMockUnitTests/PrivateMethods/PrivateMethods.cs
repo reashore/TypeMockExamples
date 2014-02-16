@@ -21,7 +21,7 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
     /// </list>
     /// </summary>
     [TestClass]
-    [Isolated(DesignMode.Pragmatic)]
+    [Isolated]
     public class PrivateMethodTests
     {
         private ClassUnderTest _classUnderTest;

@@ -14,7 +14,7 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
     ///     - Assert: here we verify that the outcome of running the test code with the test set up yielded the expected results    
     /// </summary>
     [TestClass]
-    [Isolated(DesignMode.Pragmatic)] // Note: Use Isolated to clean up after the test. Faking static methods requires Pragmatic mode
+    [Isolated]
     public class BasicUnitTestingTests
     {
         [TestMethod]

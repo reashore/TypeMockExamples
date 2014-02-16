@@ -11,7 +11,7 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
     /// To set the return value of a ref or out arguement, set them before calling the WhenCalled API.
     /// </summary>
     [TestClass]
-    [Isolated] // Note: Use Isolated to clean up after all tests in class
+    [Isolated]
     public class RefOutArgumentTests
     {
         private ClassUnderTest _classUnderTest;

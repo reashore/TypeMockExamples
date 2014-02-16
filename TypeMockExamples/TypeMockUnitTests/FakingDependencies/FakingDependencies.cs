@@ -11,7 +11,7 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
     /// This is a great tool to make sure that adding dependencies to the type won't fail the tests.
     /// </summary>
     [TestClass]
-    [Isolated] // Note: Use Isolated to clean up after the test
+    [Isolated]
     public class FakingDependenciesTests
     {
         [TestMethod]
