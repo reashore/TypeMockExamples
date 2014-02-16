@@ -82,14 +82,17 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception), "fakes fault")]
+        [ExpectedException(typeof(Exception))]
         public void ThrowExceptionOnRealObject()
         {
             // arrange
-            Isolate.WhenCalled(() => _dependency.GetId()).WillThrow(new Exception("fakes fault"));
+            Isolate.WhenCalled(() => _dependency.GetId()).WillThrow(new Exception());
 
             // act
             _classUnderTest.AddToDependency(1, _dependency);
+
+            // assert
+            // exception is thrown
         }
 
         [TestMethod]
@@ -120,8 +123,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         public void SequencedWillReturnOnRealObject()
         {
             // arrange
-            // Sequenced calls will return values in sequence, 
-            // last value will stay the default
+            // Sequenced calls will return values in sequence,  last value will stay the default
             Isolate.WhenCalled(() => _dependency.GetId()).WillReturn(2);
             Isolate.WhenCalled(() => _dependency.GetId()).WillReturn(9);
 
@@ -213,6 +215,23 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
             // assert
             // original GetID returns 10
             Assert.AreEqual(11, result);
+
+            Assert.AreEqual(10, _dependencyFake.GetId());
+        }
+
+        [TestMethod]
+        public void CallOriginalOnFakeObject2()
+        {
+            // arrange
+            // no additional configuration
+
+            // act
+            int result = _classUnderTest.AddToDependency(1, _dependencyFake);
+
+            // assert
+            // GetId() on fake returns default(int), which is 0
+            Assert.AreEqual(1, result);
+            Assert.AreEqual(0, _dependencyFake.GetId());
         }
 
         [TestMethod]
