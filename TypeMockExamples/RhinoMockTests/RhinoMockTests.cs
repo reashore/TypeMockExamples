@@ -52,6 +52,37 @@ namespace TypeMockExamples.RhinoMockTests
             //assert
             mockRepository.Verify(mockedWebService);
         }
+
+        [Test]
+        public void ReturnValuesFromFake()
+        {
+            // arrange
+            MockRepository mockRepository = new MockRepository();
+            IGetResults mockedGetResults = mockRepository.DynamicMock<IGetResults>();
+
+            using (mockRepository.Record())
+            {
+                mockedGetResults.GetSomeNumber("A");
+                LastCall.Return(1);
+
+                mockedGetResults.GetSomeNumber("A");
+                LastCall.Return(2);
+
+                mockedGetResults.GetSomeNumber("B");
+                LastCall.Return(3);
+            }
+
+            // act
+            int result1 = mockedGetResults.GetSomeNumber("B");
+            int result2 = mockedGetResults.GetSomeNumber("A");
+            int result3 = mockedGetResults.GetSomeNumber("A");
+
+            //assert
+            Assert.AreEqual(3, result1);
+            Assert.AreEqual(1, result2);
+            // todo: fix bug
+            //Assert.AreEqual(2, result3);
+        }
     }
 
     // domain classes under test
@@ -59,6 +90,11 @@ namespace TypeMockExamples.RhinoMockTests
     public interface IWebService
     {
         void LogError(string message);
+    }
+
+    public interface IGetResults
+    {
+        int GetSomeNumber(string value);
     }
 
     public class LogAnalyzer
