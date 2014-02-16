@@ -10,25 +10,24 @@ namespace TypeMockExamples.MoqTests
     class MoqTests
     {
         [Test]
-        public void MoqTest()
+        public void MoqTest1()
         {
             // arrange
-            //MockRepository mockRepository = new MockRepository();
-            //IWebService mockedWebService = mockRepository.StrictMock<IWebService>();
+            IWebService mockedWebService = mockRepository.StrictMock<IWebService>();
 
-            //using (mockRepository.Record())
-            //{
-            //    mockedWebService.LogError("Filename too short:abc.ext");
-            //}
+            using (mockRepository.Record())
+            {
+                mockedWebService.LogError("Filename too short:abc.ext");
+            }
 
-            //LogAnalyzer logAnalyzer = new LogAnalyzer(mockedWebService);
-            //const string shortFileName = "abc.ext";
+            LogAnalyzer logAnalyzer = new LogAnalyzer(mockedWebService);
+            const string shortFileName = "abc.ext";
 
-            //// act
-            //logAnalyzer.Analyze(shortFileName);
+            // act
+            logAnalyzer.Analyze(shortFileName);
 
-            ////assert
-            //mockRepository.Verify(mockedWebService);
+            //assert
+            mockRepository.Verify(mockedWebService);
 
             Assert.IsTrue(true);
         }
@@ -58,6 +57,16 @@ namespace TypeMockExamples.MoqTests
 
     // domain classes under test
 
+    
+
+
+
+
+
+
+
+
+    //--------------------------------------------------------------
     public interface IWebService
     {
         void LogError(string message);

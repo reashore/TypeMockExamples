@@ -45,6 +45,7 @@ namespace TypeMockExamples.MyUnitTests
         [TestCase(4, 5, 9)]
         [TestCase(3, 5, 8)]
         [TestCase(2, 5, 7)]
+        [MaxTime(2000)]
         [Category("Composite")]
         public void TestNUnitTest3(int x, int y, int expectedSum)
         {
