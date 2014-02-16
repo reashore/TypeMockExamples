@@ -74,7 +74,7 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
         }
 
         [TestMethod]
-        public void VerifyCallWasNeverMade_OnChain()
+        public void VerifyCallWasNeverMadeOnChain()
         {
             // arrange
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();

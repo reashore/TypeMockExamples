@@ -133,7 +133,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
         }
 
         [TestMethod]
-        public void FakeReturnValueBasedOnCustomArgumentsChecking_CheckOneArgument()
+        public void FakeReturnValueBasedOnCustomArgumentsCheckingCheckOneArgument()
         {
             // arrange
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();

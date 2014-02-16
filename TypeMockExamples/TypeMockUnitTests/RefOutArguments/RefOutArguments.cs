@@ -55,10 +55,11 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
             Isolate.WhenCalled(() => _dependency.SomeMethod(ref refString)).IgnoreCall();
 
             // act
-            _classUnderTest.UseRef(_dependency);
+            string result = _classUnderTest.UseRef(_dependency);
 
             // assert
             string inputShouldbe = "unit testing";
+            //Assert.AreEqual(inputShouldbe, result);
             Isolate.Verify.WasCalledWithExactArguments(() => _dependency.SomeMethod(ref inputShouldbe));
         }
     }
