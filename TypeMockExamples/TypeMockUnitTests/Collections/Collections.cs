@@ -54,6 +54,7 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
         {
             // arrange
             // configure index 5 of list to return 3
+            // causes list of length 6 to be created
             Isolate.WhenCalled(() => _dependency.GetList()[5]).WillReturn(3);
 
             // act

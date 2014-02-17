@@ -45,6 +45,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
 
             // assert
             Assert.AreEqual(7, result);
+            Assert.AreEqual(5, _dependency.Number);
         }
 
         [TestMethod]
