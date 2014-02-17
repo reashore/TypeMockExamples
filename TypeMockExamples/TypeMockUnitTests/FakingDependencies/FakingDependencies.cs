@@ -57,12 +57,7 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
         }
     }
 
-    //------------------
-    // Classes under test
-    // - Dependency: A dependency of ClassUnderTest
-    // - Dependency2: Methods are not implemented - these need to be faked out
-    // - ClassUnderTest: Class that uses Dependency
-    //------------------
+    // **** Classes under test ****
 
     public sealed class Dependency1
     {

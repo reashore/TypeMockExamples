@@ -107,12 +107,7 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
         }
     }
 
-    //------------------
-    // Classes under test
-    // - Dependency: Methods are not implemented - these need to be faked out
-    // - ClassUnderTest: Class that uses Dependency
-    // - StaticConstructorExample: a class with a static constructor and a flag that indicates it was called.
-    //------------------
+    // **** Classes under test ****
 
     public class StaticConstructorExample
     {

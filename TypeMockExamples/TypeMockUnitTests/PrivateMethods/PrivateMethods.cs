@@ -182,12 +182,7 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
         }
     }
 
-    //------------------
-    // Classes under test
-    // - Dependency: Class with private Methods that need to be faked out
-    // - ClassUnderTest: Class that uses Dependency
-    // - IGuard: an unimplemented interface
-    //------------------
+    // **** Classes under test ****
 
     public class ClassUnderTest
     {

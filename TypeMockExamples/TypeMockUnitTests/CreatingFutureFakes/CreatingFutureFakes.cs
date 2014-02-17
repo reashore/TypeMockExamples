@@ -69,12 +69,7 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
         }
     }
 
-    //------------------
-    // Classes under test
-    // - Dependency: Methods are not implemented - these need to be faked out
-    // - ClassUnderTest: Class that uses Dependency
-    // - Singleton: A Singleton 
-    //------------------
+    // **** Classes under test ****
 
     public class ClassUnderTest
     {

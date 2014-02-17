@@ -53,12 +53,7 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
         }
     }
 
-    //------------------
-    // Classes under test
-    // - Dependency: Class with Methods that need to be faked out
-    // - ClassUnderTest: Class that creates and uses Dependency
-    // - Counter: A Class that registers to our ClassUnderTest events
-    //------------------
+    // **** Classes under test ****
 
     public class Dependency
     {

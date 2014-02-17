@@ -136,10 +136,7 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
         }
     }
 
-    //------------------
-    // Classes under test
-    // Class that are Dependant on DateTime and Process and needs to be isolated from them to be unit tested
-    //------------------
+    // **** Classes under test ****
 
     public class ClassUnderTest
     {

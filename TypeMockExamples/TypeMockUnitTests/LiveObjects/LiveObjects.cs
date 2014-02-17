@@ -93,11 +93,7 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
         }
     }
 
-    //------------------
-    // Classes under test
-    // - Dependency: Class with Methods that need to be faked out
-    // - ClassUnderTest: Class that uses Dependency
-    //------------------
+    // **** Classes under test ****
 
     public class ClassUnderTest
     {

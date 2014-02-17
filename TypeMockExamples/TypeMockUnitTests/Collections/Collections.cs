@@ -66,12 +66,7 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
         }
     }
 
-    //------------------
-    // Classes under test
-    // - MyList - a partially implemented collection
-    // - Dependency: Methods are not implemented - these need to be faked out, one returns a MyList
-    // - ClassUnderTest: Class that uses Dependency
-    //------------------
+    // **** Classes under test ****
 
     public class ClassUnderTest
     {

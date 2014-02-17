@@ -274,12 +274,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         }
     }
 
-    //------------------
-    // Classes under test
-    // - ExtendDependency - an extension method of Dependency
-    // - Dependency: Methods are not implemented - these need to be faked out
-    // - ClassUnderTest: Class that uses Dependency
-    //------------------
+    // **** Classes under test ****
 
     public class ClassUnderTest
     {

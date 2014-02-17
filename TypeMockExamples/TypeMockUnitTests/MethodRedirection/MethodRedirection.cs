@@ -80,11 +80,8 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
         }
     }
 
-    //------------------
-    // Classes under test
-    // - Duck: Class with Methods that will be redirected
-    // - Dog: Class with new implementation of some Duck methods
-    //------------------
+    // **** Classes under test ****
+
     public class Duck
     {
         public int EggCount { get; private set; }
