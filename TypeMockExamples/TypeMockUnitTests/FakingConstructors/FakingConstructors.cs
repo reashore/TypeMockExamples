@@ -5,10 +5,11 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
-    /// <summary>
-    /// This test class demonstrates controlling arguments passed to constructor of a fake 
-    /// and controlling the constructors that are called
-    /// </summary>
+    // These unit tests demonstrate
+    // 1) controlling arguments passed to constructor of a fake 
+    // 2) controlling the constructors that are called
+
+
     [TestClass]
     [Isolated]
     public class FakingConstructorTests
@@ -51,22 +52,24 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
             string result = _classUnderTest.GetString(dependencyFake);
 
             // assert
+            // concat "" + 0
             Assert.AreEqual("0", result);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(OutOfMemoryException))]
         public void FutureInstanceVerifyThrowingExceptionOnCreation()
         {
             // arrange
-            // We want a memory handling exception to be thrown the next time a Dependency is instantiated
+            // An OutOfMemoryException to be thrown the next time a Dependency is instantiated
             OutOfMemoryException outOfMemoryException = new OutOfMemoryException();
             Isolate.Swap.NextInstance<Dependency>().ConstructorWillThrow(outOfMemoryException);
 
             // act
-            Dependency result = _classUnderTest.Create();
+            _classUnderTest.Create();
 
             // assert
-            Assert.AreEqual(null, result);
+            // OutOfMemoryException is thrown
         }
 
         [TestMethod]
@@ -95,14 +98,7 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
 
         public Dependency Create()
         {
-            try
-            {
-                return new Dependency(0, string.Empty);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            return new Dependency(0, string.Empty);
         }
 
         public int GetSize(Derived derived)
