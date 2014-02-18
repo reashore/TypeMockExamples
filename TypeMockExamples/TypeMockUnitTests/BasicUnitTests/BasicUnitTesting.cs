@@ -6,17 +6,30 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
-    /// <summary>
-    /// Basic examples of how to use Typemock Isolator Syntax.
-    /// The concept behind Arrange-Act-Assert is simple; we aspire for the test code to be divided into three stages:
-    ///     - Arrange: here we set up our test objects and their behavior for the test duration
-    ///     - Act: here we run the method under test using the test objects we created earlier
-    ///     - Assert: here we verify that the outcome of running the test code with the test set up yielded the expected results    
-    /// </summary>
     [TestClass]
     [Isolated]
     public class BasicUnitTestingTests
     {
+        private ClassUnderTest _classUnderTest;
+
+        [TestInitialize]
+        public void InitializeTest()
+        {
+            _classUnderTest = new ClassUnderTest();
+        }
+
+        [TestCleanup]
+        public void CleanupTest()
+        {
+            _classUnderTest = null;
+        }
+
+        // These test demonstrate
+        // 1) faking DateTime.Now()
+        // 2) faking Process and configuring it
+        // 3) the difference between Pragmatic and Interface DesignMode
+        // 4) the default behavior of faked classes
+
         [TestMethod]
         public void FakingDateTime()
         {
@@ -25,7 +38,7 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
             Isolate.WhenCalled(() => DateTime.Now).WillReturn(futureDateTime);
 
             // Act 
-            int result = ClassUnderTest.Return1234OnFutureDate(futureDateTime);
+            int result = _classUnderTest.Return1234OnFutureDate(futureDateTime);
 
             // Assert 
             Assert.AreEqual(1234, result);
@@ -34,70 +47,64 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
         [TestMethod]
         public void FakeAConcreteObjectExample()
         {
-            // Arrange - Fake a Process, default is that all Members.ReturnRecursiveFakes 
+            // Arrange
             Process processFake = Isolate.Fake.Instance<Process>();
             Isolate.WhenCalled(() => processFake.MainModule.Site.Name).WillReturn("SpecialSiteName");
 
             // Act 
-            bool result = ClassUnderTest.IsSpecialSiteName(processFake);
+            bool result = _classUnderTest.IsSpecialSiteName(processFake);
 
             // Assert 
             Assert.AreEqual(true, result);
         }
 
+        // The Isolated DesignMode constructor argument can be either:
+        // 1) Pragmatic - The default, allows faking any type and method, including sealed, static, or private.
+        // 2) InterfaceOnly - Alows faking only abstract or interface types, and public non-virtual methods, otherwise it throws a DesignModeException.
         [TestMethod]
-        public void VerifyThatFakedMethodsReturnDefaultForThatType()
+        [Isolated(DesignMode.Pragmatic)]  // the default
+        //[Isolated(DesignMode.InterfaceOnly)]
+        public void PrivateMethodsAreNotVisibleInInterfaceMode()
         {
-            // arrange
-            Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
+            // Arrange
+            Isolate.NonPublic.WhenCalled(_classUnderTest, "PrivateMethodReturnsInteger").WillReturn(100);
 
             // Act 
-            int result1 = dependencyFake.ReturnsInt();
-            string result2 = dependencyFake.ReturnsString();
-            double result3 = dependencyFake.ReturnsDouble();
-            decimal result4 = dependencyFake.ReturnsDecimal();
-            bool result5 = dependencyFake.ReturnsBool();
-            DateTime result6 = dependencyFake.ReturnsDateTime();
+            int result = _classUnderTest.PublicMethodReturnsInteger();
 
             // Assert 
-            Assert.AreEqual(default(int), result1);
-            //Assert.AreEqual(default(string), result2);  // assert fails because default(string) is null
-            Assert.AreEqual(string.Empty, result2);
-            Assert.AreEqual(default(double), result3);
-            Assert.AreEqual(default(decimal), result4);
-            Assert.AreEqual(default(bool), result5);
-            Assert.AreEqual(default(DateTime), result6);
+            Assert.AreEqual(100, result);
         }
-
 
         [TestMethod]
         public void ShowIsolateMethodsAndProperties()
         {
             // Arrange
-            ClassUnderTest classUnderTest = new ClassUnderTest();
             DateTime futureDateTime = new DateTime(2016, 2, 29);
             Exception exception = new Exception();
-            Dependency dependency1 = new Dependency();
 
             // **** Isolate Methods:
+
             // 1) WhenCalled()
             Isolate.WhenCalled(() => DateTime.Now).WillReturn(futureDateTime);
 
             // 2) GetFake()
-            //Dependency dependencyFake = Isolate.GetFake<Dependency>(dependency1);
+            //Dependency dependencyFake = Isolate.GetFake<Dependency>(dependency);
 
             // 3) CleanUp()
             Isolate.CleanUp();
 
+
             // **** Isolate Properties:
+
             // 1) Fake
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
 
             // 2) Invoke
-            object result = Isolate.Invoke.Method(classUnderTest, "PublicMethodReturnsInteger");
+            Isolate.Invoke.Method(_classUnderTest, "PublicMethodReturnsInteger");
 
             // 3) NonPublic
-            Isolate.NonPublic.WhenCalled(classUnderTest, "PrivateMethodReturnsInteger").WillReturn(100);
+            Isolate.NonPublic.WhenCalled(_classUnderTest, "PrivateMethodReturnsInteger").WillReturn(100);
 
             // 4) Swap
             Isolate.Swap.NextInstance<Dependency>().ConstructorWillThrow(exception);
@@ -113,26 +120,34 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
         }
     }
 
-    //Isolated DesignMode be either:
-    //1) Pragmatic - Pragmatic mode, the default, allows faking any type and method, including sealed, static, or private.
-    //2) InterfaceOnly - InterfaceOnly mode allows faking only abstract or interface types, and public non-virtual methods. Otherwise it throws a DesignModeException.
     [TestClass]
-    [Isolated(DesignMode.Pragmatic)]
-    //[Isolated(DesignMode.InterfaceOnly)]
+    [Isolated]
     public class BasicUnitTestingTests2
     {
         [TestMethod]
-        public void PrivateMethodsAreNotVisibleInInterfaceMode()
+        public void VerifyThatFakedMethodsReturnDefaultForThatType()
         {
-            // Arrange
-            ClassUnderTest classUnderTest = new ClassUnderTest();
-            Isolate.NonPublic.WhenCalled(classUnderTest, "PrivateMethodReturnsInteger").WillReturn(100);
+            // arrange
+            ClassUnderTest classUnderTestFake = Isolate.Fake.Instance<ClassUnderTest>();
 
             // Act 
-            int result = classUnderTest.PublicMethodReturnsInteger();
+            int result1 = classUnderTestFake.ReturnsInt();
+            string result2 = classUnderTestFake.ReturnsString();
+            double result3 = classUnderTestFake.ReturnsDouble();
+            decimal result4 = classUnderTestFake.ReturnsDecimal();
+            bool result5 = classUnderTestFake.ReturnsBool();
+            DateTime result6 = classUnderTestFake.ReturnsDateTime();
+            Dependency result7 = classUnderTestFake.ReturnsDependency();
 
             // Assert 
-            Assert.AreEqual(100, result);
+            Assert.AreEqual(default(int), result1);
+            //Assert.AreEqual(default(string), result2);  // assert fails because default(string) is null
+            Assert.AreEqual(string.Empty, result2);
+            Assert.AreEqual(default(double), result3);
+            Assert.AreEqual(default(decimal), result4);
+            Assert.AreEqual(default(bool), result5);
+            Assert.AreEqual(default(DateTime), result6);
+            Assert.AreEqual(typeof(Dependency), result7.GetType());
         }
     }
 
@@ -140,24 +155,14 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
 
     public class ClassUnderTest
     {
-        public static int Return1234OnFutureDate(DateTime dateTime)
+        public int Return1234OnFutureDate(DateTime dateTime)
         {
-            if (DateTime.Now == dateTime)
-            {
-                return 1234;
-            }
-
-            return 0;
+            return DateTime.Now == dateTime ? 1234 : 0;
         }
 
-        public static bool IsSpecialSiteName(Process process)
+        public bool IsSpecialSiteName(Process process)
         {
-            if (process.MainModule.Site.Name.StartsWith("SpecialSiteName"))
-            {
-                return true;
-            }
-
-            return false;
+            return process.MainModule.Site.Name.StartsWith("SpecialSiteName");
         }
 
         public int PublicMethodReturnsInteger()
@@ -170,10 +175,6 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
             return -10;
         }
 
-    }
-
-    public class Dependency
-    {
         public bool ReturnsBool()
         {
             return true;
@@ -204,6 +205,14 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
             return DateTime.Now;
         }
 
+        public Dependency ReturnsDependency()
+        {
+            return new Dependency();
+        }
+    }
+
+    public class Dependency
+    {
         public int PublicMethod()
         {
             return PrivateMethod();

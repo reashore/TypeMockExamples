@@ -5,14 +5,12 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
-    /// <summary>
-    /// This test class shows different ways of verifying calls on fake objects using the Isolate.Verify API.
-    /// Calls can be verified in the following ways:
-    ///     - WasCalledWithAnyArguments(): verifies the call was made regardless of arguments passed to it
-    ///     - WasCalledWithExactArguments(): verifies the call was made with the exact arguments specified
-    ///     - WasNotCalled: verifies the call was not made
-    ///     - WasCalledWithArguments: use Matching to match arguments
-    /// </summary>
+    // Thes unit tests demonstarte the following ways of verifying calls on fake objects
+    // 1) WasCalledWithAnyArguments()
+    // 2) WasCalledWithExactArguments()
+    // 3) WasNotCalled()
+    // 4) WasCalledWithArguments() - allows matching arguments
+
     [TestClass]
     [Isolated]
     public class VerifyingCallsWereMadeTests
@@ -98,7 +96,9 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
             _classUnderTest.DoAction(2, dependencyFake);
 
             // assert
+            // This can also be a chain of methods. In that case, the verification is on the entire chain, and not part of it
             Isolate.Verify.WasNotCalled(() => dependencyFake.CallGuard().CheckSecurity(null, null));
+            //Isolate.Verify.WasNotCalled(() => dependencyFake.CallGuard().CheckSecurity("username", "password"));
         }
 
         [TestMethod]

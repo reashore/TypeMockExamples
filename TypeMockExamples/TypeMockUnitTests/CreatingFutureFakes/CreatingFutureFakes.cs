@@ -5,10 +5,9 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
-    /// <summary>
-    /// This test class demonstrates handling of objects instantiated outside the test's scope. 
-    /// This is useful to eliminate dependencies in objects created by the business logic being tested
-    /// </summary>
+    // These unit tests demonstrate handling of objects instantiated outside the test's scope. 
+    // This is useful to eliminate dependencies in objects created by the business logic being tested
+
     [TestClass]
     [Isolated]
     public class CreatingFutureFakesTests
@@ -18,11 +17,15 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
         {
             // arrange
             Isolate.Fake.NextInstance<Dependency>();
+            ClassUnderTest classUnderTest = new ClassUnderTest();
 
             // act
-            int result = ClassUnderTest.AddCheckingInternalDependency(1, 2);
+            //int result = ClassUnderTest.AddCheckingInternalDependency(1, 2);
+            int result = classUnderTest.AddCheckingInternalDependency(1, 2);
 
             // assert
+            // 1 + 2
+            // fake does not throw exception
             Assert.AreEqual(3, result);
         }
 
@@ -65,6 +68,7 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
             int result = ClassUnderTest.AddCheckingDerivedDependency(1, 2);
 
             // assert
+            // 1 + 2
             Assert.AreEqual(3, result);
         }
     }
@@ -73,9 +77,10 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
 
     public class ClassUnderTest
     {
-        public static int AddCheckingInternalDependency(int x, int y)
+        public int AddCheckingInternalDependency(int x, int y)
         {
             Dependency dependency = new Dependency();
+
             dependency.Check(x, y);
 
             return x + y;
@@ -84,6 +89,7 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
         public static int AddCheckingDerivedDependency(int x, int y)
         {
             ConcreteDependency dependency = new ConcreteDependency();
+
             dependency.Check(x, y);
 
             return x + y;
@@ -92,9 +98,11 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
         public static int AddCheckingTwoInternalDependencies(int x, int y)
         {
             Dependency dependency1 = new Dependency();
+
             dependency1.Check(x, y);
 
             Dependency dependency2 = new Dependency();
+
             dependency2.Check(x, y);
 
             return x + y;
@@ -116,7 +124,7 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
 
         public int ReturnZero()
         {
-            return 10;
+            return 0;
         }
     }
 
@@ -125,7 +133,7 @@ namespace TypeMockExamples.TypeMockUnitTests.CreatingFutureFakes
         void Check(int x, int y);
     }
 
-    public class Dependency : IDependency
+    public class Dependency
     {
         public void Check(int x, int y)
         {

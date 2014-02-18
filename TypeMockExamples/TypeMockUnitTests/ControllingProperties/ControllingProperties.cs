@@ -48,17 +48,20 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
             Assert.AreEqual(5, _dependency.Number);
         }
 
+        // These unit tests demonstrate working with properties
+
         [TestMethod]
         public void FakePropertyGetterUsingTrueProperty()
         {
             // arrange
-            _dependency = Isolate.Fake.Instance<Dependency>();
-            _dependency.Number = 5;
+            Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
+            dependencyFake.Number = 5;
 
             // act
-            int result = _classUnderTest.SimpleCalculation(2, _dependency);
+            int result = _classUnderTest.SimpleCalculation(2, dependencyFake);
 
             // assert
+            // 2 + 5
             Assert.AreEqual(7, result);
         }
 
@@ -71,9 +74,11 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
 
             // act
             _classUnderTest.SimpleCalculation(2, _dependency);
+            _classUnderTest.SimpleCalculation(2, _dependency);
 
             // assert
-            Assert.AreEqual(1, countCalls);
+            // called twice
+            Assert.AreEqual(2, countCalls);
         }
     }
 
@@ -83,7 +88,9 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
     {
         public int SimpleCalculation(int a, Dependency dependency)
         {
+            // get number
             int result = a + dependency.Number;
+            // set number
             dependency.Number = result;
             return result;
         }

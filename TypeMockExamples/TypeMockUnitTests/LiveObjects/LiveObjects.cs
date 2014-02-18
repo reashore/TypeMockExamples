@@ -99,7 +99,6 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
     {
         public int Calculate(int a, int b, Dependency dependency, string username = "username", string password = "password")
         {
-            //dependency.CheckSecurity("username", "password");
             dependency.CheckSecurity(username, password);
 
             return a + b;

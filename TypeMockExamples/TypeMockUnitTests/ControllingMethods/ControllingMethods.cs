@@ -7,18 +7,14 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
-    /// <summary>
-    /// This test class shows different ways of controlling the behavior of fake objects using the Isolate.WhenCalled() API.
-    /// The supported behaviors are:
-    /// <list type="bullet">
-    ///     <item>ReturnRecursiveFake (default)- return a zero or equivalent, and return fake objects for reference types. The returned fake objects will behave in the same way.</item>
-    ///     <item>WillReturn - specify a return value for the call. Only applicable for methods returning values.</item>
-    ///     <item>IgnoreCall - this method will be ignored. Only applicable for void methods.</item>
-    ///     <item>WillThrow - will throw an exception when the method is called.</item>
-    ///     <item>CallOriginal - will call the method's original implementation.</item>
-    ///     <item>WillReturnCollectionValuesOf - will replace the collection returned by the method with a provided one. Only applies to methods returning collections</item>
-    /// </list>
-    /// </summary>
+    // These unit tests demonstrate ways of controlling the behavior of fake objects:
+    // 1) ReturnRecursiveFake
+    // 2) WillReturn
+    // 3) IgnoreCall
+    // 4) WillThrow
+    // 5) CallOriginal
+    // 6) WillReturnCollectionValuesOf
+
     [TestClass]
     [Isolated]
     public class ControllingMethodTests1
@@ -86,7 +82,8 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         public void ThrowExceptionOnRealObject()
         {
             // arrange
-            Isolate.WhenCalled(() => _dependency.GetId()).WillThrow(new Exception());
+            Exception exception = new Exception();
+            Isolate.WhenCalled(() => _dependency.GetId()).WillThrow(exception);
 
             // act
             _classUnderTest.AddToDependency(1, _dependency);
@@ -107,6 +104,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
             int result1 = _classUnderTest.AddToDependency(1, _dependency);
 
             // assert
+            // 1 + 2
             Assert.AreEqual(3, result1);
 
             // arrange
@@ -116,6 +114,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
             int result2 = _classUnderTest.AddToDependency(1, _dependency);
 
             // assert
+            // 1 + 4
             Assert.AreEqual(5, result2);
         }
 
@@ -131,6 +130,7 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
             int result = _classUnderTest.AddToDependency3Times(1, _dependency);
 
             // assert
+            // 1 + 2 + 9 + 9
             Assert.AreEqual(21, result);
         }
 
@@ -149,7 +149,9 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
             int result2 = _classUnderTest.CallTwoOverloadedDependency(_dependency);
 
             // asset
+            // 2 + 9
             Assert.AreEqual(11, result1);
+            // 4 + 10
             Assert.AreEqual(14, result2);
         }
 
@@ -157,15 +159,18 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         public void SettingBehaviorForCallChainOnRealObject()
         {
             // arrange
+            // chaining calls
             Isolate.WhenCalled(() => _dependency.GetPatent().GetId()).WillReturn(2);
 
             // act
             int result = _classUnderTest.AddToChainedDependency(1, _dependency);
             
             // assert
+            // 1 + 2
             Assert.AreEqual(3, result);
         }
 
+        // this test appears broken??
         [TestMethod]
         public void ExtensionMethodExample()
         {

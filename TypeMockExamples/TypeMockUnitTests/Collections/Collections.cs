@@ -8,12 +8,6 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
-    /// <summary>
-    /// This test class shows ways to control methods and properties returning collections using Typemock Isolator.
-    /// Collection handling in done either explicitly by swapping collection values returned by a method with a collection
-    /// of test data by using Isolate.WhenCalled().WillReturnCollectionValuesOf(), or by implicitly setting expectations on
-    /// collection types.
-    /// </summary>
     [TestClass]
     [Isolated]
     public class CollectionTests
@@ -34,6 +28,9 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
             _classUnderTest = null;
             _dependency = null;
         }
+
+        // These unit tests demonstrate
+        // 1) configuring a method to return a different collection
 
         [TestMethod]
         public void SwapCollectionWithFakeData2()
