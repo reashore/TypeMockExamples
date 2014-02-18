@@ -48,7 +48,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
             string result = _duck.Talk();
 
             // assert
-            // The duck object will now go 'Woof!' instead of 'Quack!'
+            // duck returns 'Woof!' instead of 'Quack!'
             Assert.AreEqual("Woof!", result);
         }
 

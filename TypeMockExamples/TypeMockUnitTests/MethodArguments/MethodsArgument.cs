@@ -97,8 +97,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
             _classUnderTest.CallVoid(dependency, 5);
 
             // assert
-            // got here because exception was not thrown
-            Assert.IsTrue(true);
+            // exception is thrown
         }
 
         [TestMethod]
@@ -128,7 +127,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
             int result = _classUnderTest.CallWithString3And200(dependencyFake);
 
             // assert
-            // All the arguments match our custom checker - the returned value is faked.
+            // the arguments match the custom checker and the returned value is faked
             Assert.AreEqual(1000, result);
         }
 
@@ -145,7 +144,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
             int result = _classUnderTest.CallWithString3And200(dependencyFake);
 
             // assert
-            // All the arguments match our custom checker - the returned value is faked.
+            // the arguments match the custom checker and the returned value is faked
             Assert.AreEqual(1000, result);
         }
 
@@ -163,7 +162,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
             int result = _classUnderTest.CallWithString3And200(dependencyFake);
 
             // assert
-            // All the arguments match our custom checker - the returned value is faked.
+            // the arguments match the custom checker and the returned value is faked
             Assert.AreEqual(1000, result);
         }
     }

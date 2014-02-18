@@ -59,7 +59,7 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
 
             // assert
             string inputShouldbe = "unit testing";
-            //Assert.AreEqual(inputShouldbe, result);
+            Assert.AreEqual("typemock", result);
             Isolate.Verify.WasCalledWithExactArguments(() => _dependency.SomeMethod(ref inputShouldbe));
         }
     }

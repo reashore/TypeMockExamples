@@ -66,7 +66,7 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
         public void VerifyMethodsOfRealObject2()
         {
             // arrange
-            // Requires at least one WhenCalled, can be CallOriginal, for Verify to work
+            // Verify requires at least one WhenCalled, such as CallOriginal(), IgnoreCall(), etc
             Isolate.WhenCalled(() => _dependency.CheckSecurity(null, null)).IgnoreCall();
 
             // act

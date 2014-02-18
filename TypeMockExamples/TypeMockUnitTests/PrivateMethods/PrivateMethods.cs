@@ -69,11 +69,12 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception), "exception message")]
+        [ExpectedException(typeof(Exception))]
         public void PrivateMethodThrow()
         {
             // arrange
-            Isolate.NonPublic.WhenCalled(_dependency, "InternalNumber").WillThrow(new Exception("exception message"));
+            Exception exception = new Exception("exception message");
+            Isolate.NonPublic.WhenCalled(_dependency, "InternalNumber").WillThrow(exception);
 
             // act
             _classUnderTest.Calculate(1, 2, _dependency);
@@ -92,6 +93,7 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
             int result = _classUnderTest.CalculateFromProperty(1, 2, _dependency);
 
             // assert
+            // 1 + 2 + 3
             Assert.AreEqual(6, result);
         }
 
@@ -145,7 +147,6 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
         {
             // arrange
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
-            // private works on public too
             Isolate.NonPublic.WhenCalled(dependencyFake, "GetNumberFromDatabase").CallOriginal();
 
             // act

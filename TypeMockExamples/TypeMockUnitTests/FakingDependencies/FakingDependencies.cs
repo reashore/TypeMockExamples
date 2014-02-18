@@ -48,8 +48,24 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
         {
             // arrange
             Dependency1 dependency1 = new Dependency1();
-            // what does this do?
+            // pass constructor arguments by type
             ClassUnderTest classUnderTestFake = Isolate.Fake.Dependencies<ClassUnderTest>(dependency1, 4);
+
+            // act
+            int result = classUnderTestFake.Calculate(1, 2);
+
+            // assert
+            // (1 + 2) * 1 + 4
+            Assert.AreEqual(7, result);
+        }
+
+        [TestMethod]
+        public void FakeAllDependenciesOverrideDefaultArguments2()
+        {
+            // arrange
+            Dependency1 dependency1 = new Dependency1();
+            // pass constructor arguments by type (swap arguments)
+            ClassUnderTest classUnderTestFake = Isolate.Fake.Dependencies<ClassUnderTest>(4, dependency1);
 
             // act
             int result = classUnderTestFake.Calculate(1, 2);
