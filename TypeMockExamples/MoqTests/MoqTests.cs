@@ -55,18 +55,8 @@ namespace TypeMockExamples.MoqTests
         //}
     }
 
-    // domain classes under test
+    // classes under test
 
-    
-
-
-
-
-
-
-
-
-    //--------------------------------------------------------------
     public interface IWebService
     {
         void LogError(string message);
@@ -91,5 +81,4 @@ namespace TypeMockExamples.MoqTests
             }
         }
     }
-
 }
