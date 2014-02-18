@@ -6,10 +6,9 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
-    /// <summary>
-    /// This test class shows different ways of controlling the behavior of ref and out arguments
-    /// To set the return value of a ref or out arguement, set them before calling the WhenCalled API.
-    /// </summary>
+    // These units tests demostrate the behavior of ref and out arguments.
+    // Set ref or out arguments before calling WhenCalled()
+
     [TestClass]
     [Isolated]
     public class RefOutArgumentTests
@@ -44,6 +43,7 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
             string result = _classUnderTest.GetString(_dependency);
 
             // assert
+            // "typemock" + "1"
             Assert.AreEqual("typemock1", result);
         }
 
@@ -72,6 +72,7 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
         {
             string name = "unit testing";
             List<int> list;
+
             dependency.SomeMethod(ref name, out list);
 
             return name + list.Count;
@@ -80,6 +81,7 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
         public string UseRef(Dependency dependency)
         {
             string name = "unit testing";
+
             dependency.SomeMethod(ref name);
 
             return name;

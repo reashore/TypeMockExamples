@@ -33,6 +33,7 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
             int result = _classUnderTest.Calculate(1, 2);
 
             // assert
+            // 1 + 3
             Assert.AreEqual(3, result);
         }
 
@@ -60,6 +61,7 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
 
             // assert
             Isolate.Verify.WasCalledWithAnyArguments(() => Dependency.CheckSecurity(null, null));
+            Isolate.Verify.WasCalledWithExactArguments(() => Dependency.CheckSecurity("username", "password"));
         }
     }
 
@@ -109,6 +111,16 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
 
     // **** Classes under test ****
 
+    public class ClassUnderTest
+    {
+        public int Calculate(int a, int b)
+        {
+            Dependency.CheckSecurity("username", "password");
+
+            return a + b;
+        }
+    }
+
     public class StaticConstructorExample
     {
         static StaticConstructorExample()
@@ -133,16 +145,6 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
         public static void CallGuard()
         {
             throw new NotImplementedException();
-        }
-    }
-
-    public class ClassUnderTest
-    {
-        public int Calculate(int a, int b)
-        {
-            Dependency.CheckSecurity("username", "password");
-
-            return a + b;
         }
     }
 }
