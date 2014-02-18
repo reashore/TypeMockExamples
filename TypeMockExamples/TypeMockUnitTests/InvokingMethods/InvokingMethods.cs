@@ -7,9 +7,10 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
-    /// <summary>
-    /// This class demonstrates the ability of firing events and invoking private methods using Isolator.
-    /// </summary>
+    // These unit tests demonstrate
+    // 1) firing events 
+    // 2) invoking private methods
+
     [TestClass]
     [Isolated]
     public class InvokingMethodsTests
@@ -22,7 +23,7 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
             Counter counter = new Counter(classUnderTest);
 
             // act
-            // Note how adding a dummy event is the way to fire it
+            // an event is fired by adding it
             Isolate.Invoke.Event(() => classUnderTest.RunEvent += null, 0);
 
             // assert
@@ -39,6 +40,7 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
             object result = Isolate.Invoke.Method(classUnderTest, "Sum", 2, 5);
 
             // assert
+            // 2 + 5
             Assert.AreEqual(7, result);
         }
 
@@ -49,11 +51,27 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
             object result = Isolate.Invoke.Method<ClassUnderTest>("Multiply", 2, 5);
 
             // assert
+            // 2 * 5
             Assert.AreEqual(10, result);
         }
     }
 
     // **** Classes under test ****
+
+    public class ClassUnderTest
+    {
+        public event Action<int> RunEvent;
+
+        private static int Multiply(int a, int b)
+        {
+            return a * b;
+        }
+
+        private int Sum(int a, int b)
+        {
+            return a + b;
+        }
+    }
 
     public class Dependency
     {
@@ -72,29 +90,14 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
     {
         public Counter(ClassUnderTest underTest)
         {
-            underTest.RunEvent += UnderTest_RunEvent;
+            underTest.RunEvent += RunEventHandler;
         }
 
         public int Times { get; set; }
 
-        private void UnderTest_RunEvent(int obj)
+        private void RunEventHandler(int obj)
         {
             Times++;
-        }
-    }
-
-    public class ClassUnderTest
-    {
-        public event Action<int> RunEvent;
-
-        private static int Multiply(int a, int b)
-        {
-            return a * b;
-        }
-
-        private int Sum(int a, int b)
-        {
-            return a + b;
         }
     }
 }

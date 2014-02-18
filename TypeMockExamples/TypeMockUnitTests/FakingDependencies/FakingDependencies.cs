@@ -39,6 +39,7 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
             int result = classUnderTestFake.Calculate(1, 2);
 
             // assert
+            // (1 + 2) * 3
             Assert.AreEqual(6, result);
         }
 
@@ -46,18 +47,40 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
         public void FakeAllDependenciesOverrideDefaultArguments()
         {
             // arrange
-            Dependency1 dependency = new Dependency1();
-            ClassUnderTest classUnderTestFake = Isolate.Fake.Dependencies<ClassUnderTest>(dependency, 4);
+            Dependency1 dependency1 = new Dependency1();
+            // what does this do?
+            ClassUnderTest classUnderTestFake = Isolate.Fake.Dependencies<ClassUnderTest>(dependency1, 4);
 
             // act
             int result = classUnderTestFake.Calculate(1, 2);
 
             // assert
+            // (1 + 2) * 1 + 4
             Assert.AreEqual(7, result);
         }
     }
 
     // **** Classes under test ****
+
+    public class ClassUnderTest
+    {
+        private readonly int _additional;
+        private readonly Dependency1 _depenency1;
+        private readonly Dependency2 _dependency2;
+
+        public ClassUnderTest(int additional, Dependency1 depenency1, Dependency2 dependency2)
+        {
+            _additional = additional;
+            _depenency1 = depenency1;
+            _dependency2 = dependency2;
+        }
+
+        public int Calculate(int a, int b)
+        {
+            _dependency2.Check();
+            return ((a + b) * _depenency1.Multiplier) + _additional;
+        }
+    }
 
     public sealed class Dependency1
     {
@@ -74,26 +97,6 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
         public virtual int Check()
         {
             throw new NotImplementedException();
-        }
-    }
-
-    public class ClassUnderTest
-    {
-        private readonly int _additional;
-        private readonly Dependency1 _depenency1;
-        private readonly Dependency2 _dependency2;
-
-        public ClassUnderTest(int additional, Dependency2 dependency2, Dependency1 depenency1)
-        {
-            _additional = additional;
-            _depenency1 = depenency1;
-            _dependency2 = dependency2;
-        }
-
-        public int Calculate(int a, int b)
-        {
-            _dependency2.Check();
-            return ((a + b) * _depenency1.Multiplier) + _additional;
         }
     }
 }
