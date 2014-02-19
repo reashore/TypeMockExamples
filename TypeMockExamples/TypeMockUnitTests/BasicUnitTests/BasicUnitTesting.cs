@@ -1,6 +1,4 @@
 ﻿
-
-
 namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
 {
     using System;
@@ -21,14 +19,14 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
             _classUnderTest = new ClassUnderTest();
         }
 
-        // These unit test demonstrate:
+        // These unit tests demonstrate:
         // 1) faking DateTime.Now()
         // 2) faking Process and configuring it
         // 3) the difference between Pragmatic and Interface DesignMode
         // 4) the default behavior of faked classes
 
         [TestMethod]
-        public void FakingDateTime()
+        public void FakingAStaticProperty()
         {
             // Arrange
             DateTime futureDateTime = new DateTime(2016, 2, 29);
@@ -42,7 +40,7 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
         }
 
         [TestMethod]
-        public void FakeAConcreteObjectExample()
+        public void FakeAClassInstance()
         {
             // Arrange
             Process processFake = Isolate.Fake.Instance<Process>();
@@ -57,7 +55,7 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
 
         // The Isolated DesignMode constructor argument can be either:
         // 1) Pragmatic - The default, allows faking any type and method, including sealed, static, or private.
-        // 2) InterfaceOnly - Alows faking only abstract or interface types, and public non-virtual methods, otherwise it throws a DesignModeException.
+        // 2) InterfaceOnly - Allows faking only abstract or interface types, and public non-virtual methods, otherwise it throws a DesignModeException.
         [TestMethod]
         [Isolated(DesignMode.Pragmatic)]  // the default DesignMode
         public void PrivateMethodsAreVisibleInPragmaticMode()
@@ -88,6 +86,7 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
         }
 
         [TestMethod]
+        [Isolated]
         public void ShowIsolateMethodsAndProperties()
         {
             // Arrange
@@ -148,7 +147,7 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
             decimal result4 = classUnderTestFake.ReturnsDecimal();
             bool result5 = classUnderTestFake.ReturnsBool();
             DateTime result6 = classUnderTestFake.ReturnsDateTime();
-            Dependency result7 = classUnderTestFake.ReturnsDependency();
+            Dependency result7 = classUnderTestFake.ReturnsObject();
 
             // Assert 
             Assert.AreEqual(default(int), result1);
@@ -216,7 +215,7 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
             return DateTime.Now;
         }
 
-        public Dependency ReturnsDependency()
+        public Dependency ReturnsObject()
         {
             return new Dependency();
         }
