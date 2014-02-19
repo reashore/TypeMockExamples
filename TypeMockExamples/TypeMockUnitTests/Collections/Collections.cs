@@ -26,7 +26,7 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
         // 1) configuring a method to return a different collection
 
         [TestMethod]
-        public void SwapCollectionWithFakeData2()
+        public void SwapCollectionWithFakeData()
         {
             // arrange
             List<int> intList = new List<int> {1, 2, 3};
@@ -36,11 +36,12 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
             int result = _classUnderTest.Sum(_dependency);
 
             // assert
+            // 1 + 2 + 3
             Assert.AreEqual(6, result);
         }
 
         [TestMethod]
-        public void ImplictCollectionCreationByFakingLastItem2()
+        public void ImplictCollectionCreationByFakingLastItem()
         {
             // arrange
             // configure index 5 of list to return 3
