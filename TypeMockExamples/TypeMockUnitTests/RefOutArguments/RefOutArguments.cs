@@ -7,7 +7,7 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
     using TypeMock.ArrangeActAssert;
 
     // These units tests demostrate the behavior of ref and out arguments.
-    // Set ref or out arguments before calling WhenCalled()
+    // Set ref or out arguments before calling WhenCalled().
 
     [TestClass]
     [Isolated]
@@ -28,7 +28,7 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
         {
             // arrange
             string refString = "typemock";
-            // todo: why is an initial value required on an out parameter?
+            // Set out argument before calling WhenCalled()
             List<int> outList = new List<int> { 100 };
             Isolate.WhenCalled(() => _dependency.SomeMethod(ref refString, out outList)).IgnoreCall();
 
@@ -51,8 +51,8 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
             string result = _classUnderTest.UseRef(_dependency);
 
             // assert
-            string inputShouldbe = "unit testing";
             Assert.AreEqual("typemock", result);
+            string inputShouldbe = "unit testing";
             Isolate.Verify.WasCalledWithExactArguments(() => _dependency.SomeMethod(ref inputShouldbe));
         }
     }
