@@ -22,14 +22,7 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
             _dependency = new Dependency();
         }
 
-        [TestCleanup]
-        public void CleanupTest()
-        {
-            _classUnderTest = null;
-            _dependency = null;
-        }
-
-        // These unit tests demonstrate
+        // These unit tests demonstrate:
         // 1) configuring a method to return a different collection
 
         [TestMethod]

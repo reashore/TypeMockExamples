@@ -26,13 +26,6 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
             _dog = new Dog();
         }
 
-        [TestCleanup]
-        public void CleanupTest()
-        {
-            _duck = null;
-            _dog = null; 
-        }
-
          // These tests demonstrates swapping method calls between two partially compatible objects - a duck and a dog.
          // Both a duck and a dog can walk and talk, so when a duck is swapped by a dog it will go 'woof' instead of
          // 'quack' when talking, and chase cars instead of waddle when walking. However, a duck can lay eggs while a 

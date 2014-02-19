@@ -17,12 +17,6 @@ namespace TypeMockExamples.TypeMockUnitTests.StaticMethods
             _classUnderTest = new ClassUnderTest();
         }
 
-        [TestCleanup]
-        public void CleanupTest()
-        {
-            _classUnderTest = null;
-        }
-
         [TestMethod]
         public void FakeAllStaticMethods()
         {

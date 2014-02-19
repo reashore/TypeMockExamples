@@ -26,13 +26,6 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
             _dependency = new Dependency();
         }
 
-        [TestCleanup]
-        public void CleanupTest()
-        {
-            _classUnderTest = null;
-            _dependency = null;
-        }
-
         [TestMethod]
         public void CreateRealObjectFakeVoidMethod()
         {

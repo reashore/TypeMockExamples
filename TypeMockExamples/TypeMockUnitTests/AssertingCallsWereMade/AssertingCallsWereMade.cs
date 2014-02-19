@@ -23,12 +23,6 @@ namespace TypeMockExamples.TypeMockUnitTests.AssertingCallsWereMade
             _classUnderTest = new ClassUnderTest();
         }
 
-        [TestCleanup]
-        public void CleanupTest()
-        {
-            _classUnderTest = null;
-        }
-
         [TestMethod]
         public void VerifyCallWasMadeWithAnyArgument()
         {

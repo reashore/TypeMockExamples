@@ -22,12 +22,6 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
             _classUnderTest = new ClassUnderTest();
         }
 
-        [TestCleanup]
-        public void CleanupTest()
-        {
-            _classUnderTest = null;
-        }
-
         [TestMethod]
         public void CallConstructorAndPassArgumentsFakeAllMethods()
         {

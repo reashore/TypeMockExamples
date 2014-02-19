@@ -23,13 +23,6 @@ namespace TypeMockExamples.TypeMockUnitTests.RefOutArguments
             _dependency = new Dependency();
         }
 
-        [TestCleanup]
-        public void CleanupTest()
-        {
-            _classUnderTest = null;
-            _dependency = null;
-        }
-
         [TestMethod]
         public void ReturnValuesInRefArgument()
         {

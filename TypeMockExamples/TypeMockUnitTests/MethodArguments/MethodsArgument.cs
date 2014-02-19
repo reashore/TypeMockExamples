@@ -26,12 +26,6 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
             _classUnderTest = new ClassUnderTest();
         }
 
-        [TestCleanup]
-        public void CleanupTest()
-        {
-            _classUnderTest = null;
-        }
-
         [TestMethod]
         public void FakeReturnValueBasedOnExactMethodArgumentsAtRuntime()
         {

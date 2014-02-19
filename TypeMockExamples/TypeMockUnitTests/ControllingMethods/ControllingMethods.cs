@@ -29,13 +29,6 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
             _dependency = new Dependency();
         }
 
-        [TestCleanup]
-        public void CleanupTest()
-        {
-            _classUnderTest = null;
-            _dependency = null;
-        }
-
         [TestMethod]
         public void ReturnRecursiveFake()
         {
@@ -199,13 +192,6 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingMethods
         {
             _classUnderTest = new ClassUnderTest();
             _dependencyFake = Isolate.Fake.Instance<Dependency>();
-        }
-
-        [TestCleanup]
-        public void CleanupTest()
-        {
-            _classUnderTest = null;
-            _dependencyFake = null;
         }
 
         [TestMethod]

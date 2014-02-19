@@ -1,9 +1,12 @@
 ﻿
+
+
 namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
 {
     using System;
     using System.Diagnostics;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using TypeMock;
     using TypeMock.ArrangeActAssert;
 
     [TestClass]
@@ -18,13 +21,7 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
             _classUnderTest = new ClassUnderTest();
         }
 
-        [TestCleanup]
-        public void CleanupTest()
-        {
-            _classUnderTest = null;
-        }
-
-        // These test demonstrate
+        // These unit test demonstrate:
         // 1) faking DateTime.Now()
         // 2) faking Process and configuring it
         // 3) the difference between Pragmatic and Interface DesignMode
@@ -62,9 +59,8 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
         // 1) Pragmatic - The default, allows faking any type and method, including sealed, static, or private.
         // 2) InterfaceOnly - Alows faking only abstract or interface types, and public non-virtual methods, otherwise it throws a DesignModeException.
         [TestMethod]
-        [Isolated(DesignMode.Pragmatic)]  // the default
-        //[Isolated(DesignMode.InterfaceOnly)]
-        public void PrivateMethodsAreNotVisibleInInterfaceMode()
+        [Isolated(DesignMode.Pragmatic)]  // the default DesignMode
+        public void PrivateMethodsAreVisibleInPragmaticMode()
         {
             // Arrange
             Isolate.NonPublic.WhenCalled(_classUnderTest, "PrivateMethodReturnsInteger").WillReturn(100);
@@ -74,6 +70,21 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
 
             // Assert 
             Assert.AreEqual(100, result);
+        }
+
+        [TestMethod]
+        [Isolated(DesignMode.InterfaceOnly)]
+        [ExpectedException(typeof(DesignModeException))]
+        public void PrivateMethodsAreNotVisibleInInterfaceMode()
+        {
+            // Arrange
+            Isolate.NonPublic.WhenCalled(_classUnderTest, "PrivateMethodReturnsInteger").WillReturn(100);
+
+            // Act 
+            int result = _classUnderTest.PublicMethodReturnsInteger();
+
+            // Assert 
+            // throws DesignModeException
         }
 
         [TestMethod]

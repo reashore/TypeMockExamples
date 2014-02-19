@@ -35,13 +35,6 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
             _dependency = new Dependency();
         }
 
-        [TestCleanup]
-        public void CleanupTest()
-        {
-            _classUnderTest = null;
-            _dependency = null;
-        }
-
         [TestMethod]
         public void PrivateMethodReturnRecursiveFake()
         {
@@ -121,12 +114,6 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
         public void InitializeTest()
         {
             _classUnderTest = new ClassUnderTest();
-        }
-
-        [TestCleanup]
-        public void CleanupTest()
-        {
-            _classUnderTest = null;
         }
 
         [TestMethod]
