@@ -5,7 +5,7 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
-    // These unit tests demonstrate
+    // These unit tests demonstrate:
     // 1) controlling arguments passed to constructor of a fake 
     // 2) controlling the constructors that are called
 
@@ -26,7 +26,7 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
         public void CallConstructorAndPassArgumentsFakeAllMethods()
         {
             // arrange
-            // The constructor is not faked here.      
+            // The constructor is not faked     
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>(Members.ReturnRecursiveFakes, ConstructorWillBe.Called, 5, "ConstructorArgument");
 
             // act

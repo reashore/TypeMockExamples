@@ -24,6 +24,7 @@ namespace TypeMockExamples.TypeMockUnitTests.Collections
 
         // These unit tests demonstrate:
         // 1) configuring a method to return a different collection
+        // 2) configuring a collection element to return a specific value
 
         [TestMethod]
         public void SwapCollectionWithFakeData()

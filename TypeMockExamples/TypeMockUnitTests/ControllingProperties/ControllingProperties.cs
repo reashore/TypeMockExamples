@@ -5,14 +5,10 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
-    /// <summary>
-    /// This test class shows different ways of controlling the behavior of fake properties
-    /// The supported behaviors are:
-    /// <list type="bullet">
-    ///     <item>Using WhenCalled - Like other methods</item>
-    ///     <item>Using True Properties - To fake property to act like an auto-property</item>
-    /// </list>
-    /// </summary>
+    // These unit tests demonstarte ways to fake properties:
+    // 1) Using WhenCalled to fake property return values 
+    // 2) Using properties to configure a fake property
+
     [TestClass]
     [Isolated]
     public class ControllingPropertiesTests
@@ -37,7 +33,9 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
             int result = _classUnderTest.SimpleCalculation(2, _dependency);
 
             // assert
+            // 7 = 2 + 5
             Assert.AreEqual(7, result);
+            // verify configured property value
             Assert.AreEqual(5, _dependency.Number);
         }
 
@@ -56,14 +54,15 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
             // assert
             // 2 + 5
             Assert.AreEqual(7, result);
+            Assert.AreEqual(8, dependencyFake.Number);
         }
 
         [TestMethod]
         public void FakePropertySetterUsingWhenCalled()
         {
             // arrange
-            int countCalls = 0;
-            Isolate.WhenCalled(() => _dependency.Number = 5).DoInstead(c => countCalls++);
+            int callCount = 0;
+            Isolate.WhenCalled(() => _dependency.Number = 5).DoInstead(c => callCount++);
 
             // act
             _classUnderTest.SimpleCalculation(2, _dependency);
@@ -71,7 +70,9 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
 
             // assert
             // called twice
-            Assert.AreEqual(2, countCalls);
+            Assert.AreEqual(2, callCount);
+            Isolate.Verify.WasCalledWithAnyArguments(() => _dependency.Number);
+            Assert.AreEqual(2, Isolate.Verify.GetTimesCalled(() => _dependency.Number));
         }
     }
 
@@ -83,8 +84,10 @@ namespace TypeMockExamples.TypeMockUnitTests.ControllingProperties
         {
             // get number
             int result = a + dependency.Number;
+
             // set number
-            dependency.Number = result;
+            dependency.Number = 8;
+
             return result;
         }
     }
