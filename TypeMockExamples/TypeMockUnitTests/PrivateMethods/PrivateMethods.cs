@@ -7,20 +7,15 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
-    /// <summary>
-    /// This test class shows how to fake non-public (private, protected or internal) methods, properties and indexers.
-    /// Controlling non-public members is done using the Isolate.NonPublic property, 
-    /// and verifying using the Isolate.Verify.NonPublic property. 
-    /// Access to non-public members is through a string of member name.
-    /// Supported behaviors are:
-    /// <list type="bullet">
-    ///     <item>ReturnRecursiveFake - return a zero or equivalent, and return fake objects for reference types. The returned fake objects will behave in the same way.</item>
-    ///     <item>WillReturn - specify a return value for the call. Only applicable for methods returning values.</item>
-    ///     <item>IgnoreCall - this method will be ignored. Only applicable for void methods.</item>
-    ///     <item>WillThrow - will throw an exception when the method is called.</item>
-    ///     <item>CallOriginal - will call the method's original implementation.</item>
-    /// </list>
-    /// </summary>
+    // This unit tests demonstrate faking non-public (private, protected, or internal) methods, properties and indexers 
+    // The behavior is configured using Isolate.NonPublic and verified using the Isolate.Verify.NonPublic 
+    // Supported configuration:
+    // 1) ReturnRecursiveFake
+    // 2) WillReturn()
+    // 3) IgnoreCall()
+    // 4) WillThrow()
+    // 5) CallOriginal()
+
     [TestClass]
     [Isolated]
     public class PrivateMethodTests
@@ -45,6 +40,7 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
             int result = _classUnderTest.CalculateAndAlert(1, 2, _dependency);
 
             // assert
+            // 3 = 1 + 2
             Assert.AreEqual(3, result);
         }
 
@@ -58,6 +54,7 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
             int result = _classUnderTest.Calculate(1, 2, _dependency);
 
             // assert
+            // 6 = 1 + 2 + 3
             Assert.AreEqual(6, result);
         }
 
@@ -66,7 +63,7 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
         public void PrivateMethodThrow()
         {
             // arrange
-            Exception exception = new Exception("exception message");
+            Exception exception = new Exception();
             Isolate.NonPublic.WhenCalled(_dependency, "InternalNumber").WillThrow(exception);
 
             // act
@@ -86,7 +83,7 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
             int result = _classUnderTest.CalculateFromProperty(1, 2, _dependency);
 
             // assert
-            // 1 + 2 + 3
+            // 6 = 1 + 2 + 3
             Assert.AreEqual(6, result);
         }
 
@@ -126,6 +123,7 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
             int result = _classUnderTest.Calculate(1, 2);
 
             // assert
+            // 3 = 1 + 2
             Assert.AreEqual(3, result);
         }
 
@@ -137,9 +135,11 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
             Isolate.NonPublic.WhenCalled(dependencyFake, "GetNumberFromDatabase").CallOriginal();
 
             // act
+            // Note the icon that appears when dependencyFake is clicked
             int result = _classUnderTest.Calculate(1, 2, dependencyFake);
 
             // assert
+            // 3 = 1 + 2
             Assert.AreEqual(3, result);
         }
 
@@ -150,9 +150,11 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
             Isolate.NonPublic.WhenCalled<Dependency>("CallGuard").IgnoreCall();
 
             // act
-            _classUnderTest.Calculate(1, 2);
+            int result = _classUnderTest.Calculate(1, 2);
 
             // assert
+            // 3 = 1 + 2
+            Assert.AreEqual(3, result);
             Isolate.Verify.NonPublic.WasCalled(typeof(Dependency), "CallGuard");
         }
 
@@ -163,10 +165,11 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
             Isolate.NonPublic.WhenCalled<Dependency>("CallGuard").IgnoreCall();
 
             // act
-            _classUnderTest.Calculate(1, 2);
+            int result = _classUnderTest.Calculate(1, 2);
 
             // assert
-            Isolate.Verify.NonPublic.WasCalled(typeof(Dependency), "CallGuard").WithArguments("typemock", "rocks");
+            Assert.AreEqual(3, result);
+            Isolate.Verify.NonPublic.WasCalled(typeof(Dependency), "CallGuard").WithArguments("username", "password");
         }
     }
 
@@ -182,12 +185,13 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
         public int CalculateAndAlert(int a, int b, Dependency dependency)
         {
             dependency.Alert();
+
             return a + b;
         }
 
         public int Calculate(int a, int b)
         {
-            Dependency.CheckSecurity("typemock", "rocks");
+            Dependency.CheckSecurity("username", "password");
 
             return a + b;
         }
@@ -205,7 +209,7 @@ namespace TypeMockExamples.TypeMockUnitTests.PrivateMethods
 
     public class Dependency
     {
-        private int PrivateProp { get; [UsedImplicitly] set; }
+        private int PrivateProp { get; set; }
 
         public static void CheckSecurity(string name, string password)
         {
