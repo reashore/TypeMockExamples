@@ -26,13 +26,14 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
         public void CallConstructorAndPassArgumentsFakeAllMethods()
         {
             // arrange
-            // The constructor is not faked     
+            // The non-faked constructor is called    
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>(Members.ReturnRecursiveFakes, ConstructorWillBe.Called, 5, "ConstructorArgument");
 
             // act
             string result = _classUnderTest.GetString(dependencyFake);
 
             // assert
+            // concat "ConstructorArgument" + 5
             Assert.AreEqual("ConstructorArgument5", result);
         }
 
@@ -40,6 +41,7 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
         public void IgnoringOnlyConstrutorRestOfMethodsCalled()
         {
             // arrange
+            // the constructor is ignored
             Dependency dependencyFake = Isolate.Fake.Instance<Dependency>(Members.CallOriginal, ConstructorWillBe.Ignored);
 
             // act
@@ -70,11 +72,11 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingConstructors
         public void CallConstructorFakeBaseClassConstructor()
         {
             // assert
-            // create an instance of Derived, but avoid calling the base class constructor
-            Derived dependencyFake = Isolate.Fake.Instance<Derived>(Members.CallOriginal, ConstructorWillBe.Called, BaseConstructorWillBe.Ignored);
+            // fake instance of Derived and do not call the base class constructor
+            Derived derivedFake = Isolate.Fake.Instance<Derived>(Members.CallOriginal, ConstructorWillBe.Called, BaseConstructorWillBe.Ignored);
 
             // act
-            int result = _classUnderTest.GetSize(dependencyFake);
+            int result = _classUnderTest.GetSize(derivedFake);
 
             // assert
             Assert.AreEqual(100, result);

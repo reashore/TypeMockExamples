@@ -5,15 +5,15 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
-    // This test class demonstrates using live objects - test objects that have been instantiated normally, rather than
-    // as fake objects using Isolate.Fake.Instance(). These objects' behavior can still be modified by using WhenCalled methods
-    // and verified using Verify.
+    // These unit tests demonstrate modifying the behavior of objects that have been instantiated normally.
+    // The behavior of such objects is configured by using WhenCalled() and verified using Verify().
+
     // When a live object is used in WasCalled or its NonPublic counterparts, it will become a viable fake object. 
     // This behavior applies similarly to static methods which have not had their behavior defaults set up by 
     // using Isolate.Fake.StaticMethods().
 
     [TestClass]
-    [Isolated]  //[Isolated(DesignMode.InterfaceOnly)]
+    [Isolated]
     public class LiveObjectTests
     {
         private ClassUnderTest _classUnderTest;
@@ -37,19 +37,20 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
 
             // assert
             Assert.AreEqual(3, result);
+            Isolate.Verify.WasCalledWithExactArguments(() => _dependency.CheckSecurity(null, null));
         }
 
         [TestMethod]
         public void VerifyMethodsOfRealObject1()
         {
             // arrange
-            // Requires at least one WhenCalled, can be CallOriginal for Verify to work
             Isolate.WhenCalled(() => _dependency.CheckSecurity(null, null)).IgnoreCall();
 
             // act
             int result = _classUnderTest.Calculate(1, 2, _dependency, null, null);
 
             // assert
+            // 3 = 1 + 2
             Assert.AreEqual(3, result);
             Isolate.Verify.WasCalledWithExactArguments(() => _dependency.CheckSecurity(null, null));
             Isolate.Verify.WasCalledWithAnyArguments(() => _dependency.CheckSecurity(null, null));
@@ -59,7 +60,7 @@ namespace TypeMockExamples.TypeMockUnitTests.LiveObjects
         public void VerifyMethodsOfRealObject2()
         {
             // arrange
-            // Verify requires at least one WhenCalled, such as CallOriginal(), IgnoreCall(), etc
+            // can also use CallOriginal(), IgnoreCall(), DoInstead(), WillThrow(), WithExactArguments()
             Isolate.WhenCalled(() => _dependency.CheckSecurity(null, null)).IgnoreCall();
 
             // act

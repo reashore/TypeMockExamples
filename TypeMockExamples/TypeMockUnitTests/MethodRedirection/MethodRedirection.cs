@@ -4,14 +4,9 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
-    /// <summary>
-    /// This test class demonstrates performing "Duck-type" swapping between objects using 
-    /// Isolate.Swap.CallsOn(object).WithCallsTo(object). 
-    /// The concept of duck-typing can be phrased simply as "if it walks like a duck and talks like a duck, it must be a duck". 
-    /// In this context duck-typing is used to substitute behavior between two objects that are not necessarily identical. 
-    /// When calling a method on the first object that also exists in the second object (i.e. has the same name, arguments 
-    /// and return value), the second object's implementation will be called instead.
-    /// </summary>
+    // These unit tests demonstrate swapping calls on compatible objects using Swap.CallsOn(object1).WithCallsTo(object2). 
+    // The classes Duck and Dog are compatible in that they share the common methods Walk() and Talk().
+
     [TestClass]
     [Isolated]
     public class MethodRedirectionTests
@@ -26,11 +21,6 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
             _dog = new Dog();
         }
 
-         // These tests demonstrates swapping method calls between two partially compatible objects - a duck and a dog.
-         // Both a duck and a dog can walk and talk, so when a duck is swapped by a dog it will go 'woof' instead of
-         // 'quack' when talking, and chase cars instead of waddle when walking. However, a duck can lay eggs while a 
-         // dog can't - this behavior is preserved by the swapped object.
-
         [TestMethod]
         public void DuckTypeSwap_ReplaceADuckWithADog1()
         {
@@ -41,8 +31,8 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
             string result = _duck.Talk();
 
             // assert
-            // duck returns 'Woof!' instead of 'Quack!'
-            Assert.AreEqual("Woof!", result);
+            // the call to duck was redirected to dog
+            Assert.AreEqual("Woof", result);
         }
 
         [TestMethod]
@@ -69,6 +59,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
 
             // assert
             // Note that converting lambda expression to method group will break the test
+            Isolate.Verify.WasCalledWithExactArguments(() => _duck.Walk());
             Isolate.Verify.WasCalledWithAnyArguments(() => _duck.Walk());
         }
     }
@@ -86,7 +77,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
 
         public string Talk()
         {
-            return "Quack!";
+            return "Quack";
         }
 
         public void LayEgg()
@@ -108,7 +99,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodRedirection
 
         public string Talk()
         {
-            return "Woof!";
+            return "Woof";
         }
 
         private void ChaseCar()

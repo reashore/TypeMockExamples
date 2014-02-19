@@ -92,23 +92,25 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
             // Arrange
             DateTime futureDateTime = new DateTime(2016, 2, 29);
             Exception exception = new Exception();
+            ClassUnderTest classUnderTest = Isolate.Fake.Dependencies<ClassUnderTest>();
+            Dependency dependencyFake;
 
-            // **** Isolate Methods:
+            // Isolate Methods:
 
             // 1) WhenCalled()
             Isolate.WhenCalled(() => DateTime.Now).WillReturn(futureDateTime);
 
             // 2) GetFake()
-            //Dependency dependencyFake = Isolate.GetFake<Dependency>(dependency);
+            dependencyFake = Isolate.GetFake<Dependency>(classUnderTest);
 
             // 3) CleanUp()
             Isolate.CleanUp();
 
 
-            // **** Isolate Properties:
+            // Isolate Properties:
 
             // 1) Fake
-            Dependency dependencyFake = Isolate.Fake.Instance<Dependency>();
+            dependencyFake = Isolate.Fake.Instance<Dependency>();
 
             // 2) Invoke
             Isolate.Invoke.Method(_classUnderTest, "PublicMethodReturnsInteger");
@@ -165,6 +167,18 @@ namespace TypeMockExamples.TypeMockUnitTests.BasicUnitTests
 
     public class ClassUnderTest
     {
+        private Dependency _dependency;
+
+        public ClassUnderTest()
+        {
+            
+        }
+
+        public ClassUnderTest(Dependency dependency)
+        {
+            _dependency = dependency;
+        }
+
         public int Return1234OnFutureDate(DateTime dateTime)
         {
             return DateTime.Now == dateTime ? 1234 : 0;

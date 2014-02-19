@@ -1,13 +1,11 @@
 ﻿
-using TypeMockExamples.Properties;
-
 namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
 {
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
-    // These unit tests demonstrate
+    // These unit tests demonstrate:
     // 1) firing events 
     // 2) invoking private methods
 
@@ -25,9 +23,10 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
             // act
             // an event is fired by adding it
             Isolate.Invoke.Event(() => classUnderTest.RunEvent += null, 0);
+            Isolate.Invoke.Event(() => classUnderTest.RunEvent += null, 0);
 
             // assert
-            Assert.AreEqual(1, counter.Times);
+            Assert.AreEqual(2, counter.Times);
         }
 
         [TestMethod]
@@ -40,7 +39,7 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
             object result = Isolate.Invoke.Method(classUnderTest, "Sum", 2, 5);
 
             // assert
-            // 2 + 5
+            // 7 = 2 + 5
             Assert.AreEqual(7, result);
         }
 
@@ -51,7 +50,7 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
             object result = Isolate.Invoke.Method<ClassUnderTest>("Multiply", 2, 5);
 
             // assert
-            // 2 * 5
+            // 10 = 2 * 5
             Assert.AreEqual(10, result);
         }
     }
@@ -88,9 +87,9 @@ namespace TypeMockExamples.TypeMockUnitTests.InvokingMethods
 
     public class Counter
     {
-        public Counter(ClassUnderTest underTest)
+        public Counter(ClassUnderTest classUnderTest)
         {
-            underTest.RunEvent += RunEventHandler;
+            classUnderTest.RunEvent += RunEventHandler;
         }
 
         public int Times { get; set; }

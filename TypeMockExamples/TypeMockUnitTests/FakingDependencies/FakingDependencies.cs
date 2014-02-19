@@ -5,11 +5,10 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
-    /// <summary>
-    /// This test class shows different ways of faking dependencies of a class.
-    /// This method, creates a type by creating fakes for the longest constructor and calling it.
-    /// This is a great tool to make sure that adding dependencies to the type won't fail the tests.
-    /// </summary>
+    // These unit tests demonstrate faking dependencies of a ClassUnderTest.
+    // This method creates an instance of ClassUnderTest by using the constructor with the most arguments.
+    // Any injected dependencies are faked.
+
     [TestClass]
     [Isolated]
     public class FakingDependenciesTests
@@ -31,15 +30,15 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
         public void FakeAllDependenciesChangeBehaviorOfADependency()
         {
             // arrange
-            ClassUnderTest classUnderTestFake = Isolate.Fake.Dependencies<ClassUnderTest>();
-            Dependency1 dependencyFake = Isolate.GetFake<Dependency1>(classUnderTestFake);
+            ClassUnderTest classUnderTestWithFakeDependencies = Isolate.Fake.Dependencies<ClassUnderTest>();
+            Dependency1 dependencyFake = Isolate.GetFake<Dependency1>(classUnderTestWithFakeDependencies);
             Isolate.WhenCalled(() => dependencyFake.Multiplier).WillReturn(2);
 
             // act
-            int result = classUnderTestFake.Calculate(1, 2);
+            int result = classUnderTestWithFakeDependencies.Calculate(1, 2);
 
             // assert
-            // (1 + 2) * 3
+            // (1 + 2) * 2 + 0
             Assert.AreEqual(6, result);
         }
 
@@ -48,11 +47,12 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
         {
             // arrange
             Dependency1 dependency1 = new Dependency1();
-            // pass constructor arguments by type
-            ClassUnderTest classUnderTestFake = Isolate.Fake.Dependencies<ClassUnderTest>(dependency1, 4);
+            // constructor arguments are determined by their type
+            // only dependency2 is faked
+            ClassUnderTest classUnderTestWithFakeDependencies = Isolate.Fake.Dependencies<ClassUnderTest>(dependency1, 4);
 
             // act
-            int result = classUnderTestFake.Calculate(1, 2);
+            int result = classUnderTestWithFakeDependencies.Calculate(1, 2);
 
             // assert
             // (1 + 2) * 1 + 4
@@ -94,6 +94,7 @@ namespace TypeMockExamples.TypeMockUnitTests.FakingDependencies
         public int Calculate(int a, int b)
         {
             _dependency2.Check();
+
             return ((a + b) * _depenency1.Multiplier) + _additional;
         }
     }

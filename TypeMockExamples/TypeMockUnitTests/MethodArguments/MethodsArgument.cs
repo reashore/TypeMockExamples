@@ -5,15 +5,11 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using TypeMock.ArrangeActAssert;
 
-    /// <summary>
-    /// This test class shows different ways of controlling the behavior of fake objects using the Isolate.WhenCalled() API.
-    /// The supported behaviors are:
-    /// <list type="bullet">
-    ///     <item>Using Exact Argument Matching</item>
-    ///     <item>Using Custom Checkers on Arguments</item>
-    ///     <item>Mixing WithExactArguments and Custom Checkers</item>
-    /// </list>
-    /// </summary>
+    // These unit test class demonstrate configuring fakes objects using WhenCalled() using:
+    // 1) Using WithExactArguments()
+    // 2) Using AndArgumentsMatch()
+    // 3) Combining WithExactArguments() and custom checkers
+
     [TestClass]
     [Isolated]
     public class MethodsArgumentTests
@@ -38,31 +34,9 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
             int result = _classUnderTest.SimpleCalculation(dependencyFake);
 
             // assert
+            // 60 = 10 + 50
             Assert.AreEqual(60, result);
         }
-
-        // wierd test
-        //[TestMethod]
-        //public void FakeVoidMethodBasedOnExactMethodArgs()
-        //{
-        //    // arrange
-        //    Dependency dependency = new Dependency();
-        //    Isolate.WhenCalled(() => dependency.MethodReturnVoid(4)).WithExactArguments().IgnoreCall();
-        //    bool exceptionWasThrown = false;
-
-        //    // act
-        //    try
-        //    {
-        //        _classUnderTest.CallVoid(dependency, 4);
-        //    }
-        //    catch (NotImplementedException)
-        //    {
-        //        exceptionWasThrown = true;
-        //    }
-
-        //    // assert
-        //    Assert.IsFalse(exceptionWasThrown);
-        //}
 
         [TestMethod]
         public void FakeVoidMethodBasedOnExactMethodArgs1()
@@ -75,7 +49,7 @@ namespace TypeMockExamples.TypeMockUnitTests.MethodArguments
             _classUnderTest.CallVoid(dependency, 4);
 
             // assert
-            // got here because exception was not thrown
+            // exception was not thrown
             Assert.IsTrue(true);
         }
 
