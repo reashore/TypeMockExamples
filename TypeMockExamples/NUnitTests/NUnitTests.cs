@@ -48,7 +48,7 @@ namespace TypeMockExamples.NUnitTests
         [TestCase(3, 5, 8)]
         [TestCase(2, 5, 7)]
         [Category("Composite")]
-        public void TestNUnitTest3(int x, int y, int expectedSum)
+        public void TestNUnitTestCases(int x, int y, int expectedSum)
         {
             // arrange
             Calculator calculator = new Calculator();
