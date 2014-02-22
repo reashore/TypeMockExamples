@@ -1,4 +1,6 @@
 ﻿
+using System.Threading;
+
 namespace TypeMockExamples.NUnitTests
 {
     using System.Diagnostics;
@@ -34,7 +36,7 @@ namespace TypeMockExamples.NUnitTests
         [Test]
         [Ignore]
         [Category("Ignored")]
-        public void TestNUnitTest2()
+        public void TestIgnore()
         {
             // assert
             Assert.IsTrue(true);
@@ -45,7 +47,6 @@ namespace TypeMockExamples.NUnitTests
         [TestCase(4, 5, 9)]
         [TestCase(3, 5, 8)]
         [TestCase(2, 5, 7)]
-        [MaxTime(2000)]
         [Category("Composite")]
         public void TestNUnitTest3(int x, int y, int expectedSum)
         {
@@ -57,6 +58,54 @@ namespace TypeMockExamples.NUnitTests
 
             // assert
             Assert.AreEqual(expectedSum, actualSum);
+        }
+
+        [Test]
+        [Category("Timing")]
+        [MaxTime(2000)]
+        public void TestMaxTimePasses()
+        {
+            // act
+            Thread.Sleep(1000);
+
+            // assert
+            Assert.IsTrue(true);
+        }
+
+        [Test]
+        [Category("Timing")]
+        [MaxTime(2000)]
+        public void TestMaxTimeFails()
+        {
+            // act
+            Thread.Sleep(3000);
+
+            // assert
+            Assert.Fail();
+        }
+
+        [Test]
+        [Category("Timing")]
+        [Timeout(2000)]
+        public void TestTimeoutPasses()
+        {
+            // act
+            Thread.Sleep(1000);
+
+            // assert
+            Assert.IsTrue(true);
+        }
+
+        [Test]
+        [Category("Timing")]
+        [Timeout(2000)]
+        public void TestTimeoutFails()
+        {
+            // act
+            Thread.Sleep(3000);
+
+            // assert
+            Assert.Fail();
         }
     }
 
