@@ -79,6 +79,7 @@
     <Compile Include="FluentAssertionsTests\ReferenceTypeTests.cs" />
     <Compile Include="FluentAssertionsTests\StringTests.cs" />
     <Compile Include="MoqTests\MoqTests.cs" />
+    <Compile Include="NUnitTests\AssertSyntaxTests.cs" />
     <Compile Include="NUnitTests\NUnitTests.cs" />
     <Compile Include="NSubstituteTests\NSubstituteTests.cs" />
     <Compile Include="Properties\Annotations.cs" />
