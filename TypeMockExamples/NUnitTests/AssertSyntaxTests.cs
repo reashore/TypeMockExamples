@@ -374,7 +374,6 @@ namespace TypeMockExamples.NUnitTests
 		[Test]
 		public void EqualityTestsWithTolerance_MixedFloatAndDouble()
 		{
-			// Bug Fix 1743844
 			Assert.That(2.20492d, Is.EqualTo(2.2d).Within(0.01f), "Double actual, Double expected, Single tolerance");
 			Assert.That(2.20492d, Is.EqualTo(2.2f).Within(0.01d), "Double actual, Single expected, Double tolerance");
 			Assert.That(2.20492d, Is.EqualTo(2.2f).Within(0.01f), "Double actual, Single expected, Single tolerance");
@@ -788,26 +787,6 @@ namespace TypeMockExamples.NUnitTests
 			Assert.That(7, !(Constraint)null & !Is.LessThan(5) & !Is.GreaterThan(10));
 			Expect(7, !(Constraint)null & !LessThan(5) & !GreaterThan(10));
 		}
-
-		#endregion
- 
-		#region Invalid Code Tests
-
-		// This method contains assertions that should not compile
-		// You can check by uncommenting it.
-		//public void WillNotCompile()
-		//{
-		//    Assert.That(42, Is.Not);
-		//    Assert.That(42, Is.All);
-		//    Assert.That(42, Is.Null.Not);
-		//    Assert.That(42, Is.Not.Null.GreaterThan(10));
-		//    Assert.That(42, Is.GreaterThan(10).LessThan(99));
-
-		//    object[] c = new object[0];
-		//    Assert.That(c, Is.Null.All);
-		//    Assert.That(c, Is.Not.All);
-		//    Assert.That(c, Is.All.Not);
-		//}
 
 		#endregion
 	}
