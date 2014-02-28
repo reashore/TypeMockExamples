@@ -76,7 +76,7 @@ namespace TypeMockExamples.RhinoMockTests
             // act
             int result1 = mockedGetResults.GetSomeNumber("B");
             int result2 = mockedGetResults.GetSomeNumber("A");
-            int result3 = mockedGetResults.GetSomeNumber("A");
+            int result3 = mockedGetResults.GetSomeNumber("A");      //result3 = 1
 
             //assert
             Assert.AreEqual(3, result1);
