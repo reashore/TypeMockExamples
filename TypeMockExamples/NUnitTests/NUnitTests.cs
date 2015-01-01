@@ -1,13 +1,11 @@
 ﻿
-using System;
+using System.Diagnostics;
 using System.Threading;
+using NUnit.Framework;
 
 namespace TypeMockExamples.NUnitTests
 {
-    using System.Diagnostics;
-    using NUnit.Framework;
-
-    [SetUpFixture]
+	[SetUpFixture]
     public class TestSetUpClass
     {
         [SetUp]
